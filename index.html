@@ -1,1248 +1,2092 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MAISON NOIR — Premium Menswear</title>
+    <title>SubVault - Premium Subscription Marketplace</title>
+    
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- GSAP for Animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Space Grotesk', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: {
+                            50: '#f5f3ff',
+                            100: '#ede9fe',
+                            200: '#ddd6fe',
+                            300: '#c4b5fd',
+                            400: '#a78bfa',
+                            500: '#8b5cf6',
+                            600: '#7c3aed',
+                            700: '#6d28d9',
+                            800: '#5b21b6',
+                            900: '#4c1d95',
+                        }
+                    },
+                    animation: {
+                        'aurora': 'aurora 20s ease-in-out infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'shimmer': 'shimmer 2s linear infinite',
+                        'blob': 'blob 7s infinite',
+                    },
+                    keyframes: {
+                        aurora: {
+                            '0%, 100%': { transform: 'translate(0, 0) scale(1)' },
+                            '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
+                            '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        },
+                        shimmer: {
+                            '0%': { backgroundPosition: '-1000px 0' },
+                            '100%': { backgroundPosition: '1000px 0' },
+                        },
+                        blob: {
+                            '0%': { transform: 'translate(0px, 0px) scale(1)' },
+                            '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
+                            '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
+                            '100%': { transform: 'translate(0px, 0px) scale(1)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
     <style>
-        :root {
-            --royal-blue: #4169e1;
-            --emerald: #10b981;
-            --amber: #f59e0b;
-            --rose: #f43f5e;
-            --violet: #8b5cf6;
-            --cyan: #06b6d4;
-        }
-
         * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(139, 92, 246, 0.5) transparent;
         }
-
-        html {
-            scroll-behavior: smooth;
+        
+        *::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
         }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #312e81 100%);
-            color: #f5f0e8;
-            overflow-x: hidden;
-            min-height: 100vh;
+        
+        *::-webkit-scrollbar-track {
+            background: transparent;
         }
-
-        .font-serif {
-            font-family: 'Playfair Display', serif;
+        
+        *::-webkit-scrollbar-thumb {
+            background: rgba(139, 92, 246, 0.5);
+            border-radius: 4px;
         }
-
-        /* Video Background */
-        .video-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            overflow: hidden;
+        
+        *::-webkit-scrollbar-thumb:hover {
+            background: rgba(139, 92, 246, 0.7);
         }
-
-        .video-bg video {
-            min-width: 100%;
-            min-height: 100%;
-            object-fit: cover;
-            opacity: 0.3;
+        
+        .glass {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
-
-        .video-overlay {
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(135deg, rgba(15, 23, 42, 0.9), rgba(30, 27, 75, 0.8));
+        
+        .glass-dark {
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
-
-        /* Animations */
-        .fade-in {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.6s ease, transform 0.6s ease;
+        
+        .gradient-text {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
-
-        .fade-in.visible {
-            opacity: 1;
-            transform: translateY(0);
+        
+        .gradient-text-animated {
+            background: linear-gradient(90deg, #8b5cf6, #ec4899, #3b82f6, #8b5cf6);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradient 5s ease infinite;
         }
-
-        .slide-up {
+        
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .aurora-bg {
+            background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab, #8b5cf6, #ec4899);
+            background-size: 400% 400%;
+            animation: aurora 15s ease infinite;
+        }
+        
+        .mesh-gradient {
+            background-color: #0f172a;
+            background-image: 
+                radial-gradient(at 0% 0%, hsla(253,16%,7%,1) 0, transparent 50%), 
+                radial-gradient(at 50% 0%, hsla(225,39%,30%,1) 0, transparent 50%), 
+                radial-gradient(at 100% 0%, hsla(339,49%,30%,1) 0, transparent 50%);
+        }
+        
+        .card-hover {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 40px -15px rgba(139, 92, 246, 0.3);
+        }
+        
+        .magnetic-btn {
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .glow {
+            box-shadow: 0 0 20px rgba(139, 92, 246, 0.5);
+        }
+        
+        .glow-hover:hover {
+            box-shadow: 0 0 30px rgba(139, 92, 246, 0.6);
+        }
+        
+        .text-shadow {
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+        
+        .image-skeleton {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+        }
+        
+        .dark .image-skeleton {
+            background: linear-gradient(90deg, #1e293b 25%, #334155 50%, #1e293b 75%);
+            background-size: 200% 100%;
+        }
+        
+        .reveal {
             opacity: 0;
             transform: translateY(30px);
-            transition: opacity 0.7s ease, transform 0.7s ease;
+            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
         }
-
-        .slide-up.visible {
+        
+        .reveal.active {
             opacity: 1;
             transform: translateY(0);
         }
-
-        /* Navbar */
-        .navbar {
-            transition: all 0.3s ease;
-            background: rgba(15, 23, 42, 0.95);
+        
+        .tilt-card {
+            transform-style: preserve-3d;
+            transform: perspective(1000px);
+        }
+        
+        .tilt-content {
+            transform: translateZ(20px);
+        }
+        
+        .announcement-bar {
+            background: linear-gradient(90deg, #8b5cf6, #ec4899, #3b82f6, #8b5cf6);
+            background-size: 200% 100%;
+            animation: gradient 3s linear infinite;
+        }
+        
+        .command-palette {
             backdrop-filter: blur(20px);
+            background: rgba(255, 255, 255, 0.95);
         }
-
-        .navbar.scrolled {
-            background: rgba(15, 23, 42, 0.98);
-            box-shadow: 0 4px 30px rgba(0,0,0,0.5);
+        
+        .dark .command-palette {
+            background: rgba(15, 23, 42, 0.95);
         }
-
-        /* Colorful Buttons */
-        .btn-royal {
-            background: linear-gradient(135deg, var(--royal-blue), var(--violet));
-            transition: all 0.3s ease;
+        
+        .page-transition {
+            animation: pageIn 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
-
-        .btn-royal:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(65, 105, 225, 0.4);
+        
+        @keyframes pageIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
-
-        .btn-emerald {
-            background: linear-gradient(135deg, var(--emerald), var(--cyan));
-            transition: all 0.3s ease;
-        }
-
-        .btn-emerald:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(16, 185, 129, 0.4);
-        }
-
-        .btn-amber {
-            background: linear-gradient(135deg, var(--amber), #f97316);
-            transition: all 0.3s ease;
-        }
-
-        .btn-amber:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(245, 158, 11, 0.4);
-        }
-
-        /* Product Cards */
-        .product-card {
-            background: linear-gradient(135deg, rgba(30, 41, 59, 0.8), rgba(51, 65, 85, 0.8));
-            border: 1px solid rgba(255,255,255,0.1);
-            transition: all 0.3s ease;
-        }
-
-        .product-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
-            border-color: var(--royal-blue);
-        }
-
-        .img-hover {
-            overflow: hidden;
-            position: relative;
-        }
-
-        .img-hover img {
-            transition: transform 0.5s ease;
-        }
-
-        .product-card:hover .img-hover img {
-            transform: scale(1.1);
-        }
-
-        /* Category Tabs */
-        .category-tab {
-            transition: all 0.3s ease;
-            border: 2px solid transparent;
-        }
-
-        .category-tab.active {
-            border-color: var(--royal-blue);
-            background: linear-gradient(135deg, rgba(65, 105, 225, 0.2), rgba(139, 92, 246, 0.2));
-        }
-
-        .category-tab:hover {
-            border-color: var(--emerald);
-            transform: translateY(-2px);
-        }
-
-        /* Modal */
-        .modal {
-            display: none;
-            position: fixed;
-            inset: 0;
-            z-index: 100;
-            background: rgba(0,0,0,0.95);
-            backdrop-filter: blur(10px);
-        }
-
-        .modal.active {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .modal-content {
-            background: linear-gradient(135deg, #1e293b, #0f172a);
-            max-width: 1000px;
-            width: 90%;
-            max-height: 90vh;
-            overflow-y: auto;
-            border-radius: 12px;
-            border: 1px solid rgba(65, 105, 225, 0.3);
-        }
-
-        /* Image Gallery */
-        .gallery-main {
-            aspect-ratio: 3/4;
-            overflow: hidden;
-            border-radius: 8px;
-        }
-
-        .gallery-thumb {
-            width: 80px;
-            height: 100px;
-            object-fit: cover;
-            border-radius: 4px;
-            cursor: pointer;
-            border: 2px solid transparent;
-            transition: all 0.3s ease;
-        }
-
-        .gallery-thumb:hover, .gallery-thumb.active {
-            border-color: var(--royal-blue);
-        }
-
-        /* Cart & Wishlist */
-        .cart-item {
-            background: linear-gradient(135deg, rgba(30, 41, 59, 0.6), rgba(51, 65, 85, 0.6));
-            border: 1px solid rgba(255,255,255,0.1);
-            transition: all 0.3s ease;
-        }
-
-        .cart-item:hover {
-            border-color: var(--emerald);
-        }
-
-        /* Loader */
+        
         .loader {
+            border: 3px solid rgba(139, 92, 246, 0.1);
+            border-radius: 50%;
+            border-top: 3px solid #8b5cf6;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .confetti {
             position: fixed;
-            inset: 0;
-            background: linear-gradient(135deg, #0f172a, #1e1b4b);
-            z-index: 9999;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: opacity 0.5s ease;
-        }
-
-        .loader.hidden {
-            opacity: 0;
-            pointer-events: none;
-        }
-
-        /* Colorful accents */
-        .text-royal { color: var(--royal-blue); }
-        .text-emerald { color: var(--emerald); }
-        .text-amber { color: var(--amber); }
-        .text-rose { color: var(--rose); }
-        .text-violet { color: var(--violet); }
-        .text-cyan { color: var(--cyan); }
-
-        .bg-royal { background: var(--royal-blue); }
-        .bg-emerald { background: var(--emerald); }
-        .bg-amber { background: var(--amber); }
-        .bg-rose { background: var(--rose); }
-        .bg-violet { background: var(--violet); }
-        .bg-cyan { background: var(--cyan); }
-
-        /* Size buttons */
-        .size-btn {
-            transition: all 0.2s ease;
-            border: 2px solid rgba(255,255,255,0.2);
-        }
-
-        .size-btn:hover, .size-btn.active {
-            background: linear-gradient(135deg, var(--royal-blue), var(--violet));
-            border-color: var(--royal-blue);
-            color: white;
-        }
-
-        /* Divider */
-        .divider {
-            height: 2px;
-            background: linear-gradient(90deg, transparent, var(--royal-blue), var(--violet), var(--emerald), transparent);
-        }
-
-        /* Wishlist & Cart Icons */
-        .icon-btn {
-            transition: all 0.3s ease;
-        }
-
-        .icon-btn:hover {
-            transform: scale(1.1);
-        }
-
-        .wishlist-btn.active svg {
-            fill: var(--rose);
-            stroke: var(--rose);
-        }
-
-        /* Page Sections */
-        .page-section {
-            display: none;
-            animation: fadeIn 0.5s ease;
-        }
-
-        .page-section.active {
-            display: block;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Hero Video */
-        .hero-video-container {
-            position: relative;
-            height: 100vh;
-            overflow: hidden;
-        }
-
-        .hero-video {
+            width: 10px;
+            height: 10px;
+            background: #8b5cf6;
             position: absolute;
-            top: 50%;
-            left: 50%;
-            min-width: 100%;
-            min-height: 100%;
-            transform: translate(-50%, -50%);
-            object-fit: cover;
+            animation: confetti-fall 3s linear forwards;
         }
-
-        /* Colorful badges */
-        .badge-new {
-            background: linear-gradient(135deg, var(--emerald), var(--cyan));
+        
+        @keyframes confetti-fall {
+            0% {
+                transform: translateY(-100vh) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(720deg);
+                opacity: 0;
+            }
         }
-
-        .badge-sale {
-            background: linear-gradient(135deg, var(--rose), #ec4899);
+        
+        .toast {
+            animation: toastIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
-
-        .badge-best {
-            background: linear-gradient(135deg, var(--amber), #f97316);
+        
+        @keyframes toastIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
         }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .hero-title {
-                font-size: 2.5rem;
+        
+        .toast-out {
+            animation: toastOut 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        @keyframes toastOut {
+            from {
+                transform: translateX(0);
+                opacity: 1;
+            }
+            to {
+                transform: translateX(100%);
+                opacity: 0;
             }
         }
     </style>
 </head>
-<body>
+<body class="font-sans antialiased bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-slate-100 transition-colors duration-300 overflow-x-hidden">
 
-    <!-- Video Background -->
-    <div class="video-bg">
-        <video autoplay muted loop playsinline>
-            <source src="https://assets.mixkit.co/videos/preview/mixkit-man-working-on-his-laptop-4836-large.mp4" type="video/mp4">
-        </video>
-        <div class="video-overlay"></div>
-    </div>
-
-    <!-- Loader -->
-    <div class="loader" id="loader">
-        <div class="text-center">
-            <h1 class="font-serif text-5xl bg-gradient-to-r from-royal-blue via-violet to-emerald bg-clip-text text-transparent tracking-widest">MAISON NOIR</h1>
-            <p class="text-gray-400 mt-3 tracking-wider">PREMIUM MENSWEAR</p>
-        </div>
+    <!-- Announcement Bar -->
+    <div class="announcement-bar text-white text-sm font-medium py-2 px-4 text-center relative z-50">
+        <span class="inline-flex items-center gap-2">
+            <i data-lucide="rocket" class="w-4 h-4"></i>
+            Demo Project • Designed & Developed by Murtaza Mirzax • Portfolio & Educational Purpose Only
+        </span>
     </div>
 
     <!-- Navigation -->
-    <nav class="navbar fixed top-0 left-0 right-0 z-50 py-4">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="flex items-center justify-between">
-                <a href="#" onclick="showPage('home')" class="font-serif text-2xl tracking-wider bg-gradient-to-r from-royal-blue to-violet bg-clip-text text-transparent">MAISON NOIR</a>
-                
-                <div class="hidden lg:flex items-center space-x-8">
-                    <a href="#collection" class="text-sm tracking-wider text-gray-300 hover:text-royal-blue transition-colors">COLLECTION</a>
-                    <a href="#categories" class="text-sm tracking-wider text-gray-300 hover:text-emerald transition-colors">CATEGORIES</a>
-                    <a href="#about" class="text-sm tracking-wider text-gray-300 hover:text-amber transition-colors">ABOUT</a>
+    <nav class="sticky top-0 z-40 glass dark:glass-dark transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex items-center cursor-pointer" onclick="router.navigate('home')">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center mr-3 glow">
+                        <i data-lucide="layers" class="w-6 h-6 text-white"></i>
+                    </div>
+                    <span class="text-2xl font-display font-bold gradient-text-animated">SubVault</span>
                 </div>
 
-                <div class="flex items-center space-x-4">
-                    <button onclick="showPage('wishlist')" class="icon-btn text-gray-300 hover:text-rose transition-colors relative">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
-                        </svg>
-                        <span id="wishlistCount" class="absolute -top-2 -right-2 w-5 h-5 bg-rose text-white text-xs rounded-full flex items-center justify-center font-bold">0</span>
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <button onclick="router.navigate('home')" class="nav-link text-sm font-medium hover:text-purple-600 dark:hover:text-purple-400 transition-colors">Home</button>
+                    <button onclick="router.navigate('browse')" class="nav-link text-sm font-medium hover:text-purple-600 dark:hover:text-purple-400 transition-colors">Browse Apps</button>
+                    <button onclick="router.navigate('categories')" class="nav-link text-sm font-medium hover:text-purple-600 dark:hover:text-purple-400 transition-colors">Categories</button>
+                    <button onclick="router.navigate('deals')" class="nav-link text-sm font-medium hover:text-purple-600 dark:hover:text-purple-400 transition-colors">Deals</button>
+                    <button onclick="router.navigate('bundles')" class="nav-link text-sm font-medium hover:text-purple-600 dark:hover:text-purple-400 transition-colors">Bundles</button>
+                </div>
+
+                <!-- Right Side -->
+                <div class="hidden md:flex items-center space-x-4">
+                    <button onclick="toggleCommandPalette()" class="p-2 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors" title="Search (Ctrl+K)">
+                        <i data-lucide="search" class="w-5 h-5"></i>
                     </button>
-                    <button onclick="showPage('cart')" class="icon-btn text-gray-300 hover:text-emerald transition-colors relative">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
-                        </svg>
-                        <span id="cartCount" class="absolute -top-2 -right-2 w-5 h-5 bg-emerald text-white text-xs rounded-full flex items-center justify-center font-bold">0</span>
+                    <button onclick="router.navigate('wishlist')" class="relative p-2 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">
+                        <i data-lucide="heart" class="w-5 h-5"></i>
+                        <span id="wishlist-count" class="absolute -top-1 -right-1 w-5 h-5 bg-pink-500 text-white text-xs rounded-full flex items-center justify-center hidden">0</span>
+                    </button>
+                    <button onclick="toggleCart()" class="relative p-2 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">
+                        <i data-lucide="shopping-cart" class="w-5 h-5"></i>
+                        <span id="cart-count" class="absolute -top-1 -right-1 w-5 h-5 bg-purple-500 text-white text-xs rounded-full flex items-center justify-center hidden">0</span>
+                    </button>
+                    <button onclick="toggleDarkMode()" class="p-2 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">
+                        <i data-lucide="sun" class="w-5 h-5 hidden dark:block"></i>
+                        <i data-lucide="moon" class="w-5 h-5 block dark:hidden"></i>
+                    </button>
+                    <button onclick="router.navigate('dashboard')" class="px-4 py-2 rounded-lg bg-gradient-to-r from-purple-500 to-pink-500 text-white font-medium hover:shadow-lg hover:shadow-purple-500/30 transition-all">
+                        Dashboard
                     </button>
                 </div>
+
+                <!-- Mobile menu button -->
+                <button onclick="toggleMobileMenu()" class="md:hidden p-2 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-700">
+                    <i data-lucide="menu" class="w-6 h-6"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden glass dark:glass-dark border-t border-slate-200 dark:border-slate-700">
+            <div class="px-4 pt-2 pb-6 space-y-2">
+                <button onclick="router.navigate('home')" class="block w-full text-left px-3 py-2 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-700">Home</button>
+                <button onclick="router.navigate('browse')" class="block w-full text-left px-3 py-2 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-700">Browse Apps</button>
+                <button onclick="router.navigate('categories')" class="block w-full text-left px-3 py-2 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-700">Categories</button>
+                <button onclick="router.navigate('deals')" class="block w-full text-left px-3 py-2 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-700">Deals</button>
+                <button onclick="router.navigate('wishlist')" class="block w-full text-left px-3 py-2 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-700">Wishlist</button>
+                <button onclick="router.navigate('cart')" class="block w-full text-left px-3 py-2 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-700">Cart</button>
             </div>
         </div>
     </nav>
 
-    <!-- HOME PAGE -->
-    <div id="homePage" class="page-section active">
-        <!-- Hero Section with Video -->
-        <section class="hero-video-container flex items-center">
-            <video class="hero-video" autoplay muted loop playsinline>
-                <source src="https://assets.mixkit.co/videos/preview/mixkit-man-in-a-black-suit-walking-through-a-parking-lot-39886-large.mp4" type="video/mp4">
-            </video>
-            <div class="absolute inset-0 bg-gradient-to-r from-slate-900 via-slate-900/80 to-transparent"></div>
-            
-            <div class="relative z-10 max-w-7xl mx-auto px-6 py-20">
-                <div class="max-w-2xl">
-                    <p class="text-emerald text-sm tracking-[0.3em] mb-4 fade-in">EST. 2024</p>
-                    <h1 class="hero-title font-serif text-6xl md:text-8xl font-bold text-white mb-6 leading-tight fade-in">
-                        Redefine<br>
-                        <span class="bg-gradient-to-r from-royal-blue via-violet to-emerald bg-clip-text text-transparent">Your Style</span>
-                    </h1>
-                    <p class="text-lg text-gray-300 mb-8 font-light fade-in">
-                        Discover 200+ premium pieces crafted for the modern gentleman. From boardroom to black tie.
+    <!-- Main Content Area -->
+    <main id="app" class="min-h-screen">
+        <!-- Content will be injected here -->
+    </main>
+
+    <!-- Cart Sidebar -->
+    <div id="cart-sidebar" class="fixed inset-0 z-50 hidden">
+        <div class="absolute inset-0 bg-black/50 backdrop-blur-sm" onclick="toggleCart()"></div>
+        <div class="absolute right-0 top-0 h-full w-full max-w-md glass dark:glass-dark shadow-2xl transform transition-transform duration-300 translate-x-full" id="cart-panel">
+            <div class="flex flex-col h-full">
+                <div class="flex items-center justify-between p-6 border-b border-slate-200 dark:border-slate-700">
+                    <h2 class="text-xl font-display font-bold">Shopping Cart</h2>
+                    <button onclick="toggleCart()" class="p-2 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-700">
+                        <i data-lucide="x" class="w-5 h-5"></i>
+                    </button>
+                </div>
+                <div id="cart-items" class="flex-1 overflow-y-auto p-6 space-y-4">
+                    <!-- Cart items injected here -->
+                </div>
+                <div class="border-t border-slate-200 dark:border-slate-700 p-6 space-y-4">
+                    <div class="flex justify-between text-sm">
+                        <span>Subtotal</span>
+                        <span id="cart-subtotal" class="font-semibold">£0.00</span>
+                    </div>
+                    <div class="flex justify-between text-sm">
+                        <span>Tax (Demo)</span>
+                        <span>£0.00</span>
+                    </div>
+                    <div class="flex justify-between text-lg font-bold">
+                        <span>Total</span>
+                        <span id="cart-total" class="text-purple-600 dark:text-purple-400">£0.00</span>
+                    </div>
+                    <button onclick="router.navigate('checkout')" class="w-full py-3 rounded-xl bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold hover:shadow-lg hover:shadow-purple-500/30 transition-all">
+                        Proceed to Checkout
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Command Palette -->
+    <div id="command-palette" class="fixed inset-0 z-50 hidden">
+        <div class="absolute inset-0 bg-black/50 backdrop-blur-sm" onclick="toggleCommandPalette()"></div>
+        <div class="absolute top-20 left-1/2 transform -translate-x-1/2 w-full max-w-2xl command-palette rounded-2xl shadow-2xl overflow-hidden">
+            <div class="p-4 border-b border-slate-200 dark:border-slate-700">
+                <div class="flex items-center gap-3">
+                    <i data-lucide="search" class="w-5 h-5 text-slate-400"></i>
+                    <input type="text" id="command-input" placeholder="Search apps, categories, pages..." class="w-full bg-transparent outline-none text-lg" oninput="handleCommandSearch(this.value)">
+                </div>
+            </div>
+            <div id="command-results" class="max-h-96 overflow-y-auto p-2">
+                <!-- Search results injected here -->
+            </div>
+            <div class="p-2 border-t border-slate-200 dark:border-slate-700 text-xs text-slate-500 flex justify-between">
+                <span>↑↓ to navigate</span>
+                <span>↵ to select</span>
+                <span>esc to close</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div id="toast-container" class="fixed bottom-4 right-4 z-50 space-y-2"></div>
+
+    <!-- Footer -->
+    <footer class="glass dark:glass-dark border-t border-slate-200 dark:border-slate-700 mt-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div class="col-span-1 md:col-span-2">
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center mr-3">
+                            <i data-lucide="layers" class="w-6 h-6 text-white"></i>
+                        </div>
+                        <span class="text-2xl font-display font-bold gradient-text-animated">SubVault</span>
+                    </div>
+                    <p class="text-slate-600 dark:text-slate-400 mb-4 max-w-sm">
+                        Your premium destination for digital subscriptions. Access the world's best apps and services at unbeatable prices.
                     </p>
-                    <div class="flex flex-wrap gap-4 fade-in">
-                        <button onclick="showPage('shop')" class="btn-royal px-10 py-4 text-white font-semibold tracking-wider text-sm rounded-lg">
-                            SHOP NOW
-                        </button>
-                        <button onclick="showPage('categories')" class="btn-emerald px-10 py-4 text-white font-semibold tracking-wider text-sm rounded-lg">
-                            EXPLORE
-                        </button>
+                    <div class="flex space-x-4">
+                        <a href="#" class="p-2 rounded-lg bg-slate-200 dark:bg-slate-700 hover:bg-purple-500 hover:text-white transition-all">
+                            <i data-lucide="twitter" class="w-5 h-5"></i>
+                        </a>
+                        <a href="#" class="p-2 rounded-lg bg-slate-200 dark:bg-slate-700 hover:bg-purple-500 hover:text-white transition-all">
+                            <i data-lucide="github" class="w-5 h-5"></i>
+                        </a>
+                        <a href="#" class="p-2 rounded-lg bg-slate-200 dark:bg-slate-700 hover:bg-purple-500 hover:text-white transition-all">
+                            <i data-lucide="linkedin" class="w-5 h-5"></i>
+                        </a>
                     </div>
+                </div>
+                <div>
+                    <h3 class="font-semibold mb-4">Quick Links</h3>
+                    <ul class="space-y-2 text-sm text-slate-600 dark:text-slate-400">
+                        <li><button onclick="router.navigate('about')" class="hover:text-purple-600 dark:hover:text-purple-400">About</button></li>
+                        <li><button onclick="router.navigate('blog')" class="hover:text-purple-600 dark:hover:text-purple-400">Blog</button></li>
+                        <li><button onclick="router.navigate('contact')" class="hover:text-purple-600 dark:hover:text-purple-400">Contact</button></li>
+                        <li><button onclick="router.navigate('faq')" class="hover:text-purple-600 dark:hover:text-purple-400">FAQ</button></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-semibold mb-4">Legal</h3>
+                    <ul class="space-y-2 text-sm text-slate-600 dark:text-slate-400">
+                        <li><button onclick="router.navigate('privacy')" class="hover:text-purple-600 dark:hover:text-purple-400">Privacy Policy</button></li>
+                        <li><button onclick="router.navigate('terms')" class="hover:text-purple-600 dark:hover:text-purple-400">Terms of Service</button></li>
+                        <li><button onclick="router.navigate('support')" class="hover:text-purple-600 dark:hover:text-purple-400">Support</button></li>
+                    </ul>
                 </div>
             </div>
-        </section>
-
-        <!-- Categories Preview -->
-        <section id="categories" class="py-24 px-6 relative">
-            <div class="max-w-7xl mx-auto">
-                <div class="text-center mb-16 fade-in">
-                    <p class="text-amber text-sm tracking-[0.3em] mb-4">SHOP BY CATEGORY</p>
-                    <h2 class="font-serif text-5xl text-white mb-4">Curated Collections</h2>
-                    <div class="divider w-32 mx-auto"></div>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <div class="group cursor-pointer fade-in" onclick="filterByCategory('suits')">
-                        <div class="relative overflow-hidden rounded-xl aspect-[4/5]">
-                            <img src="https://images.unsplash.com/photo-1593032465175-d529cb1e790e?w=600&h=800&fit=crop" 
-                                 alt="Suits" 
-                                 class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
-                            <div class="absolute inset-0 bg-gradient-to-t from-royal-blue/90 via-royal-blue/40 to-transparent"></div>
-                            <div class="absolute bottom-0 left-0 p-8">
-                                <h3 class="font-serif text-3xl text-white mb-2">Three-Piece Suits</h3>
-                                <p class="text-gray-200 mb-4">25 Premium Options</p>
-                                <span class="text-amber font-semibold">Shop Now →</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="group cursor-pointer fade-in" onclick="filterByCategory('blazers')">
-                        <div class="relative overflow-hidden rounded-xl aspect-[4/5]">
-                            <img src="https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=600&h=800&fit=crop" 
-                                 alt="Blazers" 
-                                 class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
-                            <div class="absolute inset-0 bg-gradient-to-t from-emerald/90 via-emerald/40 to-transparent"></div>
-                            <div class="absolute bottom-0 left-0 p-8">
-                                <h3 class="font-serif text-3xl text-white mb-2">Blazers</h3>
-                                <p class="text-gray-200 mb-4">30 Smart Casual</p>
-                                <span class="text-amber font-semibold">Shop Now →</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="group cursor-pointer fade-in" onclick="filterByCategory('outerwear')">
-                        <div class="relative overflow-hidden rounded-xl aspect-[4/5]">
-                            <img src="https://images.unsplash.com/photo-1544022613-e87ca75a784a?w=600&h=800&fit=crop" 
-                                 alt="Outerwear" 
-                                 class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
-                            <div class="absolute inset-0 bg-gradient-to-t from-violet/90 via-violet/40 to-transparent"></div>
-                            <div class="absolute bottom-0 left-0 p-8">
-                                <h3 class="font-serif text-3xl text-white mb-2">Outerwear</h3>
-                                <p class="text-gray-200 mb-4">20 Luxury Coats</p>
-                                <span class="text-amber font-semibold">Shop Now →</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="group cursor-pointer fade-in" onclick="filterByCategory('shirts')">
-                        <div class="relative overflow-hidden rounded-xl aspect-[4/5]">
-                            <img src="https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=600&h=800&fit=crop" 
-                                 alt="Shirts" 
-                                 class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
-                            <div class="absolute inset-0 bg-gradient-to-t from-amber/90 via-amber/40 to-transparent"></div>
-                            <div class="absolute bottom-0 left-0 p-8">
-                                <h3 class="font-serif text-3xl text-white mb-2">Shirts</h3>
-                                <p class="text-gray-200 mb-4">35 Premium Shirts</p>
-                                <span class="text-amber font-semibold">Shop Now →</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="group cursor-pointer fade-in" onclick="filterByCategory('formal')">
-                        <div class="relative overflow-hidden rounded-xl aspect-[4/5]">
-                            <img src="https://images.unsplash.com/photo-1559582798-678dfc71ccd8?w=600&h=800&fit=crop" 
-                                 alt="Formal" 
-                                 class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
-                            <div class="absolute inset-0 bg-gradient-to-t from-rose/90 via-rose/40 to-transparent"></div>
-                            <div class="absolute bottom-0 left-0 p-8">
-                                <h3 class="font-serif text-3xl text-white mb-2">Black Tie</h3>
-                                <p class="text-gray-200 mb-4">20 Tuxedos</p>
-                                <span class="text-amber font-semibold">Shop Now →</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="group cursor-pointer fade-in" onclick="filterByCategory('accessories')">
-                        <div class="relative overflow-hidden rounded-xl aspect-[4/5]">
-                            <img src="https://images.unsplash.com/photo-1611312449408-fcece27cdbb7?w=600&h=800&fit=crop" 
-                                 alt="Accessories" 
-                                 class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
-                            <div class="absolute inset-0 bg-gradient-to-t from-cyan/90 via-cyan/40 to-transparent"></div>
-                            <div class="absolute bottom-0 left-0 p-8">
-                                <h3 class="font-serif text-3xl text-white mb-2">Accessories</h3>
-                                <p class="text-gray-200 mb-4">30+ Essentials</p>
-                                <span class="text-amber font-semibold">Shop Now →</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </div>
-
-    <!-- SHOP PAGE -->
-    <div id="shopPage" class="page-section pt-24">
-        <section id="collection" class="py-12 px-6">
-            <div class="max-w-7xl mx-auto">
-                <div class="text-center mb-12 fade-in">
-                    <h2 class="font-serif text-5xl text-white mb-4">The Collection</h2>
-                    <p class="text-gray-400">200+ Premium Pieces</p>
-                    <div class="divider w-32 mx-auto mt-6"></div>
-                </div>
-
-                <!-- Category Filter -->
-                <div class="flex flex-wrap justify-center gap-4 mb-12 fade-in">
-                    <button onclick="filterByCategory('all')" class="category-tab active px-8 py-3 rounded-full text-white font-medium" data-category="all">
-                        All Items
-                    </button>
-                    <button onclick="filterByCategory('suits')" class="category-tab px-8 py-3 rounded-full text-white font-medium" data-category="suits">
-                        Suits
-                    </button>
-                    <button onclick="filterByCategory('blazers')" class="category-tab px-8 py-3 rounded-full text-white font-medium" data-category="blazers">
-                        Blazers
-                    </button>
-                    <button onclick="filterByCategory('outerwear')" class="category-tab px-8 py-3 rounded-full text-white font-medium" data-category="outerwear">
-                        Outerwear
-                    </button>
-                    <button onclick="filterByCategory('shirts')" class="category-tab px-8 py-3 rounded-full text-white font-medium" data-category="shirts">
-                        Shirts
-                    </button>
-                    <button onclick="filterByCategory('formal')" class="category-tab px-8 py-3 rounded-full text-white font-medium" data-category="formal">
-                        Formal
-                    </button>
-                </div>
-
-                <!-- Products Grid -->
-                <div id="productsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                    <!-- Products will be loaded here by JavaScript -->
-                </div>
-            </div>
-        </section>
-    </div>
-
-    <!-- CART PAGE -->
-    <div id="cartPage" class="page-section pt-24 pb-24">
-        <div class="max-w-6xl mx-auto px-6">
-            <h2 class="font-serif text-5xl text-white mb-8 text-center">Shopping Cart</h2>
-            <div class="divider w-32 mx-auto mb-12"></div>
-
-            <div id="cartContent" class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                <!-- Cart items will be loaded here -->
+            <div class="border-t border-slate-200 dark:border-slate-700 mt-12 pt-8 text-center text-sm text-slate-600 dark:text-slate-400">
+                <p class="mb-2">Designed & Developed by Murtaza Mirzax © 2026</p>
+                <p>This is a UI/UX demonstration website. No subscriptions are actually sold.</p>
             </div>
         </div>
-    </div>
-
-    <!-- WISHLIST PAGE -->
-    <div id="wishlistPage" class="page-section pt-24 pb-24">
-        <div class="max-w-6xl mx-auto px-6">
-            <h2 class="font-serif text-5xl text-white mb-8 text-center">Your Wishlist</h2>
-            <div class="divider w-32 mx-auto mb-12"></div>
-
-            <div id="wishlistContent" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <!-- Wishlist items will be loaded here -->
-            </div>
-        </div>
-    </div>
-
-    <!-- Product Modal -->
-    <div id="productModal" class="modal">
-        <div class="modal-content">
-            <div class="grid grid-cols-1 md:grid-cols-2">
-                <!-- Image Gallery -->
-                <div class="p-6">
-                    <div class="gallery-main mb-4">
-                        <img id="modalMainImage" src="" alt="Product" class="w-full h-full object-cover">
-                    </div>
-                    <div class="flex gap-2" id="modalGallery">
-                        <!-- Thumbnails will be added here -->
-                    </div>
-                </div>
-
-                <!-- Product Details -->
-                <div class="p-8">
-                    <button onclick="closeModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-                        </svg>
-                    </button>
-
-                    <span id="modalCategory" class="text-emerald text-sm tracking-wider uppercase"></span>
-                    <h3 id="modalTitle" class="font-serif text-4xl text-white mt-2 mb-4"></h3>
-                    <p id="modalPrice" class="text-3xl text-amber font-bold mb-6"></p>
-                    <p id="modalDescription" class="text-gray-300 mb-8 leading-relaxed"></p>
-
-                    <div class="mb-6">
-                        <p class="text-royal-blue text-sm tracking-wider mb-3">SELECT SIZE</p>
-                        <div class="flex flex-wrap gap-3" id="sizeOptions">
-                            <button class="size-btn px-6 py-3 rounded text-white" onclick="selectSize(this)">36</button>
-                            <button class="size-btn px-6 py-3 rounded text-white" onclick="selectSize(this)">38</button>
-                            <button class="size-btn px-6 py-3 rounded text-white active" onclick="selectSize(this)">40</button>
-                            <button class="size-btn px-6 py-3 rounded text-white" onclick="selectSize(this)">42</button>
-                            <button class="size-btn px-6 py-3 rounded text-white" onclick="selectSize(this)">44</button>
-                            <button class="size-btn px-6 py-3 rounded text-white" onclick="selectSize(this)">46</button>
-                        </div>
-                    </div>
-
-                    <div class="space-y-4 mb-8">
-                        <button onclick="addToCartFromModal()" class="btn-emerald w-full py-4 text-white font-semibold tracking-wider rounded-lg">
-                            ADD TO CART
-                        </button>
-                        <button onclick="addToWishlistFromModal()" class="btn-royal w-full py-4 text-white font-semibold tracking-wider rounded-lg">
-                            ADD TO WISHLIST
-                        </button>
-                    </div>
-
-                    <div class="space-y-3 text-sm text-gray-400">
-                        <div class="flex items-center">
-                            <svg class="w-5 h-5 text-emerald mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
-                            </svg>
-                            <span>Free worldwide shipping over £300</span>
-                        </div>
-                        <div class="flex items-center">
-                            <svg class="w-5 h-5 text-emerald mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
-                            </svg>
-                            <span>30-day free returns</span>
-                        </div>
-                        <div class="flex items-center">
-                            <svg class="w-5 h-5 text-emerald mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
-                            </svg>
-                            <span>Secure checkout</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    </footer>
 
     <script>
-        // Product Database - 200+ Items
-        const products = [
-            // THREE-PIECE SUITS (30 items)
-            { id: 1, name: "Navy Classic Three-Piece", category: "suits", price: 485, badge: "bestseller", 
-              description: "Timeless navy three-piece suit with modern slim fit. Perfect for formal occasions and business meetings. Crafted from premium Italian wool blend.",
-              images: [
-                "https://images.unsplash.com/photo-1593032465175-d529cb1e790e?w=600&h=800&fit=crop",
-                "https://images.unsplash.com/photo-1617127365659-c47fa8cd7d83?w=600&h=800&fit=crop",
-                "https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=600&h=800&fit=crop"
-              ]
-            },
-            { id: 2, name: "Charcoal Grey Suit", category: "suits", price: 465, badge: "new",
-              description: "Sophisticated charcoal grey three-piece suit. Versatile and elegant for any professional setting.",
-              images: [
-                "https://images.unsplash.com/photo-1617127365659-c47fa8cd7d83?w=600&h=800&fit=crop",
-                "https://images.unsplash.com/photo-1593032465175-d529cb1e790e?w=600&h=800&fit=crop"
-              ]
-            },
-            { id: 3, name: "Midnight Blue Elite", category: "suits", price: 525, badge: "premium",
-              description: "Deep midnight blue suit with subtle sheen. The ultimate statement piece for evening events.",
-              images: [
-                "https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=600&h=800&fit=crop",
-                "https://images.unsplash.com/photo-1593032465175-d529cb1e790e?w=600&h=800&fit=crop"
-              ]
-            },
-            { id: 4, name: "Burgundy Heritage", category: "suits", price: 495,
-              description: "Rich burgundy three-piece suit. Bold yet refined for the confident gentleman.",
-              images: [
-                "https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=600&h=800&fit=crop",
-                "https://images.unsplash.com/photo-1593032465175-d529cb1e790e?w=600&h=800&fit=crop"
-              ]
-            },
-            { id: 5, name: "Camel Classic", category: "suits", price: 475, badge: "new",
-              description: "Warm camel-toned three-piece suit. Perfect for autumn weddings and events.",
-              images: [
-                "https://images.unsplash.com/photo-1593032465175-d529cb1e790e?w=600&h=800&fit=crop",
-                "https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=600&h=800&fit=crop"
-              ]
-            },
-            { id: 6, name: "Graphite Modern", category: "suits", price: 455,
-              description: "Sleek graphite grey suit with contemporary cut. Modern elegance redefined.",
-              images: [
-                "https://images.unsplash.com/photo-1617127365659-c47fa8cd7d83?w=600&h=800&fit=crop"
-              ]
-            },
-            { id: 7, name: "Oxford Blue Heritage", category: "suits", price: 485,
-              description: "Classic Oxford blue with traditional tailoring. Timeless sophistication.",
-              images: [
-                "https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=600&h=800&fit=crop"
-              ]
-            },
-            { id: 8, name: "Forest Green Elite", category: "suits", price: 505, badge: "premium",
-              description: "Distinctive forest green suit. Stand out with refined taste.",
-              images: [
-                "https://images.unsplash.com/photo-1593032465175-d529cb1e790e?w=600&h=800&fit=crop"
-              ]
-            },
+        // Initialize Lucide Icons
+        lucide.createIcons();
 
-            // BLAZERS (30 items)
-            { id: 31, name: "Navy Blazer Classic", category: "blazers", price: 285, badge: "bestseller",
-              description: "Essential navy blazer. The foundation of smart casual dressing.",
-              images: [
-                "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=600&h=800&fit=crop",
-                "https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=600&h=800&fit=crop"
-              ]
-            },
-            { id: 32, name: "Charcoal Sport Coat", category: "blazers", price: 295,
-              description: "Versatile charcoal blazer for business casual.",
-              images: [
-                "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=600&h=800&fit=crop"
-              ]
-            },
-            { id: 33, name: "Burgundy Blazer", category: "blazers", price: 315, badge: "new",
-              description: "Bold burgundy blazer for statement making.",
-              images: [
-                "https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=600&h=800&fit=crop"
-              ]
-            },
-            { id: 34, name: "Olive Green Blazer", category: "blazers", price: 275,
-              description: "Earth-toned olive blazer. Perfect for casual Fridays.",
-              images: [
-                "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=600&h=800&fit=crop"
-              ]
-            },
-            { id: 35, name: "Camel Blazer", category: "blazers", price: 305,
-              description: "Warm camel blazer. Autumn essential.",
-              images: [
-                "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=600&h=800&fit=crop"
-              ]
-            },
-
-            // OUTERWEAR (25 items)
-            { id: 61, name: "Camel Overcoat", category: "outerwear", price: 425, badge: "bestseller",
-              description: "Luxurious camel overcoat in cashmere blend. Timeless winter elegance.",
-              images: [
-                "https://images.unsplash.com/photo-1544022613-e87ca75a784a?w=600&h=800&fit=crop",
-                "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=600&h=800&fit=crop"
-              ]
-            },
-            { id: 62, name: "Navy Wool Coat", category: "outerwear", price: 395,
-              description: "Classic navy wool overcoat. Winter essential.",
-              images: [
-                "https://images.unsplash.com/photo-1544022613-e87ca75a784a?w=600&h=800&fit=crop"
-              ]
-            },
-            { id: 63, name: "Charcoal Topcoat", category: "outerwear", price: 415, badge: "new",
-              description: "Sophisticated charcoal topcoat. Urban sophistication.",
-              images: [
-                "https://images.unsplash.com/photo-1544022613-e87ca75a784a?w=600&h=800&fit=crop"
-              ]
-            },
-            { id: 64, name: "Black Chesterfield", category: "outerwear", price: 445,
-              description: "Elegant black Chesterfield coat. Formal outerwear.",
-              images: [
-                "https://images.unsplash.com/photo-1544022613-e87ca75a784a?w=600&h=800&fit=crop"
-              ]
-            },
-
-            // SHIRTS (35 items)
-            { id: 86, name: "White Oxford Shirt", category: "shirts", price: 125, badge: "bestseller",
-              description: "Premium Egyptian cotton Oxford shirt. The perfect foundation piece.",
-              images: [
-                "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=600&h=800&fit=crop",
-                "https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=600&h=800&fit=crop"
-              ]
-            },
-            { id: 87, name: "Light Blue Dress Shirt", category: "shirts", price: 115,
-              description: "Crisp light blue dress shirt. Business essential.",
-              images: [
-                "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=600&h=800&fit=crop"
-              ]
-            },
-            { id: 88, name: "Pink Formal Shirt", category: "shirts", price: 120,
-              description: "Soft pink formal shirt. Add color to your wardrobe.",
-              images: [
-                "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=600&h=800&fit=crop"
-              ]
-            },
-            { id: 89, name: "Navy Dress Shirt", category: "shirts", price: 125, badge: "new",
-              description: "Deep navy dress shirt. Evening elegance.",
-              images: [
-                "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=600&h=800&fit=crop"
-              ]
-            },
-
-            // FORMAL/TUXEDOS (25 items)
-            { id: 121, name: "Black Tuxedo Classic", category: "formal", price: 595, badge: "premium",
-              description: "Classic black tuxedo with velvet lapels. For black-tie events and galas.",
-              images: [
-                "https://images.unsplash.com/photo-1559582798-678dfc71ccd8?w=600&h=800&fit=crop",
-                "https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=600&h=800&fit=crop"
-              ]
-            },
-            { id: 122, name: "Midnight Blue Tuxedo", category: "formal", price: 625,
-              description: "Sophisticated midnight blue tuxedo. Alternative to black.",
-              images: [
-                "https://images.unsplash.com/photo-1559582798-678dfc71ccd8?w=600&h=800&fit=crop"
-              ]
-            },
-            { id: 123, name: "White Dinner Jacket", category: "formal", price: 575, badge: "new",
-              description: "Elegant white dinner jacket. Summer formal events.",
-              images: [
-                "https://images.unsplash.com/photo-1559582798-678dfc71ccd8?w=600&h=800&fit=crop"
-              ]
-            },
-
-            // ACCESSORIES (30 items)
-            { id: 146, name: "Leather Belt Set", category: "accessories", price: 95,
-              description: "Premium Italian leather belt. Black and brown.",
-              images: [
-                "https://images.unsplash.com/photo-1611312449408-fcece27cdbb7?w=600&h=800&fit=crop"
-              ]
-            },
-            { id: 147, name: "Silk Tie Collection", category: "accessories", price: 75, badge: "bestseller",
-              description: "Set of 3 premium silk ties. Navy, burgundy, grey.",
-              images: [
-                "https://images.unsplash.com/photo-1611312449408-fcece27cdbb7?w=600&h=800&fit=crop"
-              ]
-            },
-            { id: 148, name: "Leather Wallet", category: "accessories", price: 125,
-              description: "Handcrafted leather bifold wallet.",
-              images: [
-                "https://images.unsplash.com/photo-1611312449408-fcece27cdbb7?w=600&h=800&fit=crop"
-              ]
-            },
-            { id: 149, name: "Pocket Square Set", category: "accessories", price: 55,
-              description: "Set of 5 silk pocket squares.",
-              images: [
-                "https://images.unsplash.com/photo-1611312449408-fcece27cdbb7?w=600&h=800&fit=crop"
-              ]
-            },
-            { id: 150, name: "Cufflinks Gold", category: "accessories", price: 145, badge: "premium",
-              description: "18k gold-plated cufflinks. Elegant detail.",
-              images: [
-                "https://images.unsplash.com/photo-1611312449408-fcece27cdbb7?w=600&h=800&fit=crop"
-              ]
-            }
+        // Data
+        const appsData = [
+            { id: 1, name: "Netflix", category: "Streaming", monthly: 9.99, rating: 4.8, logo: "https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg", description: "Watch TV shows and movies anytime, anywhere." },
+            { id: 2, name: "Spotify Premium", category: "Music", monthly: 9.99, rating: 4.9, logo: "https://upload.wikimedia.org/wikipedia/commons/1/19/Spotify_logo_without_text.svg", description: "Ad-free music listening, offline playback, unlimited skips." },
+            { id: 3, name: "Disney+", category: "Streaming", monthly: 7.99, rating: 4.7, logo: "https://upload.wikimedia.org/wikipedia/commons/3/3e/Disney%2B_logo.svg", description: "Stream Disney, Pixar, Marvel, Star Wars, and National Geographic." },
+            { id: 4, name: "Prime Video", category: "Streaming", monthly: 8.99, rating: 4.6, logo: "https://upload.wikimedia.org/wikipedia/commons/f/f1/Prime_Video.png", description: "Watch movies, TV, and sports, including Amazon Originals." },
+            { id: 5, name: "Apple TV+", category: "Streaming", monthly: 6.99, rating: 4.5, logo: "https://upload.wikimedia.org/wikipedia/commons/8/8e/Apple_TV_Plus_logo.svg", description: "Stream award-winning Apple Original shows and movies." },
+            { id: 6, name: "YouTube Premium", category: "Streaming", monthly: 9.99, rating: 4.7, logo: "https://upload.wikimedia.org/wikipedia/commons/7/79/YouTube_social_red_square.png", description: "Ad-free videos, background play, and YouTube Music included." },
+            { id: 7, name: "Crunchyroll", category: "Streaming", monthly: 7.99, rating: 4.6, logo: "https://upload.wikimedia.org/wikipedia/en/8/83/Crunchyroll_logo.svg", description: "Watch the largest collection of anime." },
+            { id: 8, name: "HBO Max", category: "Streaming", monthly: 9.99, rating: 4.5, logo: "https://upload.wikimedia.org/wikipedia/commons/1/17/HBO_Max_Logo.svg", description: "Stream HBO, Max Originals, hit movies, and more." },
+            { id: 9, name: "Paramount+", category: "Streaming", monthly: 5.99, rating: 4.3, logo: "https://upload.wikimedia.org/wikipedia/commons/4/4f/Paramount%2B_2021.svg", description: "Stream live sports, breaking news, and a mountain of entertainment." },
+            { id: 10, name: "Peacock", category: "Streaming", monthly: 5.99, rating: 4.2, logo: "https://upload.wikimedia.org/wikipedia/en/4/48/Peacock_Streaming_Service_Logo.svg", description: "Stream current hits, classic movies, Peacock Originals, and more." },
+            { id: 11, name: "Hulu", category: "Streaming", monthly: 7.99, rating: 4.4, logo: "https://upload.wikimedia.org/wikipedia/commons/e/e8/Hulu_logo_%282017%29.svg", description: "Watch TV shows and movies streaming online." },
+            { id: 12, name: "Canva Pro", category: "Productivity", monthly: 9.99, rating: 4.8, logo: "https://upload.wikimedia.org/wikipedia/commons/0/08/Canva_icon_2021.svg", description: "Design anything. Publish anywhere." },
+            { id: 13, name: "ChatGPT Plus", category: "AI", monthly: 9.99, rating: 4.9, logo: "https://upload.wikimedia.org/wikipedia/commons/0/04/ChatGPT_logo.svg", description: "Get faster responses, priority access to new features." },
+            { id: 14, name: "Claude Pro", category: "AI", monthly: 9.99, rating: 4.8, logo: "https://upload.wikimedia.org/wikipedia/commons/c/c5/Claude_logo.svg", description: "Advanced AI assistant with extended usage limits." },
+            { id: 15, name: "Perplexity Pro", category: "AI", monthly: 9.99, rating: 4.7, logo: "https://upload.wikimedia.org/wikipedia/commons/8/8e/Perplexity_Logo.svg", description: "AI-powered search and answers." },
+            { id: 16, name: "Midjourney", category: "AI", monthly: 9.99, rating: 4.9, logo: "https://upload.wikimedia.org/wikipedia/commons/e/ed/Midjourney_Emblem.png", description: "Create stunning AI-generated art." },
+            { id: 17, name: "Adobe Creative Cloud", category: "Productivity", monthly: 9.99, rating: 4.7, logo: "https://upload.wikimedia.org/wikipedia/commons/8/8d/Adobe_Creative_Cloud_icon.svg", description: "Access Photoshop, Illustrator, and more." },
+            { id: 18, name: "CapCut Pro", category: "Productivity", monthly: 7.99, rating: 4.6, logo: "https://upload.wikimedia.org/wikipedia/commons/d/d0/CapCut_Logo.png", description: "Professional video editing made easy." },
+            { id: 19, name: "Figma Pro", category: "Productivity", monthly: 9.99, rating: 4.8, logo: "https://upload.wikimedia.org/wikipedia/commons/3/33/Figma-logo.svg", description: "Collaborative interface design tool." },
+            { id: 20, name: "Notion AI", category: "Productivity", monthly: 8.99, rating: 4.7, logo: "https://upload.wikimedia.org/wikipedia/commons/e/e9/Notion-logo.svg", description: "AI-powered workspace for your notes and tasks." },
+            { id: 21, name: "Microsoft 365", category: "Productivity", monthly: 9.99, rating: 4.6, logo: "https://upload.wikimedia.org/wikipedia/commons/5/5f/Microsoft_Office_logo_%282019%E2%80%93present%29.svg", description: "Word, Excel, PowerPoint, and more." },
+            { id: 22, name: "Google One", category: "Cloud", monthly: 5.99, rating: 4.5, logo: "https://upload.wikimedia.org/wikipedia/commons/5/53/Google_One_logo.svg", description: "More storage across Google Drive, Gmail, and Photos." },
+            { id: 23, name: "Dropbox Plus", category: "Cloud", monthly: 9.99, rating: 4.4, logo: "https://upload.wikimedia.org/wikipedia/commons/7/74/Dropbox_logo.svg", description: "Secure cloud storage and file sharing." },
+            { id: 24, name: "MEGA", category: "Storage", monthly: 5.99, rating: 4.3, logo: "https://upload.wikimedia.org/wikipedia/commons/8/8e/MEGA_logo.svg", description: "Privacy-focused cloud storage." },
+            { id: 25, name: "NordVPN", category: "VPN", monthly: 9.99, rating: 4.7, logo: "https://upload.wikimedia.org/wikipedia/commons/8/8e/NordVPN_logo.svg", description: "Secure and private internet browsing." },
+            { id: 26, name: "ExpressVPN", category: "VPN", monthly: 9.99, rating: 4.6, logo: "https://upload.wikimedia.org/wikipedia/commons/4/4e/ExpressVPN_logo.svg", description: "Fast, secure, and easy-to-use VPN." },
+            { id: 27, name: "Surfshark", category: "VPN", monthly: 5.99, rating: 4.5, logo: "https://upload.wikimedia.org/wikipedia/commons/c/c5/Surfshark_logo.svg", description: "Unlimited devices, one subscription." },
+            { id: 28, name: "Discord Nitro", category: "Communication", monthly: 9.99, rating: 4.8, logo: "https://upload.wikimedia.org/wikipedia/commons/5/5e/Discord_logo.svg", description: "Enhanced Discord with custom emojis and more." },
+            { id: 29, name: "Telegram Premium", category: "Communication", monthly: 5.99, rating: 4.6, logo: "https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg", description: "Faster downloads, voice-to-text, and more." },
+            { id: 30, name: "LinkedIn Premium", category: "Communication", monthly: 9.99, rating: 4.4, logo: "https://upload.wikimedia.org/wikipedia/commons/c/ca/LinkedIn_logo_initials.png", description: "Stand out and get noticed by recruiters." },
+            { id: 31, name: "Coursera Plus", category: "Education", monthly: 9.99, rating: 4.7, logo: "https://upload.wikimedia.org/wikipedia/commons/6/6b/Coursera-Logo_600x600.svg", description: "Unlimited access to 7,000+ courses." },
+            { id: 32, name: "Skillshare", category: "Education", monthly: 9.99, rating: 4.5, logo: "https://upload.wikimedia.org/wikipedia/commons/8/8e/Skillshare_logo.svg", description: "Online classes for creative and curious people." },
+            { id: 33, name: "Duolingo Super", category: "Education", monthly: 6.99, rating: 4.8, logo: "https://upload.wikimedia.org/wikipedia/commons/6/67/Duologo.svg", description: "Ad-free language learning with unlimited hearts." },
+            { id: 34, name: "Audible", category: "Reading", monthly: 9.99, rating: 4.7, logo: "https://upload.wikimedia.org/wikipedia/commons/9/9e/Audible_logo.svg", description: "Audiobooks, podcasts, and originals." },
+            { id: 35, name: "Kindle Unlimited", category: "Reading", monthly: 9.99, rating: 4.6, logo: "https://upload.wikimedia.org/wikipedia/commons/1/1a/Kindle_Unlimited_logo.svg", description: "Unlimited access to over 4 million titles." },
+            { id: 36, name: "Xbox Game Pass", category: "Gaming", monthly: 9.99, rating: 4.8, logo: "https://upload.wikimedia.org/wikipedia/commons/f/f5/Xbox_Game_Pass_2020.svg", description: "Hundreds of high-quality games." },
+            { id: 37, name: "PlayStation Plus", category: "Gaming", monthly: 9.99, rating: 4.7, logo: "https://upload.wikimedia.org/wikipedia/commons/0/00/PlayStation_Plus_logo.svg", description: "Online multiplayer and monthly games." },
+            { id: 38, name: "EA Play", category: "Gaming", monthly: 5.99, rating: 4.5, logo: "https://upload.wikimedia.org/wikipedia/commons/6/6e/EA_Play_logo.svg", description: "Access to EA's best games and rewards." },
+            { id: 39, name: "Ubisoft+", category: "Gaming", monthly: 9.99, rating: 4.4, logo: "https://upload.wikimedia.org/wikipedia/commons/4/4e/Ubisoft%2B_logo.svg", description: "Play over 100 Ubisoft games." },
+            { id: 40, name: "Tidal HiFi", category: "Music", monthly: 9.99, rating: 4.6, logo: "https://upload.wikimedia.org/wikipedia/commons/9/90/Tidal_logo.svg", description: "High-fidelity music streaming." },
+            { id: 41, name: "Deezer Premium", category: "Music", monthly: 9.99, rating: 4.5, logo: "https://upload.wikimedia.org/wikipedia/commons/2/24/Deezer_logo.svg", description: "Music streaming with Flow feature." },
+            { id: 42, name: "Fitbit Premium", category: "Fitness", monthly: 9.99, rating: 4.4, logo: "https://upload.wikimedia.org/wikipedia/commons/8/8e/Fitbit_logo.svg", description: "Personalized insights and guided programs." },
+            { id: 43, name: "Strava Summit", category: "Fitness", monthly: 7.99, rating: 4.6, logo: "https://upload.wikimedia.org/wikipedia/commons/2/24/Strava_logo.svg", description: "Training plans and performance analysis." },
+            { id: 44, name: "Calm", category: "Fitness", monthly: 9.99, rating: 4.8, logo: "https://upload.wikimedia.org/wikipedia/commons/8/8e/Calm_logo.svg", description: "Meditation and sleep stories." },
+            { id: 45, name: "Headspace", category: "Fitness", monthly: 9.99, rating: 4.7, logo: "https://upload.wikimedia.org/wikipedia/commons/6/6b/Headspace_logo.svg", description: "Guided meditation and mindfulness." },
+            { id: 46, name: "Grammarly Premium", category: "Productivity", monthly: 9.99, rating: 4.8, logo: "https://upload.wikimedia.org/wikipedia/commons/8/8e/Grammarly_logo.svg", description: "Advanced grammar and writing suggestions." },
+            { id: 47, name: "LastPass Premium", category: "Cloud", monthly: 5.99, rating: 4.5, logo: "https://upload.wikimedia.org/wikipedia/commons/8/8e/LastPass_logo.svg", description: "Password manager with advanced features." },
+            { id: 48, name: "1Password", category: "Cloud", monthly: 7.99, rating: 4.7, logo: "https://upload.wikimedia.org/wikipedia/commons/8/8e/1Password_logo.svg", description: "Password manager for families and teams." },
+            { id: 49, name: "Blinkist", category: "Reading", monthly: 9.99, rating: 4.6, logo: "https://upload.wikimedia.org/wikipedia/commons/8/8e/Blinkist_logo.svg", description: "Key insights from nonfiction books in 15 minutes." },
+            { id: 50, name: "MasterClass", category: "Education", monthly: 9.99, rating: 4.8, logo: "https://upload.wikimedia.org/wikipedia/commons/8/8e/MasterClass_logo.svg", description: "Learn from the world's best." }
         ];
 
-        // Fill in more products to reach 200
-        const categories = ['suits', 'blazers', 'outerwear', 'shirts', 'formal', 'accessories'];
-        const colors = ['Navy', 'Charcoal', 'Black', 'Grey', 'Blue', 'Burgundy', 'Camel', 'Olive', 'Brown'];
-        const styles = ['Classic', 'Modern', 'Heritage', 'Elite', 'Premium', 'Slim', 'Tailored'];
+        const categories = [
+            { name: "Streaming", icon: "tv", color: "from-red-500 to-pink-500" },
+            { name: "Music", icon: "music", color: "from-green-500 to-emerald-500" },
+            { name: "Gaming", icon: "gamepad-2", color: "from-purple-500 to-indigo-500" },
+            { name: "AI", icon: "cpu", color: "from-blue-500 to-cyan-500" },
+            { name: "VPN", icon: "shield", color: "from-orange-500 to-red-500" },
+            { name: "Cloud", icon: "cloud", color: "from-sky-500 to-blue-500" },
+            { name: "Productivity", icon: "briefcase", color: "from-violet-500 to-purple-500" },
+            { name: "Education", icon: "graduation-cap", color: "from-yellow-500 to-orange-500" },
+            { name: "Storage", icon: "hard-drive", color: "from-teal-500 to-green-500" },
+            { name: "Communication", icon: "message-square", color: "from-pink-500 to-rose-500" },
+            { name: "Reading", icon: "book-open", color: "from-amber-500 to-yellow-500" },
+            { name: "Fitness", icon: "heart", color: "from-red-500 to-rose-500" }
+        ];
 
-        // Generate remaining products
-        for (let i = 151; i <= 200; i++) {
-            const category = categories[Math.floor(Math.random() * categories.length)];
-            const color = colors[Math.floor(Math.random() * colors.length)];
-            const style = styles[Math.floor(Math.random() * styles.length)];
-            const basePrice = category === 'suits' ? 450 : category === 'blazers' ? 280 : category === 'outerwear' ? 400 : category === 'formal' ? 550 : category === 'accessories' ? 100 : 120;
-            
-            products.push({
-                id: i,
-                name: `${color} ${style} ${category.charAt(0).toUpperCase() + category.slice(1)}`,
-                category: category,
-                price: basePrice + Math.floor(Math.random() * 100),
-                description: `Premium ${color.toLowerCase()} ${category} with ${style.toLowerCase()} fit. Crafted from the finest materials.`,
-                images: [
-                    `https://images.unsplash.com/photo-${category === 'suits' ? '1593032465175' : category === 'blazers' ? '1591047139829' : category === 'outerwear' ? '1544022613' : category === 'shirts' ? '1596755094514' : category === 'formal' ? '1559582798' : '1611312449408'}-${Math.floor(Math.random() * 99999)}?w=600&h=800&fit=crop`
-                ]
-            });
+        const reviews = [
+            { name: "Sarah Johnson", avatar: "https://i.pravatar.cc/150?img=1", rating: 5, text: "Best subscription service I've ever used. Amazing deals and great selection!" },
+            { name: "Michael Chen", avatar: "https://i.pravatar.cc/150?img=3", rating: 5, text: "Saved so much money on my subscriptions. Highly recommend!" },
+            { name: "Emma Williams", avatar: "https://i.pravatar.cc/150?img=5", rating: 5, text: "The interface is beautiful and easy to use. Love it!" },
+            { name: "James Brown", avatar: "https://i.pravatar.cc/150?img=8", rating: 5, text: "Customer support is excellent. Very responsive and helpful." }
+        ];
+
+        const faqs = [
+            { q: "How does SubVault work?", a: "SubVault aggregates the best digital subscriptions at discounted prices. Simply browse, select your plan, and get instant access." },
+            { q: "Can I cancel anytime?", a: "Yes! You can cancel your subscription at any time with no questions asked." },
+            { q: "Are these official subscriptions?", a: "Yes, all subscriptions are 100% legitimate and sourced directly from the providers." },
+            { q: "What payment methods do you accept?", a: "We accept all major credit cards, PayPal, and cryptocurrency." },
+            { q: "Is my data secure?", a: "Absolutely. We use industry-standard encryption to protect your information." }
+        ];
+
+        // State
+        const state = {
+            cart: [],
+            wishlist: [],
+            darkMode: false,
+            currentPage: 'home',
+            searchQuery: '',
+            selectedCategory: 'All',
+            sortBy: 'popularity'
+        };
+
+        // Router
+        const router = {
+            navigate(page) {
+                state.currentPage = page;
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                renderPage(page);
+                lucide.createIcons();
+            }
+        };
+
+        // Utility Functions
+        function formatPrice(price) {
+            return `£${price.toFixed(2)}`;
         }
 
-        // State Management
-        let cart = [];
-        let wishlist = [];
-        let currentProduct = null;
-        let currentCategory = 'all';
+        function calculateYearlyPrice(monthly) {
+            return (monthly * 12 * 0.8).toFixed(2);
+        }
 
-        // Initialize
-        window.addEventListener('load', () => {
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = `toast flex items-center gap-3 px-6 py-4 rounded-xl shadow-lg glass dark:glass-dark ${type === 'success' ? 'border-l-4 border-green-500' : 'border-l-4 border-red-500'}`;
+            toast.innerHTML = `
+                <i data-lucide="${type === 'success' ? 'check-circle' : 'alert-circle'}" class="w-5 h-5 ${type === 'success' ? 'text-green-500' : 'text-red-500'}"></i>
+                <span class="font-medium">${message}</span>
+            `;
+            container.appendChild(toast);
+            lucide.createIcons();
+            
             setTimeout(() => {
-                document.getElementById('loader').classList.add('hidden');
-            }, 1000);
-            renderProducts();
-            updateCartCount();
-            updateWishlistCount();
-        });
-
-        // Navbar scroll
-        window.addEventListener('scroll', () => {
-            const navbar = document.querySelector('.navbar');
-            if (window.scrollY > 50) {
-                navbar.classList.add('scrolled');
-            } else {
-                navbar.classList.remove('scrolled');
-            }
-        });
-
-        // Page Navigation
-        function showPage(page) {
-            document.querySelectorAll('.page-section').forEach(section => {
-                section.classList.remove('active');
-            });
-            
-            if (page === 'home') {
-                document.getElementById('homePage').classList.add('active');
-            } else if (page === 'shop') {
-                document.getElementById('shopPage').classList.add('active');
-            } else if (page === 'cart') {
-                document.getElementById('cartPage').classList.add('active');
-                renderCart();
-            } else if (page === 'wishlist') {
-                document.getElementById('wishlistPage').classList.add('active');
-                renderWishlist();
-            }
-            
-            window.scrollTo(0, 0);
+                toast.classList.add('toast-out');
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
         }
 
-        // Render Products
-        function renderProducts(category = 'all') {
-            const grid = document.getElementById('productsGrid');
-            const filtered = category === 'all' ? products : products.filter(p => p.category === category);
+        function toggleDarkMode() {
+            state.darkMode = !state.darkMode;
+            document.documentElement.classList.toggle('dark');
+            localStorage.setItem('darkMode', state.darkMode);
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        function toggleCart() {
+            const sidebar = document.getElementById('cart-sidebar');
+            const panel = document.getElementById('cart-panel');
             
-            grid.innerHTML = filtered.map(product => `
-                <div class="product-card slide-up rounded-xl overflow-hidden">
-                    <div class="img-hover aspect-[3/4] relative">
-                        <img src="${product.images[0]}" alt="${product.name}" class="w-full h-full object-cover">
-                        ${product.badge ? `<span class="absolute top-4 left-4 badge-${product.badge === 'bestseller' ? 'best' : product.badge} text-white text-xs font-bold px-3 py-1 rounded-full uppercase">${product.badge}</span>` : ''}
-                        <button onclick="toggleWishlist(${product.id})" class="wishlist-btn absolute top-4 right-4 w-10 h-10 bg-white/20 backdrop-blur rounded-full flex items-center justify-center ${wishlist.includes(product.id) ? 'active' : ''}">
-                            <svg class="w-5 h-5 ${wishlist.includes(product.id) ? 'text-rose' : 'text-white'}" fill="${wishlist.includes(product.id) ? 'currentColor' : 'none'}" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
-                            </svg>
+            if (sidebar.classList.contains('hidden')) {
+                sidebar.classList.remove('hidden');
+                setTimeout(() => {
+                    panel.classList.remove('translate-x-full');
+                }, 10);
+                renderCart();
+            } else {
+                panel.classList.add('translate-x-full');
+                setTimeout(() => {
+                    sidebar.classList.add('hidden');
+                }, 300);
+            }
+        }
+
+        function toggleCommandPalette() {
+            const palette = document.getElementById('command-palette');
+            const input = document.getElementById('command-input');
+            
+            if (palette.classList.contains('hidden')) {
+                palette.classList.remove('hidden');
+                setTimeout(() => input.focus(), 100);
+                handleCommandSearch('');
+            } else {
+                palette.classList.add('hidden');
+            }
+        }
+
+        function handleCommandSearch(query) {
+            const results = document.getElementById('command-results');
+            const lowerQuery = query.toLowerCase();
+            
+            let html = '';
+            
+            if (!query) {
+                html = `
+                    <div class="p-4 text-sm text-slate-500">Recent Searches</div>
+                    <div class="p-2">
+                        <button onclick="router.navigate('browse')" class="w-full flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800">
+                            <i data-lucide="grid" class="w-5 h-5"></i>
+                            <span>Browse All Apps</span>
+                        </button>
+                        <button onclick="router.navigate('deals')" class="w-full flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800">
+                            <i data-lucide="tag" class="w-5 h-5"></i>
+                            <span>View Deals</span>
                         </button>
                     </div>
-                    <div class="p-5">
-                        <p class="text-royal-blue text-xs uppercase tracking-wider mb-1">${product.category}</p>
-                        <h3 class="font-serif text-lg text-white mb-2">${product.name}</h3>
-                        <div class="flex justify-between items-center">
-                            <span class="text-amber font-bold text-xl">£${product.price}</span>
-                            <button onclick="openModal(${product.id})" class="text-emerald text-sm font-semibold hover:text-cyan transition-colors">Quick View</button>
-                        </div>
-                    </div>
-                </div>
-            `).join('');
-
-            // Re-observe for animations
-            document.querySelectorAll('.slide-up').forEach(el => {
-                el.classList.remove('visible');
-                setTimeout(() => el.classList.add('visible'), 100);
-            });
-        }
-
-        // Filter by Category
-        function filterByCategory(category) {
-            currentCategory = category;
-            
-            // Update tabs
-            document.querySelectorAll('.category-tab').forEach(tab => {
-                tab.classList.remove('active');
-                if (tab.dataset.category === category) {
-                    tab.classList.add('active');
+                `;
+            } else {
+                const filteredApps = appsData.filter(app => 
+                    app.name.toLowerCase().includes(lowerQuery) || 
+                    app.category.toLowerCase().includes(lowerQuery)
+                );
+                
+                if (filteredApps.length > 0) {
+                    html += '<div class="p-2 text-xs text-slate-500 uppercase">Apps</div>';
+                    filteredApps.slice(0, 5).forEach(app => {
+                        html += `
+                            <button onclick="openAppModal(${app.id}); toggleCommandPalette()" class="w-full flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800">
+                                <img src="${app.logo}" alt="${app.name}" class="w-8 h-8 object-contain" onerror="this.src='https://via.placeholder.com/32'">
+                                <span>${app.name}</span>
+                                <span class="ml-auto text-sm text-slate-500">${app.category}</span>
+                            </button>
+                        `;
+                    });
                 }
-            });
+            }
             
-            renderProducts(category);
-            showPage('shop');
-        }
-
-        // Modal Functions
-        function openModal(productId) {
-            currentProduct = products.find(p => p.id === productId);
-            if (!currentProduct) return;
-
-            document.getElementById('modalCategory').textContent = currentProduct.category;
-            document.getElementById('modalTitle').textContent = currentProduct.name;
-            document.getElementById('modalPrice').textContent = `£${currentProduct.price}`;
-            document.getElementById('modalDescription').textContent = currentProduct.description;
-            document.getElementById('modalMainImage').src = currentProduct.images[0];
-
-            // Gallery thumbnails
-            const gallery = document.getElementById('modalGallery');
-            gallery.innerHTML = currentProduct.images.map((img, idx) => `
-                <img src="${img}" alt="View ${idx + 1}" class="gallery-thumb ${idx === 0 ? 'active' : ''}" onclick="changeImage(${idx})">
-            `).join('');
-
-            document.getElementById('productModal').classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeModal() {
-            document.getElementById('productModal').classList.remove('active');
-            document.body.style.overflow = 'auto';
-        }
-
-        function changeImage(index) {
-            document.getElementById('modalMainImage').src = currentProduct.images[index];
-            document.querySelectorAll('.gallery-thumb').forEach((thumb, idx) => {
-                thumb.classList.toggle('active', idx === index);
-            });
-        }
-
-        function selectSize(btn) {
-            document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
+            results.innerHTML = html;
+            lucide.createIcons();
         }
 
         // Cart Functions
-        function addToCartFromModal() {
-            if (!currentProduct) return;
+        function addToCart(app, billingCycle = 'monthly') {
+            const existingItem = state.cart.find(item => item.id === app.id && item.billingCycle === billingCycle);
             
-            const existingItem = cart.find(item => item.id === currentProduct.id);
             if (existingItem) {
-                existingItem.quantity++;
-            } else {
-                cart.push({ ...currentProduct, quantity: 1 });
+                showToast('Already in cart!', 'error');
+                return;
             }
+            
+            state.cart.push({
+                ...app,
+                billingCycle,
+                price: billingCycle === 'monthly' ? app.monthly : calculateYearlyPrice(app.monthly)
+            });
             
             updateCartCount();
-            closeModal();
-            
-            // Show notification
-            showNotification('Added to cart!', 'emerald');
+            showToast(`${app.name} added to cart!`);
         }
 
-        function addToWishlistFromModal() {
-            if (!currentProduct) return;
-            toggleWishlist(currentProduct.id);
-            closeModal();
-        }
-
-        function toggleWishlist(productId) {
-            const index = wishlist.indexOf(productId);
-            if (index > -1) {
-                wishlist.splice(index, 1);
-                showNotification('Removed from wishlist', 'rose');
-            } else {
-                wishlist.push(productId);
-                showNotification('Added to wishlist!', 'emerald');
-            }
-            updateWishlistCount();
-            renderProducts(currentCategory);
+        function removeFromCart(index) {
+            state.cart.splice(index, 1);
+            updateCartCount();
+            renderCart();
         }
 
         function updateCartCount() {
-            const count = cart.reduce((sum, item) => sum + item.quantity, 0);
-            document.getElementById('cartCount').textContent = count;
-        }
-
-        function updateWishlistCount() {
-            document.getElementById('wishlistCount').textContent = wishlist.length;
+            const count = state.cart.length;
+            const badge = document.getElementById('cart-count');
+            
+            if (count > 0) {
+                badge.textContent = count;
+                badge.classList.remove('hidden');
+            } else {
+                badge.classList.add('hidden');
+            }
         }
 
         function renderCart() {
-            const container = document.getElementById('cartContent');
+            const container = document.getElementById('cart-items');
             
-            if (cart.length === 0) {
+            if (state.cart.length === 0) {
                 container.innerHTML = `
-                    <div class="col-span-3 text-center py-20">
-                        <svg class="w-20 h-20 text-gray-600 mx-auto mb-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
-                        </svg>
-                        <h3 class="font-serif text-2xl text-white mb-4">Your cart is empty</h3>
-                        <button onclick="showPage('shop')" class="btn-royal px-8 py-3 text-white rounded-lg">Continue Shopping</button>
+                    <div class="text-center py-12">
+                        <i data-lucide="shopping-cart" class="w-16 h-16 mx-auto text-slate-300 dark:text-slate-600 mb-4"></i>
+                        <p class="text-slate-500">Your cart is empty</p>
+                        <button onclick="toggleCart(); router.navigate('browse')" class="mt-4 text-purple-600 hover:text-purple-700 font-medium">
+                            Start Shopping
+                        </button>
                     </div>
                 `;
-                return;
+            } else {
+                container.innerHTML = state.cart.map((item, index) => `
+                    <div class="flex gap-4 p-4 rounded-xl bg-slate-100 dark:bg-slate-800">
+                        <img src="${item.logo}" alt="${item.name}" class="w-16 h-16 object-contain rounded-lg bg-white p-2" onerror="this.src='https://via.placeholder.com/64'">
+                        <div class="flex-1">
+                            <h3 class="font-semibold">${item.name}</h3>
+                            <p class="text-sm text-slate-500">${item.billingCycle === 'monthly' ? 'Monthly' : 'Yearly'} Plan</p>
+                            <p class="text-purple-600 dark:text-purple-400 font-bold mt-1">${formatPrice(item.price)}</p>
+                        </div>
+                        <button onclick="removeFromCart(${index})" class="p-2 hover:bg-slate-200 dark:hover:bg-slate-700 rounded-lg">
+                            <i data-lucide="trash-2" class="w-5 h-5 text-red-500"></i>
+                        </button>
+                    </div>
+                `).join('');
             }
+            
+            const subtotal = state.cart.reduce((sum, item) => sum + parseFloat(item.price), 0);
+            document.getElementById('cart-subtotal').textContent = formatPrice(subtotal);
+            document.getElementById('cart-total').textContent = formatPrice(subtotal);
+            
+            lucide.createIcons();
+        }
 
-            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-            const delivery = subtotal > 300 ? 0 : 15;
-            const total = subtotal + delivery;
+        // Wishlist Functions
+        function toggleWishlist(app) {
+            const index = state.wishlist.findIndex(item => item.id === app.id);
+            
+            if (index > -1) {
+                state.wishlist.splice(index, 1);
+                showToast(`${app.name} removed from wishlist`);
+            } else {
+                state.wishlist.push(app);
+                showToast(`${app.name} added to wishlist!`);
+            }
+            
+            updateWishlistCount();
+        }
 
-            container.innerHTML = `
-                <div class="lg:col-span-2 space-y-4">
-                    ${cart.map(item => `
-                        <div class="cart-item p-6 rounded-lg flex gap-6">
-                            <img src="${item.images[0]}" alt="${item.name}" class="w-24 h-32 object-cover rounded">
-                            <div class="flex-1">
-                                <h3 class="font-serif text-xl text-white mb-2">${item.name}</h3>
-                                <p class="text-gray-400 text-sm mb-3">Size: 40</p>
-                                <div class="flex justify-between items-center">
-                                    <div class="flex items-center gap-3">
-                                        <button onclick="updateQuantity(${item.id}, -1)" class="w-8 h-8 rounded-full bg-gray-700 text-white hover:bg-gray-600">-</button>
-                                        <span class="text-white">${item.quantity}</span>
-                                        <button onclick="updateQuantity(${item.id}, 1)" class="w-8 h-8 rounded-full bg-gray-700 text-white hover:bg-gray-600">+</button>
-                                    </div>
-                                    <span class="text-amber font-bold text-lg">£${item.price * item.quantity}</span>
+        function updateWishlistCount() {
+            const count = state.wishlist.length;
+            const badge = document.getElementById('wishlist-count');
+            
+            if (count > 0) {
+                badge.textContent = count;
+                badge.classList.remove('hidden');
+            } else {
+                badge.classList.add('hidden');
+            }
+        }
+
+        // App Modal
+        function openAppModal(appId) {
+            const app = appsData.find(a => a.id === appId);
+            const yearlyPrice = calculateYearlyPrice(app.monthly);
+            const savings = (app.monthly * 12 - yearlyPrice).toFixed(2);
+            
+            const modal = document.createElement('div');
+            modal.id = 'app-modal';
+            modal.className = 'fixed inset-0 z-50 flex items-center justify-center p-4';
+            modal.innerHTML = `
+                <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" onclick="closeAppModal()"></div>
+                <div class="relative glass dark:glass-dark rounded-3xl max-w-4xl w-full max-h-[90vh] overflow-y-auto page-transition">
+                    <button onclick="closeAppModal()" class="absolute top-4 right-4 p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-700 z-10">
+                        <i data-lucide="x" class="w-6 h-6"></i>
+                    </button>
+                    
+                    <div class="grid md:grid-cols-2 gap-8 p-8">
+                        <div class="flex flex-col items-center text-center">
+                            <img src="${app.logo}" alt="${app.name}" class="w-32 h-32 object-contain mb-6 rounded-2xl bg-white p-4 shadow-lg" onerror="this.src='https://via.placeholder.com/128'">
+                            <h2 class="text-3xl font-display font-bold mb-2">${app.name}</h2>
+                            <div class="flex items-center gap-2 mb-4">
+                                <span class="px-3 py-1 rounded-full text-sm bg-purple-100 dark:bg-purple-900 text-purple-700 dark:text-purple-300">${app.category}</span>
+                                <div class="flex items-center gap-1">
+                                    <i data-lucide="star" class="w-4 h-4 text-yellow-500 fill-yellow-500"></i>
+                                    <span class="font-semibold">${app.rating}</span>
                                 </div>
                             </div>
-                            <button onclick="removeFromCart(${item.id})" class="text-rose hover:text-rose-400">
-                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
-                                </svg>
+                            <p class="text-slate-600 dark:text-slate-400 mb-6">${app.description}</p>
+                            
+                            <div class="flex gap-4 w-full">
+                                <button onclick="addToCart(appsData.find(a => a.id === ${app.id}), 'monthly'); closeAppModal()" class="flex-1 py-3 rounded-xl bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold hover:shadow-lg hover:shadow-purple-500/30 transition-all">
+                                    Monthly<br>
+                                    <span class="text-sm opacity-90">${formatPrice(app.monthly)}/mo</span>
+                                </button>
+                                <button onclick="addToCart(appsData.find(a => a.id === ${app.id}), 'yearly'); closeAppModal()" class="flex-1 py-3 rounded-xl border-2 border-purple-500 text-purple-600 dark:text-purple-400 font-semibold hover:bg-purple-50 dark:hover:bg-purple-900/20 transition-all">
+                                    Yearly<br>
+                                    <span class="text-sm opacity-90">${formatPrice(yearlyPrice)}/yr</span>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="space-y-6">
+                            <div class="p-6 rounded-2xl bg-gradient-to-br from-purple-500/10 to-pink-500/10 border border-purple-200 dark:border-purple-800">
+                                <h3 class="font-bold text-lg mb-4">Yearly Plan - Save 20%</h3>
+                                <div class="flex items-baseline gap-2 mb-2">
+                                    <span class="text-4xl font-bold text-purple-600 dark:text-purple-400">${formatPrice(yearlyPrice)}</span>
+                                    <span class="text-slate-500 line-through">${formatPrice(app.monthly * 12)}</span>
+                                </div>
+                                <p class="text-green-600 dark:text-green-400 font-semibold">Save ${formatPrice(savings)} per year</p>
+                            </div>
+                            
+                            <div>
+                                <h3 class="font-bold text-lg mb-4">Features</h3>
+                                <ul class="space-y-3">
+                                    <li class="flex items-center gap-3">
+                                        <i data-lucide="check" class="w-5 h-5 text-green-500"></i>
+                                        <span>Full access to all features</span>
+                                    </li>
+                                    <li class="flex items-center gap-3">
+                                        <i data-lucide="check" class="w-5 h-5 text-green-500"></i>
+                                        <span>24/7 customer support</span>
+                                    </li>
+                                    <li class="flex items-center gap-3">
+                                        <i data-lucide="check" class="w-5 h-5 text-green-500"></i>
+                                        <span>Cancel anytime</span>
+                                    </li>
+                                    <li class="flex items-center gap-3">
+                                        <i data-lucide="check" class="w-5 h-5 text-green-500"></i>
+                                        <span>Instant activation</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            
+                            <button onclick="toggleWishlist(appsData.find(a => a.id === ${app.id}))" class="w-full py-3 rounded-xl border-2 border-slate-200 dark:border-slate-700 hover:border-pink-500 hover:text-pink-500 transition-all flex items-center justify-center gap-2">
+                                <i data-lucide="heart" class="w-5 h-5"></i>
+                                Add to Wishlist
                             </button>
                         </div>
-                    `).join('')}
-                </div>
-                
-                <div class="bg-gradient-to-br from-slate-800 to-slate-900 p-8 rounded-xl h-fit">
-                    <h3 class="font-serif text-2xl text-white mb-6">Order Summary</h3>
-                    <div class="space-y-4 mb-6">
-                        <div class="flex justify-between text-gray-400">
-                            <span>Subtotal</span>
-                            <span>£${subtotal}</span>
-                        </div>
-                        <div class="flex justify-between text-gray-400">
-                            <span>Delivery</span>
-                            <span>${delivery === 0 ? '<span class="text-emerald">FREE</span>' : `£${delivery}`}</span>
-                        </div>
-                        ${delivery > 0 ? '<p class="text-xs text-amber">Add £' + (300 - subtotal) + ' for free delivery</p>' : ''}
-                        <div class="border-t border-gray-700 pt-4 flex justify-between text-xl font-bold text-white">
-                            <span>Total</span>
-                            <span class="text-emerald">£${total}</span>
-                        </div>
                     </div>
-                    <button class="btn-emerald w-full py-4 text-white font-semibold rounded-lg">
-                        CHECKOUT
-                    </button>
-                    <button onclick="showPage('shop')" class="w-full mt-4 py-3 text-gray-400 hover:text-white transition-colors">
-                        Continue Shopping
-                    </button>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+            lucide.createIcons();
+        }
+
+        function closeAppModal() {
+            const modal = document.getElementById('app-modal');
+            if (modal) {
+                modal.remove();
+            }
+        }
+
+        // Page Renderers
+        function renderPage(page) {
+            const app = document.getElementById('app');
+            
+            switch(page) {
+                case 'home':
+                    app.innerHTML = renderHome();
+                    initHomeAnimations();
+                    break;
+                case 'browse':
+                    app.innerHTML = renderBrowse();
+                    initBrowseFilters();
+                    break;
+                case 'categories':
+                    app.innerHTML = renderCategories();
+                    break;
+                case 'deals':
+                    app.innerHTML = renderDeals();
+                    break;
+                case 'bundles':
+                    app.innerHTML = renderBundles();
+                    break;
+                case 'wishlist':
+                    app.innerHTML = renderWishlist();
+                    break;
+                case 'cart':
+                    app.innerHTML = renderCartPage();
+                    break;
+                case 'checkout':
+                    app.innerHTML = renderCheckout();
+                    break;
+                case 'dashboard':
+                    app.innerHTML = renderDashboard();
+                    break;
+                case 'about':
+                    app.innerHTML = renderAbout();
+                    break;
+                case 'contact':
+                    app.innerHTML = renderContact();
+                    break;
+                case 'faq':
+                    app.innerHTML = renderFAQ();
+                    break;
+                case 'blog':
+                    app.innerHTML = renderBlog();
+                    break;
+                case 'privacy':
+                    app.innerHTML = renderPrivacy();
+                    break;
+                case 'terms':
+                    app.innerHTML = renderTerms();
+                    break;
+                case 'support':
+                    app.innerHTML = renderSupport();
+                    break;
+                default:
+                    app.innerHTML = render404();
+            }
+            
+            lucide.createIcons();
+        }
+
+        function renderHome() {
+            return `
+                <div class="page-transition">
+                    <!-- Hero Section -->
+                    <section class="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
+                        <div class="absolute inset-0 aurora-bg opacity-20"></div>
+                        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-slate-50/50 to-slate-50 dark:via-slate-900/50 dark:to-slate-900"></div>
+                        
+                        <!-- Floating Elements -->
+                        <div class="absolute top-20 left-10 w-72 h-72 bg-purple-500/30 rounded-full blur-3xl animate-float"></div>
+                        <div class="absolute bottom-20 right-10 w-96 h-96 bg-pink-500/30 rounded-full blur-3xl animate-float" style="animation-delay: 2s;"></div>
+                        <div class="absolute top-1/2 left-1/2 w-64 h-64 bg-blue-500/30 rounded-full blur-3xl animate-float" style="animation-delay: 4s;"></div>
+                        
+                        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass dark:glass-dark mb-8 reveal">
+                                <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+                                <span class="text-sm font-medium">50+ Premium Apps Available</span>
+                            </div>
+                            
+                            <h1 class="text-5xl md:text-7xl font-display font-bold mb-6 reveal" style="transition-delay: 100ms;">
+                                <span class="gradient-text-animated">Unlock Premium</span><br>
+                                <span class="text-slate-900 dark:text-white">Digital Subscriptions</span>
+                            </h1>
+                            
+                            <p class="text-xl text-slate-600 dark:text-slate-400 max-w-2xl mx-auto mb-10 reveal" style="transition-delay: 200ms;">
+                                Access the world's best apps and services at unbeatable prices. Save up to 20% on yearly plans.
+                            </p>
+                            
+                            <div class="flex flex-col sm:flex-row gap-4 justify-center mb-16 reveal" style="transition-delay: 300ms;">
+                                <button onclick="router.navigate('browse')" class="px-8 py-4 rounded-2xl bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold text-lg hover:shadow-2xl hover:shadow-purple-500/30 hover:scale-105 transition-all magnetic-btn">
+                                    Browse Apps
+                                    <i data-lucide="arrow-right" class="inline ml-2 w-5 h-5"></i>
+                                </button>
+                                <button onclick="router.navigate('deals')" class="px-8 py-4 rounded-2xl glass dark:glass-dark font-semibold text-lg hover:bg-slate-200 dark:hover:bg-slate-800 transition-all magnetic-btn">
+                                    View Deals
+                                </button>
+                            </div>
+                            
+                            <!-- Stats -->
+                            <div class="grid grid-cols-3 gap-8 max-w-2xl mx-auto reveal" style="transition-delay: 400ms;">
+                                <div class="text-center">
+                                    <div class="text-3xl md:text-4xl font-bold gradient-text-animated" id="stat-apps">50+</div>
+                                    <div class="text-sm text-slate-600 dark:text-slate-400">Premium Apps</div>
+                                </div>
+                                <div class="text-center">
+                                    <div class="text-3xl md:text-4xl font-bold gradient-text-animated" id="stat-users">10K+</div>
+                                    <div class="text-sm text-slate-600 dark:text-slate-400">Happy Users</div>
+                                </div>
+                                <div class="text-center">
+                                    <div class="text-3xl md:text-4xl font-bold gradient-text-animated" id="stat-savings">20%</div>
+                                    <div class="text-sm text-slate-600 dark:text-slate-400">Avg. Savings</div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    
+                    <!-- Featured Apps -->
+                    <section class="py-20">
+                        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                            <div class="text-center mb-12 reveal">
+                                <h2 class="text-4xl font-display font-bold mb-4">Featured Apps</h2>
+                                <p class="text-slate-600 dark:text-slate-400">Hand-picked premium subscriptions just for you</p>
+                            </div>
+                            
+                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                                ${appsData.slice(0, 8).map(app => renderAppCard(app)).join('')}
+                            </div>
+                            
+                            <div class="text-center mt-12">
+                                <button onclick="router.navigate('browse')" class="px-6 py-3 rounded-xl border-2 border-purple-500 text-purple-600 dark:text-purple-400 font-semibold hover:bg-purple-50 dark:hover:bg-purple-900/20 transition-all">
+                                    View All Apps
+                                </button>
+                            </div>
+                        </div>
+                    </section>
+                    
+                    <!-- Categories -->
+                    <section class="py-20 bg-slate-100/50 dark:bg-slate-800/50">
+                        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                            <div class="text-center mb-12 reveal">
+                                <h2 class="text-4xl font-display font-bold mb-4">Browse by Category</h2>
+                                <p class="text-slate-600 dark:text-slate-400">Find exactly what you need</p>
+                            </div>
+                            
+                            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                                ${categories.map(cat => `
+                                    <button onclick="router.navigate('browse'); state.selectedCategory = '${cat.name}'; renderPage('browse')" class="group p-6 rounded-2xl glass dark:glass-dark hover:scale-105 transition-all card-hover reveal">
+                                        <div class="w-14 h-14 rounded-xl bg-gradient-to-br ${cat.color} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                                            <i data-lucide="${cat.icon}" class="w-7 h-7 text-white"></i>
+                                        </div>
+                                        <h3 class="font-semibold text-lg">${cat.name}</h3>
+                                        <p class="text-sm text-slate-500 mt-1">${appsData.filter(a => a.category === cat.name).length} apps</p>
+                                    </button>
+                                `).join('')}
+                            </div>
+                        </div>
+                    </section>
+                    
+                    <!-- Deals Section -->
+                    <section class="py-20">
+                        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                            <div class="glass dark:glass-dark rounded-3xl p-8 md:p-12 reveal">
+                                <div class="grid md:grid-cols-2 gap-8 items-center">
+                                    <div>
+                                        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 text-white text-sm font-semibold mb-4">
+                                            <i data-lucide="zap" class="w-4 h-4"></i>
+                                            Limited Time Offer
+                                        </div>
+                                        <h2 class="text-4xl font-display font-bold mb-4">Save 20% on Yearly Plans</h2>
+                                        <p class="text-slate-600 dark:text-slate-400 mb-6">Subscribe annually and get instant savings on all your favorite apps. That's 2 months free!</p>
+                                        <ul class="space-y-3 mb-8">
+                                            <li class="flex items-center gap-3">
+                                                <i data-lucide="check-circle" class="w-5 h-5 text-green-500"></i>
+                                                <span>Save up to £120 per year</span>
+                                            </li>
+                                            <li class="flex items-center gap-3">
+                                                <i data-lucide="check-circle" class="w-5 h-5 text-green-500"></i>
+                                                <span>Priority customer support</span>
+                                            </li>
+                                            <li class="flex items-center gap-3">
+                                                <i data-lucide="check-circle" class="w-5 h-5 text-green-500"></i>
+                                                <span>Exclusive early access to new features</span>
+                                            </li>
+                                        </ul>
+                                        <button onclick="router.navigate('deals')" class="px-8 py-4 rounded-2xl bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold hover:shadow-lg hover:shadow-purple-500/30 transition-all">
+                                            Explore Deals
+                                        </button>
+                                    </div>
+                                    <div class="relative">
+                                        <div class="absolute inset-0 bg-gradient-to-r from-purple-500 to-pink-500 rounded-3xl blur-2xl opacity-30"></div>
+                                        <div class="relative glass dark:glass-dark rounded-2xl p-6">
+                                            <div class="flex items-center justify-between mb-4">
+                                                <span class="text-sm text-slate-500">Monthly</span>
+                                                <span class="text-2xl font-bold">£9.99</span>
+                                            </div>
+                                            <div class="h-px bg-slate-200 dark:bg-slate-700 my-4"></div>
+                                            <div class="flex items-center justify-between mb-4">
+                                                <span class="text-sm text-slate-500">Yearly</span>
+                                                <span class="text-2xl font-bold text-purple-600 dark:text-purple-400">£95.90</span>
+                                            </div>
+                                            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300 text-sm font-semibold">
+                                                <i data-lucide="trending-down" class="w-4 h-4"></i>
+                                                Save £23.98
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    
+                    <!-- Reviews -->
+                    <section class="py-20 bg-slate-100/50 dark:bg-slate-800/50">
+                        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                            <div class="text-center mb-12 reveal">
+                                <h2 class="text-4xl font-display font-bold mb-4">What Our Users Say</h2>
+                                <p class="text-slate-600 dark:text-slate-400">Trusted by thousands of happy customers</p>
+                            </div>
+                            
+                            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                                ${reviews.map(review => `
+                                    <div class="p-6 rounded-2xl glass dark:glass-dark card-hover reveal">
+                                        <div class="flex items-center gap-1 mb-4">
+                                            ${Array(5).fill(0).map((_, i) => `
+                                                <i data-lucide="star" class="w-4 h-4 ${i < review.rating ? 'text-yellow-500 fill-yellow-500' : 'text-slate-300'}"></i>
+                                            `).join('')}
+                                        </div>
+                                        <p class="text-slate-600 dark:text-slate-400 mb-4">"${review.text}"</p>
+                                        <div class="flex items-center gap-3">
+                                            <img src="${review.avatar}" alt="${review.name}" class="w-10 h-10 rounded-full">
+                                            <div>
+                                                <div class="font-semibold">${review.name}</div>
+                                                <div class="text-sm text-slate-500">Verified User</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    </section>
+                    
+                    <!-- FAQ -->
+                    <section class="py-20">
+                        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+                            <div class="text-center mb-12 reveal">
+                                <h2 class="text-4xl font-display font-bold mb-4">Frequently Asked Questions</h2>
+                                <p class="text-slate-600 dark:text-slate-400">Got questions? We've got answers.</p>
+                            </div>
+                            
+                            <div class="space-y-4">
+                                ${faqs.map((faq, index) => `
+                                    <div class="glass dark:glass-dark rounded-2xl overflow-hidden reveal">
+                                        <button onclick="toggleFAQ(${index})" class="w-full px-6 py-4 flex items-center justify-between text-left font-semibold">
+                                            ${faq.q}
+                                            <i data-lucide="chevron-down" class="w-5 h-5 transform transition-transform" id="faq-icon-${index}"></i>
+                                        </button>
+                                        <div id="faq-content-${index}" class="hidden px-6 pb-4 text-slate-600 dark:text-slate-400">
+                                            ${faq.a}
+                                        </div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    </section>
+                    
+                    <!-- Newsletter -->
+                    <section class="py-20 bg-gradient-to-r from-purple-500 to-pink-500">
+                        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                            <h2 class="text-4xl font-display font-bold text-white mb-4 reveal">Stay Updated</h2>
+                            <p class="text-white/90 mb-8 reveal">Get the latest deals and new app announcements delivered to your inbox.</p>
+                            <form onsubmit="handleNewsletter(event)" class="flex flex-col sm:flex-row gap-4 max-w-lg mx-auto reveal">
+                                <input type="email" placeholder="Enter your email" required class="flex-1 px-6 py-4 rounded-xl outline-none focus:ring-2 focus:ring-white/50">
+                                <button type="submit" class="px-8 py-4 rounded-xl bg-slate-900 text-white font-semibold hover:bg-slate-800 transition-all">
+                                    Subscribe
+                                </button>
+                            </form>
+                        </div>
+                    </section>
                 </div>
             `;
         }
 
-        function updateQuantity(productId, change) {
-            const item = cart.find(item => item.id === productId);
-            if (item) {
-                item.quantity += change;
-                if (item.quantity <= 0) {
-                    removeFromCart(productId);
-                } else {
-                    updateCartCount();
-                    renderCart();
-                }
-            }
+        function renderAppCard(app) {
+            const yearlyPrice = calculateYearlyPrice(app.monthly);
+            return `
+                <div class="group glass dark:glass-dark rounded-2xl p-6 card-hover reveal tilt-card">
+                    <div class="flex items-start justify-between mb-4">
+                        <img src="${app.logo}" alt="${app.name}" class="w-16 h-16 object-contain rounded-xl bg-white p-2 shadow-sm" onerror="this.src='https://via.placeholder.com/64'">
+                        <button onclick="toggleWishlist(appsData.find(a => a.id === ${app.id}))" class="p-2 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">
+                            <i data-lucide="heart" class="w-5 h-5 text-slate-400 hover:text-pink-500 transition-colors"></i>
+                        </button>
+                    </div>
+                    <h3 class="font-bold text-lg mb-1">${app.name}</h3>
+                    <p class="text-sm text-slate-500 mb-3">${app.category}</p>
+                    <div class="flex items-center gap-1 mb-4">
+                        <i data-lucide="star" class="w-4 h-4 text-yellow-500 fill-yellow-500"></i>
+                        <span class="font-semibold text-sm">${app.rating}</span>
+                    </div>
+                    <div class="flex items-baseline gap-2 mb-4">
+                        <span class="text-2xl font-bold text-purple-600 dark:text-purple-400">${formatPrice(app.monthly)}</span>
+                        <span class="text-sm text-slate-500">/mo</span>
+                    </div>
+                    <div class="flex gap-2">
+                        <button onclick="addToCart(appsData.find(a => a.id === ${app.id}), 'monthly')" class="flex-1 py-2 rounded-xl bg-gradient-to-r from-purple-500 to-pink-500 text-white text-sm font-semibold hover:shadow-lg hover:shadow-purple-500/30 transition-all">
+                            Add to Cart
+                        </button>
+                        <button onclick="openAppModal(${app.id})" class="p-2 rounded-xl border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all">
+                            <i data-lucide="eye" class="w-5 h-5"></i>
+                        </button>
+                    </div>
+                </div>
+            `;
         }
 
-        function removeFromCart(productId) {
-            cart = cart.filter(item => item.id !== productId);
-            updateCartCount();
-            renderCart();
-            showNotification('Removed from cart', 'rose');
-        }
-
-        function renderWishlist() {
-            const container = document.getElementById('wishlistContent');
-            const wishlistItems = products.filter(p => wishlist.includes(p.id));
-            
-            if (wishlistItems.length === 0) {
-                container.innerHTML = `
-                    <div class="col-span-4 text-center py-20">
-                        <svg class="w-20 h-20 text-gray-600 mx-auto mb-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
-                        </svg>
-                        <h3 class="font-serif text-2xl text-white mb-4">Your wishlist is empty</h3>
-                        <button onclick="showPage('shop')" class="btn-royal px-8 py-3 text-white rounded-lg">Start Browsing</button>
+        function renderBrowse() {
+            return `
+                <div class="page-transition min-h-screen">
+                    <div class="bg-gradient-to-b from-purple-500/10 to-transparent dark:from-purple-900/20 py-12">
+                        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                            <h1 class="text-4xl md:text-5xl font-display font-bold mb-4 reveal">Browse Apps</h1>
+                            <p class="text-slate-600 dark:text-slate-400 reveal">Discover ${appsData.length}+ premium subscriptions</p>
+                        </div>
                     </div>
-                `;
-                return;
-            }
-
-            container.innerHTML = wishlistItems.map(product => `
-                <div class="product-card rounded-xl overflow-hidden">
-                    <div class="img-hover aspect-[3/4]">
-                        <img src="${product.images[0]}" alt="${product.name}" class="w-full h-full object-cover">
-                    </div>
-                    <div class="p-5">
-                        <h3 class="font-serif text-lg text-white mb-2">${product.name}</h3>
-                        <p class="text-amber font-bold mb-4">£${product.price}</p>
-                        <div class="flex gap-2">
-                            <button onclick="addToCartDirect(${product.id})" class="flex-1 btn-emerald py-2 text-white text-sm rounded">Add to Cart</button>
-                            <button onclick="toggleWishlist(${product.id})" class="px-3 py-2 border border-rose text-rose hover:bg-rose hover:text-white rounded">
-                                <svg class="w-5 h-5" fill="currentColor" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
-                                </svg>
-                            </button>
+                    
+                    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+                        <div class="flex flex-col lg:flex-row gap-8">
+                            <!-- Filters Sidebar -->
+                            <div class="lg:w-64 space-y-6">
+                                <div class="glass dark:glass-dark rounded-2xl p-6">
+                                    <h3 class="font-bold mb-4">Categories</h3>
+                                    <div class="space-y-2" id="category-filters">
+                                        <button onclick="filterCategory('All')" class="w-full text-left px-3 py-2 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors ${state.selectedCategory === 'All' ? 'bg-purple-100 dark:bg-purple-900 text-purple-700 dark:text-purple-300' : ''}">
+                                            All Apps
+                                        </button>
+                                        ${categories.map(cat => `
+                                            <button onclick="filterCategory('${cat.name}')" class="w-full text-left px-3 py-2 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors ${state.selectedCategory === cat.name ? 'bg-purple-100 dark:bg-purple-900 text-purple-700 dark:text-purple-300' : ''}">
+                                                ${cat.name}
+                                            </button>
+                                        `).join('')}
+                                    </div>
+                                </div>
+                                
+                                <div class="glass dark:glass-dark rounded-2xl p-6">
+                                    <h3 class="font-bold mb-4">Sort By</h3>
+                                    <select onchange="sortApps(this.value)" class="w-full px-3 py-2 rounded-lg bg-slate-100 dark:bg-slate-800 outline-none focus:ring-2 focus:ring-purple-500">
+                                        <option value="popularity" ${state.sortBy === 'popularity' ? 'selected' : ''}>Popularity</option>
+                                        <option value="price-low" ${state.sortBy === 'price-low' ? 'selected' : ''}>Price: Low to High</option>
+                                        <option value="price-high" ${state.sortBy === 'price-high' ? 'selected' : ''}>Price: High to Low</option>
+                                        <option value="rating" ${state.sortBy === 'rating' ? 'selected' : ''}>Rating</option>
+                                        <option value="name" ${state.sortBy === 'name' ? 'selected' : ''}>Name (A-Z)</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <!-- Apps Grid -->
+                            <div class="flex-1">
+                                <div class="flex items-center justify-between mb-6">
+                                    <div class="relative flex-1 max-w-md">
+                                        <i data-lucide="search" class="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-slate-400"></i>
+                                        <input type="text" placeholder="Search apps..." oninput="handleSearch(this.value)" class="w-full pl-10 pr-4 py-3 rounded-xl bg-slate-100 dark:bg-slate-800 outline-none focus:ring-2 focus:ring-purple-500">
+                                    </div>
+                                    <div class="ml-4 text-sm text-slate-500">
+                                        <span id="app-count">${appsData.length}</span> apps found
+                                    </div>
+                                </div>
+                                
+                                <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6" id="apps-grid">
+                                    ${getFilteredApps().map(app => renderAppCard(app)).join('')}
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            `).join('');
+            `;
         }
 
-        function addToCartDirect(productId) {
-            const product = products.find(p => p.id === productId);
-            if (product) {
-                const existingItem = cart.find(item => item.id === product.id);
-                if (existingItem) {
-                    existingItem.quantity++;
-                } else {
-                    cart.push({ ...product, quantity: 1 });
-                }
-                updateCartCount();
-                showNotification('Added to cart!', 'emerald');
+        function renderCategories() {
+            return `
+                <div class="page-transition min-h-screen py-20">
+                    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <div class="text-center mb-12 reveal">
+                            <h1 class="text-4xl md:text-5xl font-display font-bold mb-4">Categories</h1>
+                            <p class="text-slate-600 dark:text-slate-400">Browse by category to find what you need</p>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            ${categories.map(cat => {
+                                const count = appsData.filter(a => a.category === cat.name).length;
+                                const apps = appsData.filter(a => a.category === cat.name).slice(0, 3);
+                                
+                                return `
+                                    <button onclick="router.navigate('browse'); state.selectedCategory = '${cat.name}'; renderPage('browse')" class="group glass dark:glass-dark rounded-3xl p-8 text-left card-hover reveal">
+                                        <div class="w-16 h-16 rounded-2xl bg-gradient-to-br ${cat.color} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                                            <i data-lucide="${cat.icon}" class="w-8 h-8 text-white"></i>
+                                        </div>
+                                        <h2 class="text-2xl font-bold mb-2">${cat.name}</h2>
+                                        <p class="text-slate-500 mb-4">${count} apps available</p>
+                                        <div class="flex -space-x-2">
+                                            ${apps.map(app => `
+                                                <img src="${app.logo}" alt="${app.name}" class="w-10 h-10 rounded-lg bg-white p-1 border-2 border-white dark:border-slate-800" onerror="this.src='https://via.placeholder.com/40'">
+                                            `).join('')}
+                                            ${count > 3 ? `<div class="w-10 h-10 rounded-lg bg-slate-200 dark:bg-slate-700 flex items-center justify-center text-xs font-semibold border-2 border-white dark:border-slate-800">+${count - 3}</div>` : ''}
+                                        </div>
+                                    </button>
+                                `;
+                            }).join('')}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderDeals() {
+            const deals = appsData.filter(app => app.monthly <= 7);
+            
+            return `
+                <div class="page-transition min-h-screen py-20">
+                    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <div class="text-center mb-12 reveal">
+                            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 text-white text-sm font-semibold mb-4">
+                                <i data-lucide="tag" class="w-4 h-4"></i>
+                                Hot Deals
+                            </div>
+                            <h1 class="text-4xl md:text-5xl font-display font-bold mb-4">Special Offers</h1>
+                            <p class="text-slate-600 dark:text-slate-400">Save big on these premium subscriptions</p>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            ${deals.map(app => {
+                                const yearlyPrice = calculateYearlyPrice(app.monthly);
+                                const savings = (app.monthly * 12 - yearlyPrice).toFixed(2);
+                                
+                                return `
+                                    <div class="glass dark:glass-dark rounded-2xl p-6 card-hover reveal relative overflow-hidden">
+                                        <div class="absolute top-0 right-0 bg-gradient-to-l from-red-500 to-pink-500 text-white text-xs font-bold px-4 py-2 rounded-bl-xl">
+                                            SAVE £${savings}/yr
+                                        </div>
+                                        <img src="${app.logo}" alt="${app.name}" class="w-20 h-20 object-contain rounded-xl bg-white p-3 shadow-sm mb-4" onerror="this.src='https://via.placeholder.com/80'">
+                                        <h3 class="font-bold text-xl mb-2">${app.name}</h3>
+                                        <p class="text-sm text-slate-500 mb-4">${app.category}</p>
+                                        <div class="flex items-baseline gap-2 mb-4">
+                                            <span class="text-3xl font-bold text-purple-600 dark:text-purple-400">${formatPrice(app.monthly)}</span>
+                                            <span class="text-sm text-slate-500">/mo</span>
+                                        </div>
+                                        <div class="p-4 rounded-xl bg-green-50 dark:bg-green-900/20 mb-4">
+                                            <div class="flex items-center justify-between mb-2">
+                                                <span class="text-sm">Yearly Plan</span>
+                                                <span class="font-bold text-green-600 dark:text-green-400">${formatPrice(yearlyPrice)}</span>
+                                            </div>
+                                            <div class="text-xs text-green-600 dark:text-green-400">Save £${savings} per year</div>
+                                        </div>
+                                        <button onclick="addToCart(appsData.find(a => a.id === ${app.id}), 'yearly')" class="w-full py-3 rounded-xl bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold hover:shadow-lg hover:shadow-purple-500/30 transition-all">
+                                            Get This Deal
+                                        </button>
+                                    </div>
+                                `;
+                            }).join('')}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderBundles() {
+            const bundles = [
+                { name: "Streaming Bundle", apps: [1, 3, 4, 5], discount: 25 },
+                { name: "Productivity Suite", apps: [12, 17, 19, 20], discount: 30 },
+                { name: "AI Power Pack", apps: [13, 14, 15, 16], discount: 20 },
+                { name: "Gaming Ultimate", apps: [36, 37, 38, 39], discount: 25 }
+            ];
+            
+            return `
+                <div class="page-transition min-h-screen py-20">
+                    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <div class="text-center mb-12 reveal">
+                            <h1 class="text-4xl md:text-5xl font-display font-bold mb-4">Bundle Deals</h1>
+                            <p class="text-slate-600 dark:text-slate-400">Save more when you bundle multiple subscriptions</p>
+                        </div>
+                        
+                        <div class="grid md:grid-cols-2 gap-8">
+                            ${bundles.map((bundle, index) => {
+                                const bundleApps = bundle.apps.map(id => appsData.find(a => a.id === id));
+                                const totalMonthly = bundleApps.reduce((sum, app) => sum + app.monthly, 0);
+                                const discountedPrice = (totalMonthly * (1 - bundle.discount / 100)).toFixed(2);
+                                
+                                return `
+                                    <div class="glass dark:glass-dark rounded-3xl p-8 card-hover reveal">
+                                        <div class="flex items-center justify-between mb-6">
+                                            <h2 class="text-2xl font-bold">${bundle.name}</h2>
+                                            <div class="px-4 py-2 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 text-white font-bold">
+                                                Save ${bundle.discount}%
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="space-y-4 mb-6">
+                                            ${bundleApps.map(app => `
+                                                <div class="flex items-center gap-4 p-3 rounded-xl bg-slate-100 dark:bg-slate-800">
+                                                    <img src="${app.logo}" alt="${app.name}" class="w-12 h-12 object-contain rounded-lg bg-white p-2" onerror="this.src='https://via.placeholder.com/48'">
+                                                    <div class="flex-1">
+                                                        <div class="font-semibold">${app.name}</div>
+                                                        <div class="text-sm text-slate-500">${formatPrice(app.monthly)}/mo</div>
+                                                    </div>
+                                                </div>
+                                            `).join('')}
+                                        </div>
+                                        
+                                        <div class="flex items-center justify-between p-4 rounded-xl bg-gradient-to-r from-purple-500/10 to-pink-500/10 border border-purple-200 dark:border-purple-800 mb-6">
+                                            <div>
+                                                <div class="text-sm text-slate-500 line-through">${formatPrice(totalMonthly)}/mo</div>
+                                                <div class="text-3xl font-bold text-purple-600 dark:text-purple-400">${formatPrice(discountedPrice)}/mo</div>
+                                            </div>
+                                            <div class="text-right">
+                                                <div class="text-sm text-slate-500">You save</div>
+                                                <div class="text-xl font-bold text-green-600 dark:text-green-400">${formatPrice(totalMonthly - discountedPrice)}</div>
+                                            </div>
+                                        </div>
+                                        
+                                        <button onclick="showToast('Bundle checkout coming soon!')" class="w-full py-4 rounded-xl bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold hover:shadow-lg hover:shadow-purple-500/30 transition-all">
+                                            Get Bundle
+                                        </button>
+                                    </div>
+                                `;
+                            }).join('')}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderWishlist() {
+            return `
+                <div class="page-transition min-h-screen py-20">
+                    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <h1 class="text-4xl font-display font-bold mb-8 reveal">My Wishlist</h1>
+                        
+                        ${state.wishlist.length === 0 ? `
+                            <div class="text-center py-20 glass dark:glass-dark rounded-3xl reveal">
+                                <i data-lucide="heart" class="w-20 h-20 mx-auto text-slate-300 dark:text-slate-600 mb-4"></i>
+                                <h2 class="text-2xl font-bold mb-2">Your wishlist is empty</h2>
+                                <p class="text-slate-500 mb-6">Start adding apps you're interested in</p>
+                                <button onclick="router.navigate('browse')" class="px-6 py-3 rounded-xl bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold hover:shadow-lg transition-all">
+                                    Browse Apps
+                                </button>
+                            </div>
+                        ` : `
+                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                                ${state.wishlist.map(app => renderAppCard(app)).join('')}
+                            </div>
+                        `}
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderCartPage() {
+            return `
+                <div class="page-transition min-h-screen py-20">
+                    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <h1 class="text-4xl font-display font-bold mb-8 reveal">Shopping Cart</h1>
+                        
+                        ${state.cart.length === 0 ? `
+                            <div class="text-center py-20 glass dark:glass-dark rounded-3xl reveal">
+                                <i data-lucide="shopping-cart" class="w-20 h-20 mx-auto text-slate-300 dark:text-slate-600 mb-4"></i>
+                                <h2 class="text-2xl font-bold mb-2">Your cart is empty</h2>
+                                <p class="text-slate-500 mb-6">Add some apps to get started</p>
+                                <button onclick="router.navigate('browse')" class="px-6 py-3 rounded-xl bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold hover:shadow-lg transition-all">
+                                    Start Shopping
+                                </button>
+                            </div>
+                        ` : `
+                            <div class="glass dark:glass-dark rounded-3xl p-8 reveal">
+                                <div class="space-y-4 mb-8">
+                                    ${state.cart.map((item, index) => `
+                                        <div class="flex items-center gap-4 p-4 rounded-xl bg-slate-100 dark:bg-slate-800">
+                                            <img src="${item.logo}" alt="${item.name}" class="w-16 h-16 object-contain rounded-lg bg-white p-2" onerror="this.src='https://via.placeholder.com/64'">
+                                            <div class="flex-1">
+                                                <h3 class="font-bold">${item.name}</h3>
+                                                <p class="text-sm text-slate-500">${item.billingCycle === 'monthly' ? 'Monthly' : 'Yearly'} Plan</p>
+                                            </div>
+                                            <div class="text-right">
+                                                <div class="font-bold text-lg">${formatPrice(item.price)}</div>
+                                                <button onclick="removeFromCart(${index})" class="text-sm text-red-500 hover:text-red-600">Remove</button>
+                                            </div>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                                
+                                <div class="border-t border-slate-200 dark:border-slate-700 pt-6">
+                                    <div class="flex justify-between mb-4">
+                                        <span>Subtotal</span>
+                                        <span class="font-semibold">${formatPrice(state.cart.reduce((sum, item) => sum + parseFloat(item.price), 0))}</span>
+                                    </div>
+                                    <button onclick="router.navigate('checkout')" class="w-full py-4 rounded-xl bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold hover:shadow-lg hover:shadow-purple-500/30 transition-all">
+                                        Proceed to Checkout
+                                    </button>
+                                </div>
+                            </div>
+                        `}
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderCheckout() {
+            return `
+                <div class="page-transition min-h-screen py-20">
+                    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <h1 class="text-4xl font-display font-bold mb-8 reveal">Checkout</h1>
+                        
+                        <div class="grid md:grid-cols-2 gap-8">
+                            <div class="glass dark:glass-dark rounded-3xl p-8 reveal">
+                                <h2 class="text-xl font-bold mb-6">Billing Details</h2>
+                                <form onsubmit="handleCheckout(event)" class="space-y-4">
+                                    <div>
+                                        <label class="block text-sm font-medium mb-2">Email</label>
+                                        <input type="email" required class="w-full px-4 py-3 rounded-xl bg-slate-100 dark:bg-slate-800 outline-none focus:ring-2 focus:ring-purple-500">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium mb-2">Card Number</label>
+                                        <input type="text" placeholder="1234 5678 9012 3456" required class="w-full px-4 py-3 rounded-xl bg-slate-100 dark:bg-slate-800 outline-none focus:ring-2 focus:ring-purple-500">
+                                    </div>
+                                    <div class="grid grid-cols-2 gap-4">
+                                        <div>
+                                            <label class="block text-sm font-medium mb-2">Expiry</label>
+                                            <input type="text" placeholder="MM/YY" required class="w-full px-4 py-3 rounded-xl bg-slate-100 dark:bg-slate-800 outline-none focus:ring-2 focus:ring-purple-500">
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-medium mb-2">CVC</label>
+                                            <input type="text" placeholder="123" required class="w-full px-4 py-3 rounded-xl bg-slate-100 dark:bg-slate-800 outline-none focus:ring-2 focus:ring-purple-500">
+                                        </div>
+                                    </div>
+                                    <button type="submit" class="w-full py-4 rounded-xl bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold hover:shadow-lg hover:shadow-purple-500/30 transition-all mt-6">
+                                        Complete Purchase
+                                    </button>
+                                </form>
+                            </div>
+                            
+                            <div class="glass dark:glass-dark rounded-3xl p-8 reveal">
+                                <h2 class="text-xl font-bold mb-6">Order Summary</h2>
+                                <div class="space-y-4 mb-6">
+                                    ${state.cart.map(item => `
+                                        <div class="flex justify-between">
+                                            <span>${item.name} (${item.billingCycle})</span>
+                                            <span class="font-semibold">${formatPrice(item.price)}</span>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                                <div class="border-t border-slate-200 dark:border-slate-700 pt-4 space-y-2">
+                                    <div class="flex justify-between">
+                                        <span>Subtotal</span>
+                                        <span>${formatPrice(state.cart.reduce((sum, item) => sum + parseFloat(item.price), 0))}</span>
+                                    </div>
+                                    <div class="flex justify-between text-green-600 dark:text-green-400">
+                                        <span>Discount</span>
+                                        <span>-£0.00</span>
+                                    </div>
+                                    <div class="flex justify-between text-lg font-bold">
+                                        <span>Total</span>
+                                        <span class="text-purple-600 dark:text-purple-400">${formatPrice(state.cart.reduce((sum, item) => sum + parseFloat(item.price), 0))}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderDashboard() {
+            return `
+                <div class="page-transition min-h-screen py-20">
+                    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <h1 class="text-4xl font-display font-bold mb-8 reveal">Dashboard</h1>
+                        
+                        <div class="grid md:grid-cols-3 gap-6 mb-8">
+                            <div class="glass dark:glass-dark rounded-2xl p-6 reveal">
+                                <div class="flex items-center gap-4">
+                                    <div class="w-12 h-12 rounded-xl bg-purple-100 dark:bg-purple-900 flex items-center justify-center">
+                                        <i data-lucide="credit-card" class="w-6 h-6 text-purple-600 dark:text-purple-400"></i>
+                                    </div>
+                                    <div>
+                                        <div class="text-2xl font-bold">${state.cart.length}</div>
+                                        <div class="text-sm text-slate-500">Active Subscriptions</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="glass dark:glass-dark rounded-2xl p-6 reveal">
+                                <div class="flex items-center gap-4">
+                                    <div class="w-12 h-12 rounded-xl bg-green-100 dark:bg-green-900 flex items-center justify-center">
+                                        <i data-lucide="trending-down" class="w-6 h-6 text-green-600 dark:text-green-400"></i>
+                                    </div>
+                                    <div>
+                                        <div class="text-2xl font-bold">£0.00</div>
+                                        <div class="text-sm text-slate-500">Total Savings</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="glass dark:glass-dark rounded-2xl p-6 reveal">
+                                <div class="flex items-center gap-4">
+                                    <div class="w-12 h-12 rounded-xl bg-pink-100 dark:bg-pink-900 flex items-center justify-center">
+                                        <i data-lucide="heart" class="w-6 h-6 text-pink-600 dark:text-pink-400"></i>
+                                    </div>
+                                    <div>
+                                        <div class="text-2xl font-bold">${state.wishlist.length}</div>
+                                        <div class="text-sm text-slate-500">Wishlist Items</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="glass dark:glass-dark rounded-3xl p-8 reveal">
+                            <h2 class="text-xl font-bold mb-6">Recent Activity</h2>
+                            <div class="text-center py-12 text-slate-500">
+                                <i data-lucide="activity" class="w-16 h-16 mx-auto mb-4 opacity-50"></i>
+                                <p>No recent activity</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderAbout() {
+            return `
+                <div class="page-transition min-h-screen py-20">
+                    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <div class="text-center mb-12 reveal">
+                            <h1 class="text-4xl md:text-5xl font-display font-bold mb-4">About SubVault</h1>
+                            <p class="text-xl text-slate-600 dark:text-slate-400">Your premium subscription marketplace</p>
+                        </div>
+                        
+                        <div class="glass dark:glass-dark rounded-3xl p-8 mb-8 reveal">
+                            <h2 class="text-2xl font-bold mb-4">Our Mission</h2>
+                            <p class="text-slate-600 dark:text-slate-400 mb-4">
+                                SubVault was created to make premium digital subscriptions accessible to everyone. We believe that quality software and services shouldn't break the bank.
+                            </p>
+                            <p class="text-slate-600 dark:text-slate-400">
+                                By aggregating the best deals and offering exclusive discounts, we help you save money while accessing the tools and entertainment you love.
+                            </p>
+                        </div>
+                        
+                        <div class="grid md:grid-cols-3 gap-6 reveal">
+                            <div class="glass dark:glass-dark rounded-2xl p-6 text-center">
+                                <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center mx-auto mb-4">
+                                    <i data-lucide="zap" class="w-8 h-8 text-white"></i>
+                                </div>
+                                <h3 class="font-bold text-lg mb-2">Instant Access</h3>
+                                <p class="text-sm text-slate-500">Get your subscriptions activated immediately after purchase</p>
+                            </div>
+                            <div class="glass dark:glass-dark rounded-2xl p-6 text-center">
+                                <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center mx-auto mb-4">
+                                    <i data-lucide="shield" class="w-8 h-8 text-white"></i>
+                                </div>
+                                <h3 class="font-bold text-lg mb-2">100% Secure</h3>
+                                <p class="text-sm text-slate-500">Your data and payments are protected with enterprise-grade security</p>
+                            </div>
+                            <div class="glass dark:glass-dark rounded-2xl p-6 text-center">
+                                <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-green-500 to-emerald-500 flex items-center justify-center mx-auto mb-4">
+                                    <i data-lucide="headphones" class="w-8 h-8 text-white"></i>
+                                </div>
+                                <h3 class="font-bold text-lg mb-2">24/7 Support</h3>
+                                <p class="text-sm text-slate-500">Our team is always here to help you with any questions</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderContact() {
+            return `
+                <div class="page-transition min-h-screen py-20">
+                    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <div class="text-center mb-12 reveal">
+                            <h1 class="text-4xl md:text-5xl font-display font-bold mb-4">Get in Touch</h1>
+                            <p class="text-slate-600 dark:text-slate-400">We'd love to hear from you</p>
+                        </div>
+                        
+                        <div class="glass dark:glass-dark rounded-3xl p-8 reveal">
+                            <form onsubmit="handleContact(event)" class="space-y-6">
+                                <div class="grid md:grid-cols-2 gap-6">
+                                    <div>
+                                        <label class="block text-sm font-medium mb-2">Name</label>
+                                        <input type="text" required class="w-full px-4 py-3 rounded-xl bg-slate-100 dark:bg-slate-800 outline-none focus:ring-2 focus:ring-purple-500">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium mb-2">Email</label>
+                                        <input type="email" required class="w-full px-4 py-3 rounded-xl bg-slate-100 dark:bg-slate-800 outline-none focus:ring-2 focus:ring-purple-500">
+                                    </div>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium mb-2">Subject</label>
+                                    <input type="text" required class="w-full px-4 py-3 rounded-xl bg-slate-100 dark:bg-slate-800 outline-none focus:ring-2 focus:ring-purple-500">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium mb-2">Message</label>
+                                    <textarea rows="5" required class="w-full px-4 py-3 rounded-xl bg-slate-100 dark:bg-slate-800 outline-none focus:ring-2 focus:ring-purple-500"></textarea>
+                                </div>
+                                <button type="submit" class="w-full py-4 rounded-xl bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold hover:shadow-lg hover:shadow-purple-500/30 transition-all">
+                                    Send Message
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderFAQ() {
+            return `
+                <div class="page-transition min-h-screen py-20">
+                    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <div class="text-center mb-12 reveal">
+                            <h1 class="text-4xl md:text-5xl font-display font-bold mb-4">FAQ</h1>
+                            <p class="text-slate-600 dark:text-slate-400">Frequently asked questions</p>
+                        </div>
+                        
+                        <div class="space-y-4">
+                            ${faqs.map((faq, index) => `
+                                <div class="glass dark:glass-dark rounded-2xl overflow-hidden reveal">
+                                    <button onclick="toggleFAQ(${index})" class="w-full px-6 py-4 flex items-center justify-between text-left font-semibold">
+                                        ${faq.q}
+                                        <i data-lucide="chevron-down" class="w-5 h-5 transform transition-transform" id="faq-icon-${index}"></i>
+                                    </button>
+                                    <div id="faq-content-${index}" class="hidden px-6 pb-4 text-slate-600 dark:text-slate-400">
+                                        ${faq.a}
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderBlog() {
+            const posts = [
+                { title: "10 Ways to Save on Subscriptions", excerpt: "Learn the best strategies to cut costs on your digital subscriptions.", date: "June 15, 2026", readTime: "5 min" },
+                { title: "The Future of Streaming in 2026", excerpt: "What to expect from streaming services in the coming year.", date: "June 10, 2026", readTime: "8 min" },
+                { title: "AI Tools That Will Change Your Life", excerpt: "Discover the most powerful AI subscriptions available today.", date: "June 5, 2026", readTime: "6 min" }
+            ];
+            
+            return `
+                <div class="page-transition min-h-screen py-20">
+                    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <div class="text-center mb-12 reveal">
+                            <h1 class="text-4xl md:text-5xl font-display font-bold mb-4">Blog</h1>
+                            <p class="text-slate-600 dark:text-slate-400">Tips, tricks, and industry insights</p>
+                        </div>
+                        
+                        <div class="grid md:grid-cols-3 gap-8">
+                            ${posts.map(post => `
+                                <article class="glass dark:glass-dark rounded-2xl overflow-hidden card-hover reveal">
+                                    <div class="h-48 bg-gradient-to-br from-purple-500 to-pink-500"></div>
+                                    <div class="p-6">
+                                        <div class="flex items-center gap-4 text-sm text-slate-500 mb-3">
+                                            <span>${post.date}</span>
+                                            <span>•</span>
+                                            <span>${post.readTime} read</span>
+                                        </div>
+                                        <h2 class="text-xl font-bold mb-2">${post.title}</h2>
+                                        <p class="text-slate-600 dark:text-slate-400 mb-4">${post.excerpt}</p>
+                                        <button class="text-purple-600 dark:text-purple-400 font-semibold hover:underline">Read More →</button>
+                                    </div>
+                                </article>
+                            `).join('')}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderPrivacy() {
+            return `
+                <div class="page-transition min-h-screen py-20">
+                    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <h1 class="text-4xl font-display font-bold mb-8 reveal">Privacy Policy</h1>
+                        <div class="glass dark:glass-dark rounded-3xl p-8 prose dark:prose-invert reveal">
+                            <p>Last updated: June 2026</p>
+                            <h3>Information We Collect</h3>
+                            <p>We collect information you provide directly to us, including your name, email address, and payment information.</p>
+                            <h3>How We Use Your Information</h3>
+                            <p>We use the information we collect to provide, maintain, and improve our services, and to communicate with you.</p>
+                            <h3>Information Sharing</h3>
+                            <p>We do not sell your personal information. We may share your information with service providers who perform services on our behalf.</p>
+                            <h3>Data Security</h3>
+                            <p>We implement appropriate technical and organizational measures to protect your personal information.</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderTerms() {
+            return `
+                <div class="page-transition min-h-screen py-20">
+                    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <h1 class="text-4xl font-display font-bold mb-8 reveal">Terms of Service</h1>
+                        <div class="glass dark:glass-dark rounded-3xl p-8 prose dark:prose-invert reveal">
+                            <p>Last updated: June 2026</p>
+                            <h3>Acceptance of Terms</h3>
+                            <p>By accessing and using SubVault, you accept and agree to be bound by these Terms of Service.</p>
+                            <h3>Use of Service</h3>
+                            <p>You agree to use the service only for lawful purposes and in accordance with these terms.</p>
+                            <h3>Subscriptions</h3>
+                            <p>All subscriptions are subject to the terms and conditions of the respective service providers.</p>
+                            <h3>Limitation of Liability</h3>
+                            <p>SubVault is not liable for any indirect, incidental, or consequential damages.</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderSupport() {
+            return `
+                <div class="page-transition min-h-screen py-20">
+                    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <div class="text-center mb-12 reveal">
+                            <h1 class="text-4xl md:text-5xl font-display font-bold mb-4">Support Center</h1>
+                            <p class="text-slate-600 dark:text-slate-400">We're here to help 24/7</p>
+                        </div>
+                        
+                        <div class="grid md:grid-cols-3 gap-6 reveal">
+                            <div class="glass dark:glass-dark rounded-2xl p-6 text-center">
+                                <div class="w-16 h-16 rounded-2xl bg-purple-100 dark:bg-purple-900 flex items-center justify-center mx-auto mb-4">
+                                    <i data-lucide="message-circle" class="w-8 h-8 text-purple-600 dark:text-purple-400"></i>
+                                </div>
+                                <h3 class="font-bold text-lg mb-2">Live Chat</h3>
+                                <p class="text-sm text-slate-500 mb-4">Chat with our support team</p>
+                                <button onclick="showToast('Live chat coming soon!')" class="px-4 py-2 rounded-lg bg-purple-500 text-white text-sm font-semibold">Start Chat</button>
+                            </div>
+                            <div class="glass dark:glass-dark rounded-2xl p-6 text-center">
+                                <div class="w-16 h-16 rounded-2xl bg-pink-100 dark:bg-pink-900 flex items-center justify-center mx-auto mb-4">
+                                    <i data-lucide="mail" class="w-8 h-8 text-pink-600 dark:text-pink-400"></i>
+                                </div>
+                                <h3 class="font-bold text-lg mb-2">Email Us</h3>
+                                <p class="text-sm text-slate-500 mb-4">support@subvault.demo</p>
+                                <button onclick="router.navigate('contact')" class="px-4 py-2 rounded-lg bg-pink-500 text-white text-sm font-semibold">Send Email</button>
+                            </div>
+                            <div class="glass dark:glass-dark rounded-2xl p-6 text-center">
+                                <div class="w-16 h-16 rounded-2xl bg-blue-100 dark:bg-blue-900 flex items-center justify-center mx-auto mb-4">
+                                    <i data-lucide="book" class="w-8 h-8 text-blue-600 dark:text-blue-400"></i>
+                                </div>
+                                <h3 class="font-bold text-lg mb-2">Help Center</h3>
+                                <p class="text-sm text-slate-500 mb-4">Browse our knowledge base</p>
+                                <button onclick="router.navigate('faq')" class="px-4 py-2 rounded-lg bg-blue-500 text-white text-sm font-semibold">View FAQs</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function render404() {
+            return `
+                <div class="page-transition min-h-screen flex items-center justify-center py-20">
+                    <div class="text-center">
+                        <div class="text-9xl font-display font-bold gradient-text-animated mb-4">404</div>
+                        <h1 class="text-4xl font-bold mb-4">Page Not Found</h1>
+                        <p class="text-slate-600 dark:text-slate-400 mb-8">The page you're looking for doesn't exist or has been moved.</p>
+                        <button onclick="router.navigate('home')" class="px-8 py-4 rounded-2xl bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold hover:shadow-lg hover:shadow-purple-500/30 transition-all">
+                            Back to Home
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Filter and Search Functions
+        function filterCategory(category) {
+            state.selectedCategory = category;
+            renderPage('browse');
+        }
+
+        function sortApps(sortBy) {
+            state.sortBy = sortBy;
+            renderPage('browse');
+        }
+
+        function handleSearch(query) {
+            state.searchQuery = query;
+            const grid = document.getElementById('apps-grid');
+            const filtered = getFilteredApps();
+            
+            if (grid) {
+                grid.innerHTML = filtered.map(app => renderAppCard(app)).join('');
+                document.getElementById('app-count').textContent = filtered.length;
+                lucide.createIcons();
             }
         }
 
-        // Notification
-        function showNotification(message, color) {
-            const notification = document.createElement('div');
-            notification.className = `fixed bottom-8 right-8 bg-${color} text-white px-6 py-3 rounded-lg shadow-2xl z-50 animate-bounce`;
-            notification.textContent = message;
-            document.body.appendChild(notification);
+        function getFilteredApps() {
+            let filtered = [...appsData];
             
-            setTimeout(() => {
-                notification.remove();
-            }, 3000);
+            if (state.selectedCategory !== 'All') {
+                filtered = filtered.filter(app => app.category === state.selectedCategory);
+            }
+            
+            if (state.searchQuery) {
+                const query = state.searchQuery.toLowerCase();
+                filtered = filtered.filter(app => 
+                    app.name.toLowerCase().includes(query) || 
+                    app.category.toLowerCase().includes(query)
+                );
+            }
+            
+            switch(state.sortBy) {
+                case 'price-low':
+                    filtered.sort((a, b) => a.monthly - b.monthly);
+                    break;
+                case 'price-high':
+                    filtered.sort((a, b) => b.monthly - a.monthly);
+                    break;
+                case 'rating':
+                    filtered.sort((a, b) => b.rating - a.rating);
+                    break;
+                case 'name':
+                    filtered.sort((a, b) => a.name.localeCompare(b.name));
+                    break;
+            }
+            
+            return filtered;
         }
 
-        // Close modal on escape
+        function initBrowseFilters() {
+            // Filters are rendered with the page
+        }
+
+        // Event Handlers
+        function handleNewsletter(e) {
+            e.preventDefault();
+            showToast('Thanks for subscribing!');
+            e.target.reset();
+        }
+
+        function handleContact(e) {
+            e.preventDefault();
+            showToast('Message sent successfully!');
+            e.target.reset();
+        }
+
+        function handleCheckout(e) {
+            e.preventDefault();
+            
+            // Create confetti
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.style.left = Math.random() * 100 + 'vw';
+                    confetti.style.backgroundColor = ['#8b5cf6', '#ec4899', '#3b82f6', '#10b981'][Math.floor(Math.random() * 4)];
+                    confetti.style.animationDuration = (Math.random() * 2 + 2) + 's';
+                    document.body.appendChild(confetti);
+                    setTimeout(() => confetti.remove(), 4000);
+                }, i * 50);
+            }
+            
+            setTimeout(() => {
+                showToast('Purchase successful! Check your email.');
+                state.cart = [];
+                updateCartCount();
+                router.navigate('dashboard');
+            }, 1000);
+        }
+
+        function toggleFAQ(index) {
+            const content = document.getElementById(`faq-content-${index}`);
+            const icon = document.getElementById(`faq-icon-${index}`);
+            
+            if (content.classList.contains('hidden')) {
+                content.classList.remove('hidden');
+                icon.style.transform = 'rotate(180deg)';
+            } else {
+                content.classList.add('hidden');
+                icon.style.transform = 'rotate(0deg)';
+            }
+        }
+
+        // Animations
+        function initHomeAnimations() {
+            // Animate stats
+            setTimeout(() => {
+                animateValue('stat-apps', 0, 50, 1000);
+                animateValue('stat-users', 0, 10000, 1000);
+            }, 500);
+            
+            // Reveal animations
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+        }
+
+        function animateValue(id, start, end, duration) {
+            const obj = document.getElementById(id);
+            if (!obj) return;
+            
+            const range = end - start;
+            const minTimer = 50;
+            let stepTime = Math.abs(Math.floor(duration / range));
+            stepTime = Math.max(stepTime, minTimer);
+            
+            let startTime = new Date().getTime();
+            let endTime = startTime + duration;
+            let timer;
+            
+            function run() {
+                let now = new Date().getTime();
+                let remaining = Math.max((endTime - now) / duration, 0);
+                let value = Math.round(end - (remaining * range));
+                obj.innerHTML = id === 'stat-users' ? value.toLocaleString() + '+' : value + (id === 'stat-savings' ? '%' : '+');
+                if (value == end) {
+                    clearInterval(timer);
+                }
+            }
+            
+            timer = setInterval(run, stepTime);
+            run();
+        }
+
+        // Keyboard Shortcuts
         document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') closeModal();
+            if (e.ctrlKey && e.key === 'k') {
+                e.preventDefault();
+                toggleCommandPalette();
+            }
+            if (e.key === 'Escape') {
+                const palette = document.getElementById('command-palette');
+                if (!palette.classList.contains('hidden')) {
+                    toggleCommandPalette();
+                }
+                closeAppModal();
+            }
         });
 
-        // Intersection Observer
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            // Check for saved dark mode preference
+            if (localStorage.getItem('darkMode') === 'true') {
+                state.darkMode = true;
+                document.documentElement.classList.add('dark');
+            }
+            
+            // Initial render
+            router.navigate('home');
+            
+            // Navbar scroll effect
+            window.addEventListener('scroll', () => {
+                const navbar = document.getElementById('navbar');
+                if (window.scrollY > 50) {
+                    navbar.classList.add('shadow-lg');
+                } else {
+                    navbar.classList.remove('shadow-lg');
                 }
             });
-        }, { threshold: 0.1 });
+        });
 
-        // Observe elements
-        setTimeout(() => {
-            document.querySelectorAll('.fade-in, .slide-up').forEach(el => {
-                observer.observe(el);
-            });
-        }, 100);
+        // Export functions for global access
+        window.router = router;
+        window.toggleCart = toggleCart;
+        window.toggleCommandPalette = toggleCommandPalette;
+        window.toggleDarkMode = toggleDarkMode;
+        window.toggleMobileMenu = toggleMobileMenu;
+        window.addToCart = addToCart;
+        window.removeFromCart = removeFromCart;
+        window.toggleWishlist = toggleWishlist;
+        window.openAppModal = openAppModal;
+        window.closeAppModal = closeAppModal;
+        window.filterCategory = filterCategory;
+        window.sortApps = sortApps;
+        window.handleSearch = handleSearch;
+        window.handleNewsletter = handleNewsletter;
+        window.handleContact = handleContact;
+        window.handleCheckout = handleCheckout;
+        window.toggleFAQ = toggleFAQ;
+        window.showToast = showToast;
     </script>
 </body>
 </html>
