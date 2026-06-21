@@ -3,17 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MAISON NOIR — Timeless Elegance. Modern Luxury.</title>
+    <title>MAISON NOIR — Modern Gentlemen</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --gold: #c9a96e;
-            --gold-light: #d4b87a;
-            --dark: #0a0a0a;
-            --charcoal: #1a1a1a;
+            --navy: #1e3a5f;
+            --burgundy: #722f37;
+            --forest: #2d4a3e;
+            --camel: #c19a6b;
+            --charcoal: #2c3e50;
             --cream: #f5f0e8;
         }
 
@@ -29,7 +30,7 @@
 
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #0a0a0a;
+            background-color: #0f172a;
             color: #f5f0e8;
             overflow-x: hidden;
         }
@@ -38,27 +39,11 @@
             font-family: 'Playfair Display', serif;
         }
 
-        .font-sans {
-            font-family: 'Inter', sans-serif;
-        }
-
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 6px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #0a0a0a;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #c9a96e;
-            border-radius: 3px;
-        }
-
-        /* Animations */
+        /* Optimized Animations - Lightweight */
         .fade-in {
             opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 1s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
         }
 
         .fade-in.visible {
@@ -68,8 +53,8 @@
 
         .slide-up {
             opacity: 0;
-            transform: translateY(60px);
-            transition: opacity 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            transform: translateY(30px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
         }
 
         .slide-up.visible {
@@ -77,144 +62,120 @@
             transform: translateY(0);
         }
 
-        .zoom-in {
-            opacity: 0;
-            transform: scale(0.95);
-            transition: opacity 1.5s ease, transform 1.5s ease;
-        }
-
-        .zoom-in.visible {
-            opacity: 1;
-            transform: scale(1);
-        }
-
-        /* Image hover effects */
+        /* Image hover - optimized */
         .img-hover {
             overflow: hidden;
-            position: relative;
         }
 
         .img-hover img {
-            transition: transform 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            transition: transform 0.5s ease;
         }
 
         .img-hover:hover img {
-            transform: scale(1.08);
-        }
-
-        /* Shimmer effect */
-        .shimmer {
-            position: relative;
-            overflow: hidden;
-        }
-
-        .shimmer::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(201, 169, 110, 0.1), transparent);
-            transition: left 0.8s ease;
-        }
-
-        .shimmer:hover::after {
-            left: 100%;
-        }
-
-        /* Parallax */
-        .parallax {
-            will-change: transform;
-        }
-
-        /* Glassmorphism Modal */
-        .modal-backdrop {
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            background: rgba(10, 10, 10, 0.85);
-        }
-
-        .modal-content {
-            backdrop-filter: blur(40px);
-            -webkit-backdrop-filter: blur(40px);
-            background: rgba(26, 26, 26, 0.7);
-            border: 1px solid rgba(201, 169, 110, 0.2);
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-        }
-
-        /* Navigation */
-        .nav-link {
-            position: relative;
-            transition: color 0.3s ease;
-        }
-
-        .nav-link::after {
-            content: '';
-            position: absolute;
-            bottom: -4px;
-            left: 0;
-            width: 0;
-            height: 1px;
-            background: #c9a96e;
-            transition: width 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-        }
-
-        .nav-link:hover::after {
-            width: 100%;
-        }
-
-        .nav-link:hover {
-            color: #c9a96e;
-        }
-
-        /* Button styles */
-        .btn-luxury {
-            position: relative;
-            overflow: hidden;
-            transition: all 0.4s ease;
-        }
-
-        .btn-luxury::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-            transition: left 0.6s ease;
-        }
-
-        .btn-luxury:hover::before {
-            left: 100%;
-        }
-
-        .btn-luxury:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px -10px rgba(201, 169, 110, 0.3);
-        }
-
-        /* Product card */
-        .product-card {
-            transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-        }
-
-        .product-card:hover {
-            transform: translateY(-8px);
-        }
-
-        .product-card:hover .product-image {
             transform: scale(1.05);
         }
 
-        .product-image {
-            transition: transform 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        /* Smooth navbar */
+        .navbar {
+            transition: all 0.3s ease;
         }
 
-        /* Wishlist heart */
-        .wishlist-btn {
+        .navbar.scrolled {
+            background: rgba(15, 23, 42, 0.98);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+
+        /* Button effects */
+        .btn-primary {
+            background: linear-gradient(135deg, var(--navy), var(--charcoal));
             transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(30, 58, 95, 0.4);
+        }
+
+        .btn-secondary {
+            border: 2px solid var(--camel);
+            color: var(--camel);
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            background: var(--camel);
+            color: var(--navy);
+        }
+
+        /* Product cards */
+        .product-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+
+        /* Color accents */
+        .text-navy { color: var(--navy); }
+        .text-burgundy { color: var(--burgundy); }
+        .text-forest { color: var(--forest); }
+        .text-camel { color: var(--camel); }
+        
+        .bg-navy { background-color: var(--navy); }
+        .bg-burgundy { background-color: var(--burgundy); }
+        .bg-forest { background-color: var(--forest); }
+        .bg-camel { background-color: var(--camel); }
+
+        /* Gradient text */
+        .text-gradient {
+            background: linear-gradient(135deg, var(--camel), #d4b896);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 100;
+            background: rgba(0,0,0,0.9);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: #1e293b;
+            max-width: 900px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            border-radius: 8px;
+            border: 1px solid rgba(193, 154, 107, 0.3);
+        }
+
+        /* Size buttons */
+        .size-btn {
+            transition: all 0.2s ease;
+        }
+
+        .size-btn:hover, .size-btn.active {
+            background: var(--camel);
+            color: var(--navy);
+            border-color: var(--camel);
+        }
+
+        /* Wishlist */
+        .wishlist-btn {
+            transition: all 0.2s ease;
         }
 
         .wishlist-btn:hover {
@@ -222,171 +183,114 @@
         }
 
         .wishlist-btn.active svg {
-            fill: #c9a96e;
-            stroke: #c9a96e;
-        }
-
-        /* Lookbook section */
-        .lookbook-section {
-            min-height: 100vh;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .lookbook-img {
-            transition: transform 2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-        }
-
-        .lookbook-section:hover .lookbook-img {
-            transform: scale(1.05);
-        }
-
-        /* Divider */
-        .gold-divider {
-            height: 1px;
-            background: linear-gradient(90deg, transparent, #c9a96e, transparent);
-        }
-
-        /* Testimonial card */
-        .testimonial-card {
-            transition: all 0.5s ease;
-        }
-
-        .testimonial-card:hover {
-            transform: translateY(-4px);
-            border-color: rgba(201, 169, 110, 0.4);
-        }
-
-        /* Size selector */
-        .size-btn {
-            transition: all 0.3s ease;
-        }
-
-        .size-btn:hover, .size-btn.active {
-            background: #c9a96e;
-            color: #0a0a0a;
-            border-color: #c9a96e;
+            fill: var(--burgundy);
+            stroke: var(--burgundy);
         }
 
         /* Loader */
-        .page-loader {
+        .loader {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: #0a0a0a;
+            inset: 0;
+            background: #0f172a;
             z-index: 9999;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: opacity 0.8s ease, visibility 0.8s ease;
+            transition: opacity 0.5s ease;
         }
 
-        .page-loader.hidden {
+        .loader.hidden {
             opacity: 0;
-            visibility: hidden;
+            pointer-events: none;
         }
 
-        .loader-text {
-            font-family: 'Playfair Display', serif;
-            font-size: 2rem;
-            color: #c9a96e;
-            letter-spacing: 0.3em;
-            animation: pulse 2s ease-in-out infinite;
+        /* Section dividers */
+        .divider {
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--camel), transparent);
         }
 
-        @keyframes pulse {
-            0%, 100% { opacity: 0.4; }
-            50% { opacity: 1; }
+        /* Feature icons */
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--navy), var(--charcoal));
+            border-radius: 50%;
+            margin: 0 auto 1rem;
         }
 
-        /* Hero text animation */
-        .hero-title {
-            opacity: 0;
-            transform: translateY(40px);
-            animation: heroFadeIn 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.5s forwards;
+        /* Testimonial cards */
+        .testimonial {
+            background: linear-gradient(135deg, rgba(30, 58, 95, 0.3), rgba(44, 62, 80, 0.3));
+            border: 1px solid rgba(193, 154, 107, 0.2);
+            transition: all 0.3s ease;
         }
 
-        .hero-subtitle {
-            opacity: 0;
-            transform: translateY(30px);
-            animation: heroFadeIn 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.8s forwards;
+        .testimonial:hover {
+            border-color: var(--camel);
+            transform: translateY(-3px);
         }
 
-        .hero-cta {
-            opacity: 0;
-            transform: translateY(20px);
-            animation: heroFadeIn 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1.1s forwards;
+        /* Lookbook sections */
+        .lookbook {
+            min-height: 80vh;
+            position: relative;
+            overflow: hidden;
         }
 
-        @keyframes heroFadeIn {
-            to {
-                opacity: 1;
-                transform: translateY(0);
+        .lookbook img {
+            transition: transform 0.8s ease;
+        }
+
+        .lookbook:hover img {
+            transform: scale(1.03);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
             }
-        }
-
-        /* Stagger animation for products */
-        .stagger-1 { transition-delay: 0.1s; }
-        .stagger-2 { transition-delay: 0.2s; }
-        .stagger-3 { transition-delay: 0.3s; }
-        .stagger-4 { transition-delay: 0.4s; }
-        .stagger-5 { transition-delay: 0.5s; }
-        .stagger-6 { transition-delay: 0.6s; }
-        .stagger-7 { transition-delay: 0.7s; }
-        .stagger-8 { transition-delay: 0.8s; }
-
-        /* Floating animation */
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-
-        .float {
-            animation: float 6s ease-in-out infinite;
-        }
-
-        /* Gold text gradient */
-        .text-gold-gradient {
-            background: linear-gradient(135deg, #c9a96e, #f0d9a0, #c9a96e);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
         }
     </style>
 </head>
 <body>
 
-    <!-- Page Loader -->
-    <div class="page-loader" id="pageLoader">
-        <div class="loader-text">MAISON NOIR</div>
+    <!-- Loader -->
+    <div class="loader" id="loader">
+        <div class="text-center">
+            <h1 class="font-serif text-4xl text-camel tracking-widest">MAISON NOIR</h1>
+            <p class="text-sm text-gray-400 mt-2 tracking-wider">MODERN GENTLEMEN</p>
+        </div>
     </div>
 
     <!-- Navigation -->
-    <nav class="fixed top-0 left-0 right-0 z-50 transition-all duration-500" id="navbar">
-        <div class="max-w-7xl mx-auto px-6 lg:px-8">
-            <div class="flex items-center justify-between h-20">
-                <div class="flex items-center">
-                    <a href="#" class="font-serif text-2xl tracking-widest text-cream">MAISON NOIR</a>
-                </div>
+    <nav class="navbar fixed top-0 left-0 right-0 z-50 py-4">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex items-center justify-between">
+                <a href="#" class="font-serif text-2xl tracking-wider text-cream">MAISON NOIR</a>
+                
                 <div class="hidden md:flex items-center space-x-8">
-                    <a href="#collection" class="nav-link text-sm tracking-wider text-cream/80">COLLECTION</a>
-                    <a href="#lookbook" class="nav-link text-sm tracking-wider text-cream/80">LOOKBOOK</a>
-                    <a href="#story" class="nav-link text-sm tracking-wider text-cream/80">OUR STORY</a>
-                    <a href="#contact" class="nav-link text-sm tracking-wider text-cream/80">CONTACT</a>
+                    <a href="#collection" class="text-sm tracking-wider text-gray-300 hover:text-camel transition-colors">COLLECTION</a>
+                    <a href="#lookbook" class="text-sm tracking-wider text-gray-300 hover:text-camel transition-colors">LOOKBOOK</a>
+                    <a href="#about" class="text-sm tracking-wider text-gray-300 hover:text-camel transition-colors">ABOUT</a>
+                    <a href="#contact" class="text-sm tracking-wider text-gray-300 hover:text-camel transition-colors">CONTACT</a>
                 </div>
+
                 <div class="flex items-center space-x-4">
-                    <button class="text-cream/80 hover:text-gold transition-colors">
+                    <button class="text-gray-300 hover:text-camel transition-colors">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
                         </svg>
                     </button>
-                    <button class="text-cream/80 hover:text-gold transition-colors relative">
+                    <button class="text-gray-300 hover:text-camel transition-colors relative">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
                         </svg>
-                        <span class="absolute -top-1 -right-1 w-4 h-4 bg-gold text-dark text-xs rounded-full flex items-center justify-center">0</span>
+                        <span class="absolute -top-2 -right-2 w-5 h-5 bg-camel text-navy text-xs rounded-full flex items-center justify-center font-semibold">0</span>
                     </button>
                 </div>
             </div>
@@ -394,244 +298,281 @@
     </nav>
 
     <!-- Hero Section -->
-    <section class="relative h-screen flex items-center justify-center overflow-hidden">
+    <section class="relative min-h-screen flex items-center pt-20">
         <div class="absolute inset-0">
-            <img src="https://image.pollinations.ai/prompt/Dark%20luxury%20fashion%20brand%20hero%20banner%2C%20cinematic%20wide%20shot%20of%20male%20model%20in%20black%20tailored%20blazer%20walking%20through%20grand%20marble%20hall%20with%20classical%20columns%2C%20dramatic%20lighting%20with%20deep%20shadows%20and%20golden%20highlights%2C%20old%20money%20aesthetic%2C%20Vogue%20editorial%20style%2C%20film-like%20color%20grading%2C%20ultra-wide%20composition%2C%20photorealistic?width=1920&height=1080&seed=14" 
+            <img src="https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=1920&h=1080&fit=crop" 
                  alt="Hero" 
-                 class="w-full h-full object-cover parallax"
-                 id="heroImage">
-            <div class="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-black/80"></div>
+                 class="w-full h-full object-cover opacity-60">
+            <div class="absolute inset-0 bg-gradient-to-r from-slate-900 via-slate-900/80 to-transparent"></div>
         </div>
-        <div class="relative z-10 text-center px-6 max-w-4xl">
-            <p class="hero-subtitle text-sm tracking-[0.4em] text-gold mb-6 font-sans font-light">EST. 2024 · LONDON</p>
-            <h1 class="hero-title font-serif text-5xl md:text-7xl lg:text-8xl font-light text-cream mb-8 leading-tight">
-                Timeless Elegance.<br>
-                <span class="italic text-gold-gradient">Modern Luxury.</span>
-            </h1>
-            <p class="hero-subtitle text-lg md:text-xl text-cream/70 font-light mb-12 max-w-2xl mx-auto">
-                Where heritage craftsmanship meets contemporary sophistication
-            </p>
-            <div class="hero-cta flex flex-col sm:flex-row gap-4 justify-center">
-                <a href="#collection" class="btn-luxury px-8 py-4 bg-gold text-dark font-medium tracking-wider text-sm hover:bg-gold-light">
-                    SHOP COLLECTION
-                </a>
-                <a href="#lookbook" class="btn-luxury px-8 py-4 border border-cream/30 text-cream font-medium tracking-wider text-sm hover:border-gold hover:text-gold">
-                    EXPLORE LOOKBOOK
-                </a>
+        
+        <div class="relative z-10 max-w-7xl mx-auto px-6 py-20">
+            <div class="max-w-2xl">
+                <p class="text-camel text-sm tracking-[0.3em] mb-4 fade-in">EST. 2024</p>
+                <h1 class="hero-title font-serif text-5xl md:text-7xl font-semibold text-cream mb-6 leading-tight fade-in">
+                    Redefining<br>
+                    <span class="text-gradient">Modern Elegance</span>
+                </h1>
+                <p class="text-lg text-gray-300 mb-8 font-light fade-in">
+                    Where classic tailoring meets contemporary style. For the young gentleman who values sophistication.
+                </p>
+                <div class="flex flex-wrap gap-4 fade-in">
+                    <a href="#collection" class="btn-primary px-8 py-4 text-white font-medium tracking-wider text-sm rounded">
+                        SHOP NOW
+                    </a>
+                    <a href="#lookbook" class="btn-secondary px-8 py-4 font-medium tracking-wider text-sm rounded">
+                        VIEW LOOKBOOK
+                    </a>
+                </div>
             </div>
-        </div>
-        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 float">
-            <svg class="w-6 h-6 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M19 14l-7 7m0 0l-7-7m7 7V3"/>
-            </svg>
         </div>
     </section>
 
-    <!-- Featured Collection -->
-    <section id="collection" class="py-24 md:py-32 px-6 lg:px-8">
+    <!-- Featured Categories -->
+    <section class="py-20 px-6 bg-slate-900">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="relative group cursor-pointer overflow-hidden rounded-lg fade-in">
+                    <img src="https://images.unsplash.com/photo-1593032465175-d529cb1e790e?w=600&h=800&fit=crop" 
+                         alt="Suits" 
+                         class="w-full h-[500px] object-cover transition-transform duration-500 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
+                    <div class="absolute bottom-0 left-0 p-6">
+                        <h3 class="font-serif text-2xl text-cream mb-2">Three-Piece Suits</h3>
+                        <p class="text-camel text-sm">The Ultimate Statement</p>
+                    </div>
+                </div>
+
+                <div class="relative group cursor-pointer overflow-hidden rounded-lg fade-in">
+                    <img src="https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=600&h=800&fit=crop" 
+                         alt="Blazers" 
+                         class="w-full h-[500px] object-cover transition-transform duration-500 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
+                    <div class="absolute bottom-0 left-0 p-6">
+                        <h3 class="font-serif text-2xl text-cream mb-2">Tailored Blazers</h3>
+                        <p class="text-camel text-sm">Sharp & Sophisticated</p>
+                    </div>
+                </div>
+
+                <div class="relative group cursor-pointer overflow-hidden rounded-lg fade-in">
+                    <img src="https://images.unsplash.com/photo-1544022613-e87ca75a784a?w=600&h=800&fit=crop" 
+                         alt="Coats" 
+                         class="w-full h-[500px] object-cover transition-transform duration-500 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
+                    <div class="absolute bottom-0 left-0 p-6">
+                        <h3 class="font-serif text-2xl text-cream mb-2">Luxury Outerwear</h3>
+                        <p class="text-camel text-sm">Premium Craftsmanship</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Collection Section -->
+    <section id="collection" class="py-24 px-6 bg-slate-950">
         <div class="max-w-7xl mx-auto">
             <div class="text-center mb-16 fade-in">
-                <p class="text-sm tracking-[0.3em] text-gold mb-4 font-sans">CURATED SELECTION</p>
-                <h2 class="font-serif text-4xl md:text-5xl lg:text-6xl font-light text-cream mb-6">The Collection</h2>
-                <div class="gold-divider w-24 mx-auto"></div>
+                <p class="text-camel text-sm tracking-[0.3em] mb-4">CURATED COLLECTION</p>
+                <h2 class="font-serif text-4xl md:text-5xl text-cream mb-4">The Essentials</h2>
+                <div class="divider w-24 mx-auto"></div>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                <!-- Product 1: Luxury Blazer -->
-                <div class="product-card slide-up stagger-1 group">
-                    <div class="img-hover shimmer aspect-[3/4] mb-6 bg-charcoal">
-                        <img src="https://image.pollinations.ai/prompt/Editorial%20fashion%20photography%2C%20female%20model%20in%20olive%20green%20tailored%20blazer%20with%20white%20silk%20blouse%2C%20standing%20in%20minimalist%20concrete%20luxury%20showroom%20with%20soft%20directional%20lighting%2C%20old%20money%20quiet%20luxury%20aesthetic%2C%20muted%20earth%20tones%2C%20cinematic%20film%20tone%2C%20Vogue%20style%2C%20photorealistic?width=600&height=800&seed=10" 
-                             alt="Luxury Blazer" 
-                             class="product-image w-full h-full object-cover">
+                <!-- Product 1 -->
+                <div class="product-card slide-up">
+                    <div class="img-hover aspect-[3/4] mb-4 bg-slate-800 rounded-lg overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1593032465175-d529cb1e790e?w=600&h=800&fit=crop" 
+                             alt="Navy Three-Piece Suit" 
+                             class="w-full h-full object-cover">
                     </div>
                     <div class="flex justify-between items-start mb-2">
-                        <h3 class="font-serif text-xl text-cream">The Heritage Blazer</h3>
+                        <h3 class="font-serif text-lg text-cream">The Navy Classic</h3>
                         <button class="wishlist-btn" onclick="toggleWishlist(this)">
-                            <svg class="w-5 h-5 text-cream/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+                            <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
                             </svg>
                         </button>
                     </div>
-                    <p class="text-sm text-cream/60 mb-3 font-light">Italian wool blend · Hand-finished</p>
+                    <p class="text-sm text-gray-400 mb-3">Three-piece · Wool blend</p>
                     <div class="flex justify-between items-center">
-                        <span class="text-gold font-medium">£285</span>
-                        <button onclick="openModal('The Heritage Blazer', '£285', 'Italian wool blend with silk lining. Hand-finished details and structured silhouette.', 'https://image.pollinations.ai/prompt/Editorial%20fashion%20photography%2C%20female%20model%20in%20olive%20green%20tailored%20blazer%20with%20white%20silk%20blouse%2C%20standing%20in%20minimalist%20concrete%20luxury%20showroom%20with%20soft%20directional%20lighting%2C%20old%20money%20quiet%20luxury%20aesthetic%2C%20muted%20earth%20tones%2C%20cinematic%20film%20tone%2C%20Vogue%20style%2C%20photorealistic?width=600&height=800&seed=10')" 
-                                class="text-xs tracking-wider text-cream/80 hover:text-gold transition-colors border-b border-cream/30 hover:border-gold pb-1">
+                        <span class="text-camel font-semibold">£485</span>
+                        <button onclick="openModal('The Navy Classic', '£485', 'Classic navy three-piece suit with modern slim fit. Perfect for formal occasions and business meetings.', 'https://images.unsplash.com/photo-1593032465175-d529cb1e790e?w=600&h=800&fit=crop')" 
+                                class="text-xs text-camel hover:text-white transition-colors border-b border-camel pb-1">
                             QUICK VIEW
                         </button>
                     </div>
                 </div>
 
-                <!-- Product 2: Tailored Suit -->
-                <div class="product-card slide-up stagger-2 group">
-                    <div class="img-hover shimmer aspect-[3/4] mb-6 bg-charcoal">
-                        <img src="https://image.pollinations.ai/prompt/High-end%20fashion%20editorial%20shot%2C%20male%20model%20in%20a%20perfectly%20tailored%20charcoal%20three-piece%20suit%20with%20pocket%20square%2C%20standing%20in%20a%20minimalist%20dark%20studio%20with%20soft%20directional%20lighting%2C%20old%20money%20quiet%20luxury%20aesthetic%2C%20deep%20blacks%20and%20warm%20highlights%2C%20cinematic%20color%20grading%2C%20Vogue%20Hommes%20style%2C%20photorealistic%20fashion%20photography?width=600&height=800&seed=2" 
-                             alt="Tailored Suit" 
-                             class="product-image w-full h-full object-cover">
+                <!-- Product 2 -->
+                <div class="product-card slide-up">
+                    <div class="img-hover aspect-[3/4] mb-4 bg-slate-800 rounded-lg overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=600&h=800&fit=crop" 
+                             alt="Charcoal Blazer" 
+                             class="w-full h-full object-cover">
                     </div>
                     <div class="flex justify-between items-start mb-2">
-                        <h3 class="font-serif text-xl text-cream">The Savile Row Suit</h3>
+                        <h3 class="font-serif text-lg text-cream">Charcoal Blazer</h3>
                         <button class="wishlist-btn" onclick="toggleWishlist(this)">
-                            <svg class="w-5 h-5 text-cream/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+                            <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
                             </svg>
                         </button>
                     </div>
-                    <p class="text-sm text-cream/60 mb-3 font-light">Three-piece · Super 150s wool</p>
+                    <p class="text-sm text-gray-400 mb-3">Italian wool · Slim fit</p>
                     <div class="flex justify-between items-center">
-                        <span class="text-gold font-medium">£485</span>
-                        <button onclick="openModal('The Savile Row Suit', '£485', 'Three-piece suit in Super 150s wool. Bespoke tailoring with hand-stitched details.', 'https://image.pollinations.ai/prompt/High-end%20fashion%20editorial%20shot%2C%20male%20model%20in%20a%20perfectly%20tailored%20charcoal%20three-piece%20suit%20with%20pocket%20square%2C%20standing%20in%20a%20minimalist%20dark%20studio%20with%20soft%20directional%20lighting%2C%20old%20money%20quiet%20luxury%20aesthetic%2C%20deep%20blacks%20and%20warm%20highlights%2C%20cinematic%20color%20grading%2C%20Vogue%20Hommes%20style%2C%20photorealistic%20fashion%20photography?width=600&height=800&seed=2')" 
-                                class="text-xs tracking-wider text-cream/80 hover:text-gold transition-colors border-b border-cream/30 hover:border-gold pb-1">
+                        <span class="text-camel font-semibold">£295</span>
+                        <button onclick="openModal('Charcoal Blazer', '£295', 'Versatile charcoal blazer in Italian wool. Perfect for smart-casual occasions.', 'https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=600&h=800&fit=crop')" 
+                                class="text-xs text-camel hover:text-white transition-colors border-b border-camel pb-1">
                             QUICK VIEW
                         </button>
                     </div>
                 </div>
 
-                <!-- Product 3: Cashmere Coat -->
-                <div class="product-card slide-up stagger-3 group">
-                    <div class="img-hover shimmer aspect-[3/4] mb-6 bg-charcoal">
-                        <img src="https://image.pollinations.ai/prompt/Editorial%20fashion%20photography%2C%20elegant%20female%20model%20wearing%20a%20beige%20cashmere%20long%20coat%20over%20a%20cream%20turtleneck%2C%20walking%20through%20a%20luxury%20hotel%20lobby%20with%20marble%20floors%2C%20soft%20natural%20window%20light%2C%20old%20money%20aesthetic%2C%20cinematic%20film%20tone%2C%20muted%20beige%20and%20charcoal%20palette%2C%20Vogue%20editorial%20style%2C%20photorealistic%2C%20high-end%20fashion%20campaign?width=600&height=800&seed=1" 
-                             alt="Cashmere Coat" 
-                             class="product-image w-full h-full object-cover">
+                <!-- Product 3 -->
+                <div class="product-card slide-up">
+                    <div class="img-hover aspect-[3/4] mb-4 bg-slate-800 rounded-lg overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1544022613-e87ca75a784a?w=600&h=800&fit=crop" 
+                             alt="Camel Overcoat" 
+                             class="w-full h-full object-cover">
                     </div>
                     <div class="flex justify-between items-start mb-2">
-                        <h3 class="font-serif text-xl text-cream">The Cashmere Overcoat</h3>
+                        <h3 class="font-serif text-lg text-cream">Camel Overcoat</h3>
                         <button class="wishlist-btn" onclick="toggleWishlist(this)">
-                            <svg class="w-5 h-5 text-cream/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+                            <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
                             </svg>
                         </button>
                     </div>
-                    <p class="text-sm text-cream/60 mb-3 font-light">Pure Mongolian cashmere · Floor-length</p>
+                    <p class="text-sm text-gray-400 mb-3">Cashmere blend · Long cut</p>
                     <div class="flex justify-between items-center">
-                        <span class="text-gold font-medium">£425</span>
-                        <button onclick="openModal('The Cashmere Overcoat', '£425', 'Pure Mongolian cashmere overcoat. Floor-length silhouette with horn buttons.', 'https://image.pollinations.ai/prompt/Editorial%20fashion%20photography%2C%20elegant%20female%20model%20wearing%20a%20beige%20cashmere%20long%20coat%20over%20a%20cream%20turtleneck%2C%20walking%20through%20a%20luxury%20hotel%20lobby%20with%20marble%20floors%2C%20soft%20natural%20window%20light%2C%20old%20money%20aesthetic%2C%20cinematic%20film%20tone%2C%20muted%20beige%20and%20charcoal%20palette%2C%20Vogue%20editorial%20style%2C%20photorealistic%2C%20high-end%20fashion%20campaign?width=600&height=800&seed=1')" 
-                                class="text-xs tracking-wider text-cream/80 hover:text-gold transition-colors border-b border-cream/30 hover:border-gold pb-1">
+                        <span class="text-camel font-semibold">£425</span>
+                        <button onclick="openModal('Camel Overcoat', '£425', 'Luxurious camel overcoat in cashmere blend. Timeless elegance for winter.', 'https://images.unsplash.com/photo-1544022613-e87ca75a784a?w=600&h=800&fit=crop')" 
+                                class="text-xs text-camel hover:text-white transition-colors border-b border-camel pb-1">
                             QUICK VIEW
                         </button>
                     </div>
                 </div>
 
-                <!-- Product 4: Elegant Dress -->
-                <div class="product-card slide-up stagger-4 group">
-                    <div class="img-hover shimmer aspect-[3/4] mb-6 bg-charcoal">
-                        <img src="https://image.pollinations.ai/prompt/Luxury%20fashion%20editorial%20photography%2C%20female%20model%20wearing%20an%20elegant%20black%20evening%20dress%20with%20minimalist%20design%2C%20seated%20on%20a%20velvet%20chair%20in%20a%20dark%20opulent%20room%20with%20golden%20candlelight%2C%20old%20money%20aesthetic%2C%20cinematic%20soft%20lighting%2C%20film%20grain%2C%20muted%20tones%2C%20Vogue%20editorial%20campaign%2C%20photorealistic?width=600&height=800&seed=3" 
-                             alt="Elegant Dress" 
-                             class="product-image w-full h-full object-cover">
+                <!-- Product 4 -->
+                <div class="product-card slide-up">
+                    <div class="img-hover aspect-[3/4] mb-4 bg-slate-800 rounded-lg overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=600&h=800&fit=crop" 
+                             alt="Burgundy Suit" 
+                             class="w-full h-full object-cover">
                     </div>
                     <div class="flex justify-between items-start mb-2">
-                        <h3 class="font-serif text-xl text-cream">The Noir Silk Dress</h3>
+                        <h3 class="font-serif text-lg text-cream">Burgundy Blazer</h3>
                         <button class="wishlist-btn" onclick="toggleWishlist(this)">
-                            <svg class="w-5 h-5 text-cream/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+                            <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
                             </svg>
                         </button>
                     </div>
-                    <p class="text-sm text-cream/60 mb-3 font-light">Mulberry silk · Bias-cut</p>
+                    <p class="text-sm text-gray-400 mb-3">Rich burgundy · Modern cut</p>
                     <div class="flex justify-between items-center">
-                        <span class="text-gold font-medium">£365</span>
-                        <button onclick="openModal('The Noir Silk Dress', '£365', 'Mulberry silk evening dress with bias-cut silhouette. Minimalist elegance.', 'https://image.pollinations.ai/prompt/Luxury%20fashion%20editorial%20photography%2C%20female%20model%20wearing%20an%20elegant%20black%20evening%20dress%20with%20minimalist%20design%2C%20seated%20on%20a%20velvet%20chair%20in%20a%20dark%20opulent%20room%20with%20golden%20candlelight%2C%20old%20money%20aesthetic%2C%20cinematic%20soft%20lighting%2C%20film%20grain%2C%20muted%20tones%2C%20Vogue%20editorial%20campaign%2C%20photorealistic?width=600&height=800&seed=3')" 
-                                class="text-xs tracking-wider text-cream/80 hover:text-gold transition-colors border-b border-cream/30 hover:border-gold pb-1">
+                        <span class="text-camel font-semibold">£315</span>
+                        <button onclick="openModal('Burgundy Blazer', '£315', 'Statement burgundy blazer for the bold gentleman. Stand out with confidence.', 'https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=600&h=800&fit=crop')" 
+                                class="text-xs text-camel hover:text-white transition-colors border-b border-camel pb-1">
                             QUICK VIEW
                         </button>
                     </div>
                 </div>
 
-                <!-- Product 5: Premium Shirt -->
-                <div class="product-card slide-up stagger-5 group">
-                    <div class="img-hover shimmer aspect-[3/4] mb-6 bg-charcoal">
-                        <img src="https://image.pollinations.ai/prompt/Editorial%20fashion%20photography%2C%20male%20model%20wearing%20a%20crisp%20white%20premium%20cotton%20shirt%20with%20rolled%20sleeves%2C%20leaning%20against%20a%20dark%20marble%20wall%2C%20soft%20moody%20lighting%2C%20old%20money%20aesthetic%2C%20minimalist%20composition%2C%20charcoal%20background%20with%20warm%20highlights%2C%20cinematic%20film%20tone%2C%20photorealistic%20luxury%20fashion%20campaign?width=600&height=800&seed=4" 
-                             alt="Premium Shirt" 
-                             class="product-image w-full h-full object-cover">
+                <!-- Product 5 -->
+                <div class="product-card slide-up">
+                    <div class="img-hover aspect-[3/4] mb-4 bg-slate-800 rounded-lg overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1617127365659-c47fa8cd7d83?w=600&h=800&fit=crop" 
+                             alt="Grey Suit" 
+                             class="w-full h-full object-cover">
                     </div>
                     <div class="flex justify-between items-start mb-2">
-                        <h3 class="font-serif text-xl text-cream">The Oxford Shirt</h3>
+                        <h3 class="font-serif text-lg text-cream">Grey Pinstripe</h3>
                         <button class="wishlist-btn" onclick="toggleWishlist(this)">
-                            <svg class="w-5 h-5 text-cream/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+                            <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
                             </svg>
                         </button>
                     </div>
-                    <p class="text-sm text-cream/60 mb-3 font-light">Egyptian cotton · Mother-of-pearl buttons</p>
+                    <p class="text-sm text-gray-400 mb-3">Pinstripe pattern · Classic</p>
                     <div class="flex justify-between items-center">
-                        <span class="text-gold font-medium">£185</span>
-                        <button onclick="openModal('The Oxford Shirt', '£185', 'Premium Egyptian cotton shirt with mother-of-pearl buttons. Timeless elegance.', 'https://image.pollinations.ai/prompt/Editorial%20fashion%20photography%2C%20male%20model%20wearing%20a%20crisp%20white%20premium%20cotton%20shirt%20with%20rolled%20sleeves%2C%20leaning%20against%20a%20dark%20marble%20wall%2C%20soft%20moody%20lighting%2C%20old%20money%20aesthetic%2C%20minimalist%20composition%2C%20charcoal%20background%20with%20warm%20highlights%2C%20cinematic%20film%20tone%2C%20photorealistic%20luxury%20fashion%20campaign?width=600&height=800&seed=4')" 
-                                class="text-xs tracking-wider text-cream/80 hover:text-gold transition-colors border-b border-cream/30 hover:border-gold pb-1">
+                        <span class="text-camel font-semibold">£445</span>
+                        <button onclick="openModal('Grey Pinstripe', '£445', 'Classic grey pinstripe suit. The foundation of every gentleman\'s wardrobe.', 'https://images.unsplash.com/photo-1617127365659-c47fa8cd7d83?w=600&h=800&fit=crop')" 
+                                class="text-xs text-camel hover:text-white transition-colors border-b border-camel pb-1">
                             QUICK VIEW
                         </button>
                     </div>
                 </div>
 
-                <!-- Product 6: Minimalist Streetwear -->
-                <div class="product-card slide-up stagger-6 group">
-                    <div class="img-hover shimmer aspect-[3/4] mb-6 bg-charcoal">
-                        <img src="https://image.pollinations.ai/prompt/Editorial%20fashion%20photography%2C%20male%20model%20wearing%20minimalist%20luxury%20streetwear%20-%20black%20oversized%20cashmere%20sweater%20with%20tailored%20charcoal%20trousers%2C%20standing%20in%20a%20modern%20brutalist%20concrete%20building%2C%20soft%20diffused%20lighting%2C%20quiet%20luxury%20aesthetic%2C%20muted%20palette%2C%20Vogue%20street%20style%20photography%2C%20cinematic%2C%20photorealistic?width=600&height=800&seed=7" 
-                             alt="Minimalist Streetwear" 
-                             class="product-image w-full h-full object-cover">
+                <!-- Product 6 -->
+                <div class="product-card slide-up">
+                    <div class="img-hover aspect-[3/4] mb-4 bg-slate-800 rounded-lg overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=600&h=800&fit=crop" 
+                             alt="White Shirt" 
+                             class="w-full h-full object-cover">
                     </div>
                     <div class="flex justify-between items-start mb-2">
-                        <h3 class="font-serif text-xl text-cream">The Urban Cashmere Set</h3>
+                        <h3 class="font-serif text-lg text-cream">Oxford Shirt</h3>
                         <button class="wishlist-btn" onclick="toggleWishlist(this)">
-                            <svg class="w-5 h-5 text-cream/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+                            <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
                             </svg>
                         </button>
                     </div>
-                    <p class="text-sm text-cream/60 mb-3 font-light">Oversized cashmere · Tailored trousers</p>
+                    <p class="text-sm text-gray-400 mb-3">Egyptian cotton · Crisp</p>
                     <div class="flex justify-between items-center">
-                        <span class="text-gold font-medium">£320</span>
-                        <button onclick="openModal('The Urban Cashmere Set', '£320', 'Oversized cashmere sweater with tailored charcoal trousers. Modern luxury.', 'https://image.pollinations.ai/prompt/Editorial%20fashion%20photography%2C%20male%20model%20wearing%20minimalist%20luxury%20streetwear%20-%20black%20oversized%20cashmere%20sweater%20with%20tailored%20charcoal%20trousers%2C%20standing%20in%20a%20modern%20brutalist%20concrete%20building%2C%20soft%20diffused%20lighting%2C%20quiet%20luxury%20aesthetic%2C%20muted%20palette%2C%20Vogue%20street%20style%20photography%2C%20cinematic%2C%20photorealistic?width=600&height=800&seed=7')" 
-                                class="text-xs tracking-wider text-cream/80 hover:text-gold transition-colors border-b border-cream/30 hover:border-gold pb-1">
+                        <span class="text-camel font-semibold">£125</span>
+                        <button onclick="openModal('Oxford Shirt', '£125', 'Premium Egyptian cotton Oxford shirt. The perfect foundation piece.', 'https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=600&h=800&fit=crop')" 
+                                class="text-xs text-camel hover:text-white transition-colors border-b border-camel pb-1">
                             QUICK VIEW
                         </button>
                     </div>
                 </div>
 
-                <!-- Product 7: Formal Wear -->
-                <div class="product-card slide-up stagger-7 group">
-                    <div class="img-hover shimmer aspect-[3/4] mb-6 bg-charcoal">
-                        <img src="https://image.pollinations.ai/prompt/Luxury%20formal%20wear%20editorial%20photography%2C%20male%20model%20in%20a%20classic%20black%20tuxedo%20with%20bow%20tie%2C%20standing%20in%20a%20grand%20ballroom%20with%20crystal%20chandeliers%20blurred%20in%20background%2C%20dramatic%20cinematic%20lighting%2C%20old%20money%20aesthetic%2C%20deep%20blacks%20and%20gold%20accents%2C%20Vogue%20editorial%20style%2C%20photorealistic?width=600&height=800&seed=5" 
-                             alt="Formal Wear" 
-                             class="product-image w-full h-full object-cover">
+                <!-- Product 7 -->
+                <div class="product-card slide-up">
+                    <div class="img-hover aspect-[3/4] mb-4 bg-slate-800 rounded-lg overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1559582798-678dfc71ccd8?w=600&h=800&fit=crop" 
+                             alt="Tuxedo" 
+                             class="w-full h-full object-cover">
                     </div>
                     <div class="flex justify-between items-start mb-2">
-                        <h3 class="font-serif text-xl text-cream">The Midnight Tuxedo</h3>
+                        <h3 class="font-serif text-lg text-cream">Black Tuxedo</h3>
                         <button class="wishlist-btn" onclick="toggleWishlist(this)">
-                            <svg class="w-5 h-5 text-cream/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+                            <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
                             </svg>
                         </button>
                     </div>
-                    <p class="text-sm text-cream/60 mb-3 font-light">Black tie · Velvet lapels</p>
+                    <p class="text-sm text-gray-400 mb-3">Formal wear · Velvet lapel</p>
                     <div class="flex justify-between items-center">
-                        <span class="text-gold font-medium">£495</span>
-                        <button onclick="openModal('The Midnight Tuxedo', '£495', 'Classic black tuxedo with velvet lapels. The epitome of formal elegance.', 'https://image.pollinations.ai/prompt/Luxury%20formal%20wear%20editorial%20photography%2C%20male%20model%20in%20a%20classic%20black%20tuxedo%20with%20bow%20tie%2C%20standing%20in%20a%20grand%20ballroom%20with%20crystal%20chandeliers%20blurred%20in%20background%2C%20dramatic%20cinematic%20lighting%2C%20old%20money%20aesthetic%2C%20deep%20blacks%20and%20gold%20accents%2C%20Vogue%20editorial%20style%2C%20photorealistic?width=600&height=800&seed=5')" 
-                                class="text-xs tracking-wider text-cream/80 hover:text-gold transition-colors border-b border-cream/30 hover:border-gold pb-1">
+                        <span class="text-camel font-semibold">£595</span>
+                        <button onclick="openModal('Black Tuxedo', '£595', 'Classic black tuxedo with velvet lapels. For black-tie events and galas.', 'https://images.unsplash.com/photo-1559582798-678dfc71ccd8?w=600&h=800&fit=crop')" 
+                                class="text-xs text-camel hover:text-white transition-colors border-b border-camel pb-1">
                             QUICK VIEW
                         </button>
                     </div>
                 </div>
 
-                <!-- Product 8: Accessories -->
-                <div class="product-card slide-up stagger-8 group">
-                    <div class="img-hover shimmer aspect-[3/4] mb-6 bg-charcoal">
-                        <img src="https://image.pollinations.ai/prompt/Luxury%20accessories%20editorial%20flat%20lay%20photography%2C%20a%20premium%20leather%20watch%20with%20gold%20details%2C%20Italian%20leather%20belt%2C%20and%20designer%20leather%20handbag%20arranged%20on%20dark%20marble%20surface%2C%20soft%20directional%20lighting%2C%20old%20money%20aesthetic%2C%20minimalist%20composition%2C%20muted%20gold%20and%20black%20palette%2C%20high-end%20product%20photography%2C%20photorealistic?width=600&height=800&seed=6" 
+                <!-- Product 8 -->
+                <div class="product-card slide-up">
+                    <div class="img-hover aspect-[3/4] mb-4 bg-slate-800 rounded-lg overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1611312449408-fcece27cdbb7?w=600&h=800&fit=crop" 
                              alt="Accessories" 
-                             class="product-image w-full h-full object-cover">
+                             class="w-full h-full object-cover">
                     </div>
                     <div class="flex justify-between items-start mb-2">
-                        <h3 class="font-serif text-xl text-cream">The Heritage Accessories</h3>
+                        <h3 class="font-serif text-lg text-cream">Leather Accessories</h3>
                         <button class="wishlist-btn" onclick="toggleWishlist(this)">
-                            <svg class="w-5 h-5 text-cream/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+                            <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
                             </svg>
                         </button>
                     </div>
-                    <p class="text-sm text-cream/60 mb-3 font-light">Swiss watch · Italian leather</p>
+                    <p class="text-sm text-gray-400 mb-3">Belt, wallet, watch strap</p>
                     <div class="flex justify-between items-center">
-                        <span class="text-gold font-medium">£245</span>
-                        <button onclick="openModal('The Heritage Accessories', '£245', 'Swiss-made timepiece with Italian leather strap. Handcrafted excellence.', 'https://image.pollinations.ai/prompt/Luxury%20accessories%20editorial%20flat%20lay%20photography%2C%20a%20premium%20leather%20watch%20with%20gold%20details%2C%20Italian%20leather%20belt%2C%20and%20designer%20leather%20handbag%20arranged%20on%20dark%20marble%20surface%2C%20soft%20directional%20lighting%2C%20old%20money%20aesthetic%2C%20minimalist%20composition%2C%20muted%20gold%20and%20black%20palette%2C%20high-end%20product%20photography%2C%20photorealistic?width=600&height=800&seed=6')" 
-                                class="text-xs tracking-wider text-cream/80 hover:text-gold transition-colors border-b border-cream/30 hover:border-gold pb-1">
+                        <span class="text-camel font-semibold">£185</span>
+                        <button onclick="openModal('Leather Accessories', '£185', 'Premium leather accessories set. Complete your look with style.', 'https://images.unsplash.com/photo-1611312449408-fcece27cdbb7?w=600&h=800&fit=crop')" 
+                                class="text-xs text-camel hover:text-white transition-colors border-b border-camel pb-1">
                             QUICK VIEW
                         </button>
                     </div>
@@ -641,255 +582,151 @@
     </section>
 
     <!-- Lookbook Section -->
-    <section id="lookbook" class="relative">
-        <!-- Lookbook 1 -->
-        <div class="lookbook-section flex items-center">
+    <section id="lookbook" class="py-20">
+        <div class="lookbook relative mb-20 fade-in">
             <div class="absolute inset-0">
-                <img src="https://image.pollinations.ai/prompt/Vogue%20editorial%20fashion%20photography%2C%20elegant%20female%20model%20in%20cream%20silk%20slip%20dress%20with%20pearl%20necklace%2C%20walking%20through%20a%20grand%20Parisian-style%20marble%20staircase%2C%20soft%20golden%20hour%20light%20streaming%20through%20tall%20windows%2C%20old%20money%20aesthetic%2C%20cinematic%20film%20grain%2C%20muted%20warm%20palette%2C%20photorealistic%20luxury%20fashion%20campaign?width=1920&height=1080&seed=8" 
+                <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=1920&h=1080&fit=crop" 
                      alt="Lookbook 1" 
-                     class="lookbook-img w-full h-full object-cover">
-                <div class="absolute inset-0 bg-gradient-to-r from-black/60 via-black/30 to-transparent"></div>
+                     class="w-full h-[80vh] object-cover">
+                <div class="absolute inset-0 bg-black/50"></div>
             </div>
-            <div class="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 py-24">
-                <div class="max-w-lg fade-in">
-                    <p class="text-sm tracking-[0.3em] text-gold mb-4 font-sans">CHAPTER I</p>
-                    <h2 class="font-serif text-4xl md:text-6xl font-light text-cream mb-6">The Art of<br><span class="italic">Simplicity</span></h2>
-                    <p class="text-lg text-cream/70 font-light mb-8 leading-relaxed">
-                        Where less becomes more. Our spring collection embraces the quiet confidence of understated luxury.
-                    </p>
-                    <a href="#collection" class="inline-block text-sm tracking-wider text-gold border-b border-gold pb-2 hover:text-cream hover:border-cream transition-colors">
-                        VIEW COLLECTION →
+            <div class="relative z-10 max-w-7xl mx-auto px-6 h-[80vh] flex items-center">
+                <div class="max-w-xl">
+                    <p class="text-camel text-sm tracking-[0.3em] mb-4">CHAPTER I</p>
+                    <h2 class="font-serif text-4xl md:text-6xl text-cream mb-6">The Power Suit</h2>
+                    <p class="text-lg text-gray-200 mb-8 font-light">Command respect with our signature three-piece suits. Designed for the modern professional.</p>
+                    <a href="#collection" class="btn-primary px-8 py-3 text-white font-medium tracking-wider text-sm rounded inline-block">
+                        EXPLORE SUITS
                     </a>
                 </div>
             </div>
         </div>
 
-        <!-- Lookbook 2 -->
-        <div class="lookbook-section flex items-center">
+        <div class="lookbook relative fade-in">
             <div class="absolute inset-0">
-                <img src="https://image.pollinations.ai/prompt/High-end%20fashion%20editorial%2C%20male%20model%20in%20navy%20wool%20double-breasted%20overcoat%20with%20cream%20cashmere%20scarf%2C%20standing%20in%20a%20grand%20library%20with%20dark%20wood%20bookshelves%20and%20warm%20amber%20lighting%2C%20old%20money%20aesthetic%2C%20cinematic%20film%20photography%2C%20photorealistic%20luxury%20fashion%20campaign?width=1920&height=1080&seed=9" 
+                <img src="https://images.unsplash.com/photo-1487222477894-8943e31ef7b2?w=1920&h=1080&fit=crop" 
                      alt="Lookbook 2" 
-                     class="lookbook-img w-full h-full object-cover">
-                <div class="absolute inset-0 bg-gradient-to-l from-black/60 via-black/30 to-transparent"></div>
+                     class="w-full h-[80vh] object-cover">
+                <div class="absolute inset-0 bg-black/50"></div>
             </div>
-            <div class="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 py-24">
-                <div class="max-w-lg ml-auto text-right fade-in">
-                    <p class="text-sm tracking-[0.3em] text-gold mb-4 font-sans">CHAPTER II</p>
-                    <h2 class="font-serif text-4xl md:text-6xl font-light text-cream mb-6">Heritage<br><span class="italic">Craftsmanship</span></h2>
-                    <p class="text-lg text-cream/70 font-light mb-8 leading-relaxed">
-                        Three generations of master tailors. Each piece tells a story of dedication, precision, and timeless elegance.
-                    </p>
-                    <a href="#story" class="inline-block text-sm tracking-wider text-gold border-b border-gold pb-2 hover:text-cream hover:border-cream transition-colors">
-                        OUR STORY →
-                    </a>
-                </div>
-            </div>
-        </div>
-
-        <!-- Lookbook 3 -->
-        <div class="lookbook-section flex items-center">
-            <div class="absolute inset-0">
-                <img src="https://image.pollinations.ai/prompt/Luxury%20fashion%20editorial%2C%20female%20model%20in%20flowing%20cream%20silk%20evening%20gown%2C%20standing%20in%20opulent%20ballroom%20with%20crystal%20chandeliers%20and%20gilded%20mirrors%2C%20soft%20warm%20lighting%2C%20old%20money%20aesthetic%2C%20cinematic%20film%20photography%2C%20Vogue%20editorial%20style%2C%20photorealistic%20high-end%20fashion%20campaign?width=1920&height=1080&seed=15" 
-                     alt="Lookbook 3" 
-                     class="lookbook-img w-full h-full object-cover">
-                <div class="absolute inset-0 bg-gradient-to-r from-black/60 via-black/30 to-transparent"></div>
-            </div>
-            <div class="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 py-24">
-                <div class="max-w-lg fade-in">
-                    <p class="text-sm tracking-[0.3em] text-gold mb-4 font-sans">CHAPTER III</p>
-                    <h2 class="font-serif text-4xl md:text-6xl font-light text-cream mb-6">Evening<br><span class="italic">Splendour</span></h2>
-                    <p class="text-lg text-cream/70 font-light mb-8 leading-relaxed">
-                        For moments that matter. Our evening collection captures the essence of sophistication and grace.
-                    </p>
-                    <a href="#collection" class="inline-block text-sm tracking-wider text-gold border-b border-gold pb-2 hover:text-cream hover:border-cream transition-colors">
-                        SHOP EVENING →
+            <div class="relative z-10 max-w-7xl mx-auto px-6 h-[80vh] flex items-center justify-end">
+                <div class="max-w-xl text-right">
+                    <p class="text-camel text-sm tracking-[0.3em] mb-4">CHAPTER II</p>
+                    <h2 class="font-serif text-4xl md:text-6xl text-cream mb-6">Smart Casual</h2>
+                    <p class="text-lg text-gray-200 mb-8 font-light">Effortless style for every occasion. Blazers that transition from day to night.</p>
+                    <a href="#collection" class="btn-secondary px-8 py-3 font-medium tracking-wider text-sm rounded inline-block">
+                        SHOP BLAZERS
                     </a>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Why Us Section -->
-    <section class="py-24 md:py-32 px-6 lg:px-8 bg-charcoal/30">
+    <!-- Features Section -->
+    <section class="py-24 px-6 bg-slate-900">
         <div class="max-w-7xl mx-auto">
             <div class="text-center mb-16 fade-in">
-                <p class="text-sm tracking-[0.3em] text-gold mb-4 font-sans">THE MAISON NOIR DIFFERENCE</p>
-                <h2 class="font-serif text-4xl md:text-5xl lg:text-6xl font-light text-cream mb-6">Why Choose Us</h2>
-                <div class="gold-divider w-24 mx-auto"></div>
+                <p class="text-camel text-sm tracking-[0.3em] mb-4">WHY CHOOSE US</p>
+                <h2 class="font-serif text-4xl md:text-5xl text-cream mb-4">The Maison Difference</h2>
+                <div class="divider w-24 mx-auto"></div>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
                 <div class="text-center fade-in">
-                    <div class="w-16 h-16 mx-auto mb-6 flex items-center justify-center">
-                        <svg class="w-12 h-12 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/>
+                    <div class="feature-icon">
+                        <svg class="w-8 h-8 text-camel" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/>
                         </svg>
                     </div>
-                    <h3 class="font-serif text-xl text-cream mb-3">Handmade Quality</h3>
-                    <p class="text-sm text-cream/60 font-light leading-relaxed">Every piece is meticulously crafted by master artisans with decades of experience.</p>
+                    <h3 class="font-serif text-xl text-cream mb-2">Premium Quality</h3>
+                    <p class="text-gray-400 text-sm">Hand-selected fabrics from Italy's finest mills</p>
                 </div>
 
                 <div class="text-center fade-in">
-                    <div class="w-16 h-16 mx-auto mb-6 flex items-center justify-center">
-                        <svg class="w-12 h-12 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
+                    <div class="feature-icon">
+                        <svg class="w-8 h-8 text-camel" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
                         </svg>
                     </div>
-                    <h3 class="font-serif text-xl text-cream mb-3">Premium Fabrics</h3>
-                    <p class="text-sm text-cream/60 font-light leading-relaxed">Sourced from the finest mills in Italy, Scotland, and Mongolia.</p>
+                    <h3 class="font-serif text-xl text-cream mb-2">Fast Delivery</h3>
+                    <p class="text-gray-400 text-sm">Free worldwide shipping on orders over £300</p>
                 </div>
 
                 <div class="text-center fade-in">
-                    <div class="w-16 h-16 mx-auto mb-6 flex items-center justify-center">
-                        <svg class="w-12 h-12 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    <div class="feature-icon">
+                        <svg class="w-8 h-8 text-camel" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
                         </svg>
                     </div>
-                    <h3 class="font-serif text-xl text-cream mb-3">Limited Collections</h3>
-                    <p class="text-sm text-cream/60 font-light leading-relaxed">Exclusive pieces produced in limited quantities for true exclusivity.</p>
+                    <h3 class="font-serif text-xl text-cream mb-2">Perfect Fit</h3>
+                    <p class="text-gray-400 text-sm">Complimentary alterations within 30 days</p>
                 </div>
 
                 <div class="text-center fade-in">
-                    <div class="w-16 h-16 mx-auto mb-6 flex items-center justify-center">
-                        <svg class="w-12 h-12 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    <div class="feature-icon">
+                        <svg class="w-8 h-8 text-camel" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
                         </svg>
                     </div>
-                    <h3 class="font-serif text-xl text-cream mb-3">Sustainable Fashion</h3>
-                    <p class="text-sm text-cream/60 font-light leading-relaxed">Committed to ethical practices and environmental responsibility.</p>
+                    <h3 class="font-serif text-xl text-cream mb-2">Sustainable</h3>
+                    <p class="text-gray-400 text-sm">Ethically sourced materials & production</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Reviews Section -->
-    <section class="py-24 md:py-32 px-6 lg:px-8">
+    <!-- Testimonials -->
+    <section class="py-24 px-6 bg-slate-950">
         <div class="max-w-7xl mx-auto">
             <div class="text-center mb-16 fade-in">
-                <p class="text-sm tracking-[0.3em] text-gold mb-4 font-sans">TESTIMONIALS</p>
-                <h2 class="font-serif text-4xl md:text-5xl lg:text-6xl font-light text-cream mb-6">Client Voices</h2>
-                <div class="gold-divider w-24 mx-auto"></div>
+                <p class="text-camel text-sm tracking-[0.3em] mb-4">TESTIMONIALS</p>
+                <h2 class="font-serif text-4xl md:text-5xl text-cream mb-4">Client Stories</h2>
+                <div class="divider w-24 mx-auto"></div>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="testimonial-card p-8 border border-cream/10 bg-charcoal/20 fade-in">
+                <div class="testimonial p-8 rounded-lg fade-in">
                     <div class="flex mb-4">
-                        <svg class="w-5 h-5 text-gold" fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
-                        </svg>
-                        <svg class="w-5 h-5 text-gold" fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
-                        </svg>
-                        <svg class="w-5 h-5 text-gold" fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
-                        </svg>
-                        <svg class="w-5 h-5 text-gold" fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
-                        </svg>
-                        <svg class="w-5 h-5 text-gold" fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
-                        </svg>
+                        <svg class="w-5 h-5 text-camel" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        <svg class="w-5 h-5 text-camel" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        <svg class="w-5 h-5 text-camel" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        <svg class="w-5 h-5 text-camel" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        <svg class="w-5 h-5 text-camel" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
                     </div>
-                    <p class="text-cream/80 font-light mb-6 leading-relaxed italic">"The quality is exceptional. Every detail speaks of craftsmanship and attention. This is what true luxury feels like."</p>
+                    <p class="text-gray-300 mb-6 font-light">"The three-piece suit fit perfectly right out of the box. Quality is unmatched for the price. Highly recommend!"</p>
                     <div>
-                        <p class="font-serif text-cream">Alexandra M.</p>
-                        <p class="text-xs text-cream/50 tracking-wider">LONDON</p>
+                        <p class="font-serif text-cream">James Mitchell</p>
+                        <p class="text-xs text-gray-500">London, UK</p>
                     </div>
                 </div>
 
-                <div class="testimonial-card p-8 border border-cream/10 bg-charcoal/20 fade-in">
+                <div class="testimonial p-8 rounded-lg fade-in">
                     <div class="flex mb-4">
-                        <svg class="w-5 h-5 text-gold" fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
-                        </svg>
-                        <svg class="w-5 h-5 text-gold" fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
-                        </svg>
-                        <svg class="w-5 h-5 text-gold" fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
-                        </svg>
-                        <svg class="w-5 h-5 text-gold" fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
-                        </svg>
-                        <svg class="w-5 h-5 text-gold" fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
-                        </svg>
+                        <svg class="w-5 h-5 text-camel" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        <svg class="w-5 h-5 text-camel" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        <svg class="w-5 h-5 text-camel" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        <svg class="w-5 h-5 text-camel" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        <svg class="w-5 h-5 text-camel" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
                     </div>
-                    <p class="text-cream/80 font-light mb-6 leading-relaxed italic">"I've never experienced such impeccable tailoring. The Savile Row suit fits like it was made just for me. Because it essentially was."</p>
+                    <p class="text-gray-300 mb-6 font-light">"Finally, a brand that understands young professionals need quality suits that don't break the bank. Love it!"</p>
                     <div>
-                        <p class="font-serif text-cream">James W.</p>
-                        <p class="text-xs text-cream/50 tracking-wider">PARIS</p>
+                        <p class="font-serif text-cream">David Chen</p>
+                        <p class="text-xs text-gray-500">New York, USA</p>
                     </div>
                 </div>
 
-                <div class="testimonial-card p-8 border border-cream/10 bg-charcoal/20 fade-in">
+                <div class="testimonial p-8 rounded-lg fade-in">
                     <div class="flex mb-4">
-                        <svg class="w-5 h-5 text-gold" fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
-                        </svg>
-                        <svg class="w-5 h-5 text-gold" fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
-                        </svg>
-                        <svg class="w-5 h-5 text-gold" fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
-                        </svg>
-                        <svg class="w-5 h-5 text-gold" fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
-                        </svg>
-                        <svg class="w-5 h-5 text-gold" fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
-                        </svg>
+                        <svg class="w-5 h-5 text-camel" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        <svg class="w-5 h-5 text-camel" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        <svg class="w-5 h-5 text-camel" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        <svg class="w-5 h-5 text-camel" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        <svg class="w-5 h-5 text-camel" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L......"/></svg>
                     </div>
-                    <p class="text-cream/80 font-light mb-6 leading-relaxed italic">"The cashmere coat is a masterpiece. Soft, elegant, and timeless. It's become my signature piece for every important occasion."</p>
+                    <p class="text-gray-300 mb-6 font-light">"The camel overcoat is my go-to piece this winter. Gets compliments every time I wear it."</p>
                     <div>
-                        <p class="font-serif text-cream">Sophie L.</p>
-                        <p class="text-xs text-cream/50 tracking-wider">MILAN</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Brand Story Section -->
-    <section id="story" class="py-24 md:py-32 px-6 lg:px-8 bg-charcoal/30">
-        <div class="max-w-7xl mx-auto">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-                <div class="fade-in">
-                    <p class="text-sm tracking-[0.3em] text-gold mb-4 font-sans">OUR STORY</p>
-                    <h2 class="font-serif text-4xl md:text-5xl lg:text-6xl font-light text-cream mb-8">Crafted with<br><span class="italic">Purpose</span></h2>
-                    <div class="space-y-6 text-cream/70 font-light leading-relaxed">
-                        <p>
-                            Founded in 2024, Maison Noir was born from a simple belief: true luxury lies in the details. Every stitch, every fabric choice, every silhouette is considered with intention.
-                        </p>
-                        <p>
-                            We work with master artisans who have dedicated their lives to their craft. Their expertise, passed down through generations, ensures that each piece meets our exacting standards.
-                        </p>
-                        <p>
-                            Our commitment to sustainability means we source only the finest ethical materials. Because luxury should never come at the expense of our planet.
-                        </p>
-                    </div>
-                    <div class="mt-12 flex items-center space-x-8">
-                        <div>
-                            <p class="font-serif text-3xl text-gold">15+</p>
-                            <p class="text-xs text-cream/50 tracking-wider mt-1">MASTER ARTISANS</p>
-                        </div>
-                        <div class="w-px h-12 bg-cream/20"></div>
-                        <div>
-                            <p class="font-serif text-3xl text-gold">100%</p>
-                            <p class="text-xs text-cream/50 tracking-wider mt-1">ETHICAL SOURCING</p>
-                        </div>
-                        <div class="w-px h-12 bg-cream/20"></div>
-                        <div>
-                            <p class="font-serif text-3xl text-gold">500</p>
-                            <p class="text-xs text-cream/50 tracking-wider mt-1">LIMITED PIECES</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="fade-in">
-                    <div class="img-hover aspect-[3/4] bg-charcoal">
-                        <img src="https://image.pollinations.ai/prompt/Luxury%20fashion%20atelier%20interior%2C%20master%20tailor%20working%20on%20a%20bespoke%20suit%2C%20dark%20wood%20worktables%20with%20fabric%20swatches%20and%20tools%2C%20warm%20ambient%20lighting%2C%20old%20money%20aesthetic%2C%20cinematic%20film%20photography%2C%20photorealistic?width=800&height=1067&seed=20" 
-                             alt="Atelier" 
-                             class="w-full h-full object-cover">
+                        <p class="font-serif text-cream">Alexander Ross</p>
+                        <p class="text-xs text-gray-500">Toronto, Canada</p>
                     </div>
                 </div>
             </div>
@@ -897,143 +734,141 @@
     </section>
 
     <!-- Contact Section -->
-    <section id="contact" class="py-24 md:py-32 px-6 lg:px-8">
+    <section id="contact" class="py-24 px-6 bg-slate-900">
         <div class="max-w-4xl mx-auto text-center">
             <div class="fade-in">
-                <p class="text-sm tracking-[0.3em] text-gold mb-4 font-sans">GET IN TOUCH</p>
-                <h2 class="font-serif text-4xl md:text-5xl lg:text-6xl font-light text-cream mb-6">Contact Us</h2>
-                <div class="gold-divider w-24 mx-auto mb-12"></div>
-                <p class="text-lg text-cream/70 font-light mb-12 max-w-2xl mx-auto">
-                    For bespoke consultations, private appointments, or any inquiries, our concierge team is at your service.
-                </p>
+                <p class="text-camel text-sm tracking-[0.3em] mb-4">GET IN TOUCH</p>
+                <h2 class="font-serif text-4xl md:text-5xl text-cream mb-6">Let's Connect</h2>
+                <div class="divider w-24 mx-auto mb-8"></div>
+                <p class="text-gray-300 mb-12 font-light">Have questions? Our style consultants are here to help you find the perfect fit.</p>
+                
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
                     <div>
-                        <p class="text-gold text-sm tracking-wider mb-2">VISIT US</p>
-                        <p class="text-cream/70 font-light text-sm">123 Mayfair Lane<br>London, W1K 3QA</p>
+                        <p class="text-camel text-sm tracking-wider mb-2">VISIT US</p>
+                        <p class="text-gray-400 text-sm">123 Fashion District<br>London, UK</p>
                     </div>
                     <div>
-                        <p class="text-gold text-sm tracking-wider mb-2">CALL US</p>
-                        <p class="text-cream/70 font-light text-sm">+44 20 7946 0958<br>Mon-Sat, 10am-7pm</p>
+                        <p class="text-camel text-sm tracking-wider mb-2">CALL US</p>
+                        <p class="text-gray-400 text-sm">+44 20 7946 0958<br>Mon-Sat 10am-7pm</p>
                     </div>
                     <div>
-                        <p class="text-gold text-sm tracking-wider mb-2">EMAIL US</p>
-                        <p class="text-cream/70 font-light text-sm">concierge@maisonnoir.com<br>24/7 response</p>
+                        <p class="text-camel text-sm tracking-wider mb-2">EMAIL</p>
+                        <p class="text-gray-400 text-sm">hello@maisonnoir.com<br>We reply within 24hrs</p>
                     </div>
                 </div>
-                <a href="mailto:concierge@maisonnoir.com" class="btn-luxury inline-block px-12 py-4 bg-gold text-dark font-medium tracking-wider text-sm hover:bg-gold-light">
-                    BOOK APPOINTMENT
+
+                <a href="mailto:hello@maisonnoir.com" class="btn-primary px-12 py-4 text-white font-medium tracking-wider text-sm rounded inline-block">
+                    BOOK CONSULTATION
                 </a>
             </div>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="py-12 px-6 lg:px-8 border-t border-cream/10">
+    <footer class="py-12 px-6 bg-slate-950 border-t border-gray-800">
         <div class="max-w-7xl mx-auto">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
                 <div>
                     <h3 class="font-serif text-xl text-cream mb-4">MAISON NOIR</h3>
-                    <p class="text-sm text-cream/60 font-light leading-relaxed">Timeless elegance. Modern luxury. Crafted for those who appreciate the finer things.</p>
+                    <p class="text-gray-400 text-sm">Modern elegance for the contemporary gentleman.</p>
                 </div>
                 <div>
-                    <h4 class="text-sm tracking-wider text-gold mb-4">COLLECTION</h4>
-                    <ul class="space-y-2 text-sm text-cream/60 font-light">
-                        <li><a href="#" class="hover:text-gold transition-colors">Blazers</a></li>
-                        <li><a href="#" class="hover:text-gold transition-colors">Suits</a></li>
-                        <li><a href="#" class="hover:text-gold transition-colors">Coats</a></li>
-                        <li><a href="#" class="hover:text-gold transition-colors">Dresses</a></li>
+                    <h4 class="text-camel text-sm tracking-wider mb-4">SHOP</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="#" class="hover:text-camel transition-colors">Suits</a></li>
+                        <li><a href="#" class="hover:text-camel transition-colors">Blazers</a></li>
+                        <li><a href="#" class="hover:text-camel transition-colors">Coats</a></li>
+                        <li><a href="#" class="hover:text-camel transition-colors">Accessories</a></li>
                     </ul>
                 </div>
                 <div>
-                    <h4 class="text-sm tracking-wider text-gold mb-4">MAISON</h4>
-                    <ul class="space-y-2 text-sm text-cream/60 font-light">
-                        <li><a href="#" class="hover:text-gold transition-colors">Our Story</a></li>
-                        <li><a href="#" class="hover:text-gold transition-colors">Craftsmanship</a></li>
-                        <li><a href="#" class="hover:text-gold transition-colors">Sustainability</a></li>
-                        <li><a href="#" class="hover:text-gold transition-colors">Careers</a></li>
+                    <h4 class="text-camel text-sm tracking-wider mb-4">COMPANY</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="#" class="hover:text-camel transition-colors">About Us</a></li>
+                        <li><a href="#" class="hover:text-camel transition-colors">Sustainability</a></li>
+                        <li><a href="#" class="hover:text-camel transition-colors">Careers</a></li>
+                        <li><a href="#" class="hover:text-camel transition-colors">Press</a></li>
                     </ul>
                 </div>
                 <div>
-                    <h4 class="text-sm tracking-wider text-gold mb-4">FOLLOW</h4>
-                    <ul class="space-y-2 text-sm text-cream/60 font-light">
-                        <li><a href="#" class="hover:text-gold transition-colors">Instagram</a></li>
-                        <li><a href="#" class="hover:text-gold transition-colors">Pinterest</a></li>
-                        <li><a href="#" class="hover:text-gold transition-colors">Vogue</a></li>
-                        <li><a href="#" class="hover:text-gold transition-colors">Newsletter</a></li>
+                    <h4 class="text-camel text-sm tracking-wider mb-4">FOLLOW</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="#" class="hover:text-camel transition-colors">Instagram</a></li>
+                        <li><a href="#" class="hover:text-camel transition-colors">Twitter</a></li>
+                        <li><a href="#" class="hover:text-camel transition-colors">Pinterest</a></li>
+                        <li><a href="#" class="hover:text-camel transition-colors">Newsletter</a></li>
                     </ul>
                 </div>
             </div>
-            <div class="gold-divider mb-8"></div>
-            <div class="flex flex-col md:flex-row justify-between items-center text-xs text-cream/40">
+            <div class="divider mb-6"></div>
+            <div class="flex flex-col md:flex-row justify-between items-center text-xs text-gray-500">
                 <p>&copy; 2024 Maison Noir. All rights reserved.</p>
                 <div class="flex space-x-6 mt-4 md:mt-0">
-                    <a href="#" class="hover:text-gold transition-colors">Privacy Policy</a>
-                    <a href="#" class="hover:text-gold transition-colors">Terms of Service</a>
-                    <a href="#" class="hover:text-gold transition-colors">Shipping & Returns</a>
+                    <a href="#" class="hover:text-camel transition-colors">Privacy</a>
+                    <a href="#" class="hover:text-camel transition-colors">Terms</a>
+                    <a href="#" class="hover:text-camel transition-colors">Shipping</a>
                 </div>
             </div>
         </div>
     </footer>
 
     <!-- Modal -->
-    <div id="productModal" class="fixed inset-0 z-[100] hidden">
-        <div class="modal-backdrop absolute inset-0" onclick="closeModal()"></div>
-        <div class="relative z-10 flex items-center justify-center min-h-screen p-4">
-            <div class="modal-content rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto">
-                <div class="grid grid-cols-1 md:grid-cols-2">
-                    <div class="aspect-[3/4] bg-charcoal">
-                        <img id="modalImage" src="" alt="Product" class="w-full h-full object-cover">
+    <div id="productModal" class="modal">
+        <div class="modal-content">
+            <div class="grid grid-cols-1 md:grid-cols-2">
+                <div class="aspect-[3/4] bg-slate-800">
+                    <img id="modalImage" src="" alt="Product" class="w-full h-full object-cover">
+                </div>
+                <div class="p-8">
+                    <button onclick="closeModal()" class="absolute top-4 right-4 text-gray-400 hover:text-camel transition-colors">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                        </svg>
+                    </button>
+                    
+                    <h3 id="modalTitle" class="font-serif text-3xl text-cream mb-2"></h3>
+                    <p id="modalPrice" class="text-camel text-2xl mb-6"></p>
+                    <p id="modalDescription" class="text-gray-300 mb-8 font-light leading-relaxed"></p>
+
+                    <div class="mb-8">
+                        <p class="text-camel text-sm tracking-wider mb-4">SELECT SIZE</p>
+                        <div class="flex flex-wrap gap-3">
+                            <button class="size-btn w-12 h-12 border border-gray-600 text-gray-300 text-sm rounded" onclick="selectSize(this)">36</button>
+                            <button class="size-btn w-12 h-12 border border-gray-600 text-gray-300 text-sm rounded" onclick="selectSize(this)">38</button>
+                            <button class="size-btn w-12 h-12 border border-gray-600 text-gray-300 text-sm rounded active" onclick="selectSize(this)">40</button>
+                            <button class="size-btn w-12 h-12 border border-gray-600 text-gray-300 text-sm rounded" onclick="selectSize(this)">42</button>
+                            <button class="size-btn w-12 h-12 border border-gray-600 text-gray-300 text-sm rounded" onclick="selectSize(this)">44</button>
+                        </div>
                     </div>
-                    <div class="p-8 md:p-12">
-                        <button onclick="closeModal()" class="absolute top-4 right-4 text-cream/60 hover:text-gold transition-colors">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12"/>
-                            </svg>
+
+                    <div class="space-y-4">
+                        <button class="btn-primary w-full py-4 text-white font-medium tracking-wider text-sm rounded">
+                            ADD TO CART
                         </button>
-                        <h3 id="modalTitle" class="font-serif text-3xl text-cream mb-2"></h3>
-                        <p id="modalPrice" class="text-gold text-xl mb-6"></p>
-                        <p id="modalDescription" class="text-cream/70 font-light mb-8 leading-relaxed"></p>
-                        
-                        <div class="mb-8">
-                            <p class="text-sm tracking-wider text-gold mb-4">SELECT SIZE</p>
-                            <div class="flex flex-wrap gap-3">
-                                <button class="size-btn w-12 h-12 border border-cream/30 text-cream text-sm" onclick="selectSize(this)">XS</button>
-                                <button class="size-btn w-12 h-12 border border-cream/30 text-cream text-sm" onclick="selectSize(this)">S</button>
-                                <button class="size-btn w-12 h-12 border border-cream/30 text-cream text-sm active" onclick="selectSize(this)">M</button>
-                                <button class="size-btn w-12 h-12 border border-cream/30 text-cream text-sm" onclick="selectSize(this)">L</button>
-                                <button class="size-btn w-12 h-12 border border-cream/30 text-cream text-sm" onclick="selectSize(this)">XL</button>
+                        <button class="btn-secondary w-full py-4 font-medium tracking-wider text-sm rounded">
+                            ADD TO WISHLIST
+                        </button>
+                    </div>
+
+                    <div class="mt-8 pt-8 border-t border-gray-700">
+                        <div class="space-y-3 text-sm text-gray-400">
+                            <div class="flex items-center">
+                                <svg class="w-5 h-5 text-camel mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                                </svg>
+                                <span>Free worldwide shipping over £300</span>
                             </div>
-                        </div>
-
-                        <div class="space-y-4">
-                            <button class="btn-luxury w-full py-4 bg-gold text-dark font-medium tracking-wider text-sm hover:bg-gold-light">
-                                ADD TO CART
-                            </button>
-                            <button class="btn-luxury w-full py-4 border border-cream/30 text-cream font-medium tracking-wider text-sm hover:border-gold hover:text-gold">
-                                ADD TO WISHLIST
-                            </button>
-                        </div>
-
-                        <div class="mt-8 pt-8 border-t border-cream/10">
-                            <div class="space-y-3 text-sm text-cream/60 font-light">
-                                <div class="flex items-center">
-                                    <svg class="w-5 h-5 text-gold mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M5 13l4 4L19 7"/>
-                                    </svg>
-                                    <span>Complimentary worldwide shipping</span>
-                                </div>
-                                <div class="flex items-center">
-                                    <svg class="w-5 h-5 text-gold mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M5 13l4 4L19 7"/>
-                                    </svg>
-                                    <span>30-day returns & exchanges</span>
-                                </div>
-                                <div class="flex items-center">
-                                    <svg class="w-5 h-5 text-gold mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M5 13l4 4L19 7"/>
-                                    </svg>
-                                    <span>Lifetime craftsmanship guarantee</span>
-                                </div>
+                            <div class="flex items-center">
+                                <svg class="w-5 h-5 text-camel mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                                </svg>
+                                <span>30-day returns</span>
+                            </div>
+                            <div class="flex items-center">
+                                <svg class="w-5 h-5 text-camel mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                                </svg>
+                                <span>Secure checkout</span>
                             </div>
                         </div>
                     </div>
@@ -1043,53 +878,33 @@
     </div>
 
     <script>
-        // Page Loader
+        // Remove loader
         window.addEventListener('load', () => {
             setTimeout(() => {
-                document.getElementById('pageLoader').classList.add('hidden');
-            }, 1000);
+                document.getElementById('loader').classList.add('hidden');
+            }, 500);
         });
 
         // Navbar scroll effect
-        const navbar = document.getElementById('navbar');
-        let lastScroll = 0;
-
+        const navbar = document.querySelector('.navbar');
         window.addEventListener('scroll', () => {
-            const currentScroll = window.pageYOffset;
-            
-            if (currentScroll > 100) {
-                navbar.classList.add('bg-dark/95', 'backdrop-blur-md', 'shadow-lg');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
             } else {
-                navbar.classList.remove('bg-dark/95', 'backdrop-blur-md', 'shadow-lg');
-            }
-            
-            lastScroll = currentScroll;
-        });
-
-        // Parallax effect for hero
-        window.addEventListener('scroll', () => {
-            const scrolled = window.pageYOffset;
-            const heroImage = document.getElementById('heroImage');
-            if (heroImage && scrolled < window.innerHeight) {
-                heroImage.style.transform = `translateY(${scrolled * 0.5}px)`;
+                navbar.classList.remove('scrolled');
             }
         });
 
         // Intersection Observer for animations
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('visible');
                 }
             });
-        }, observerOptions);
+        }, { threshold: 0.1 });
 
-        document.querySelectorAll('.fade-in, .slide-up, .zoom-in').forEach(el => {
+        document.querySelectorAll('.fade-in, .slide-up').forEach(el => {
             observer.observe(el);
         });
 
@@ -1099,12 +914,12 @@
             document.getElementById('modalPrice').textContent = price;
             document.getElementById('modalDescription').textContent = description;
             document.getElementById('modalImage').src = imageUrl;
-            document.getElementById('productModal').classList.remove('hidden');
+            document.getElementById('productModal').classList.add('active');
             document.body.style.overflow = 'hidden';
         }
 
         function closeModal() {
-            document.getElementById('productModal').classList.add('hidden');
+            document.getElementById('productModal').classList.remove('active');
             document.body.style.overflow = 'auto';
         }
 
@@ -1113,46 +928,18 @@
             btn.classList.add('active');
         }
 
-        // Wishlist toggle
         function toggleWishlist(btn) {
             btn.classList.toggle('active');
         }
 
         // Close modal on escape key
         document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') {
-                closeModal();
-            }
+            if (e.key === 'Escape') closeModal();
         });
 
-        // Smooth scroll for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
-
-        // Lookbook parallax on scroll
-        const lookbookSections = document.querySelectorAll('.lookbook-section');
-        
-        window.addEventListener('scroll', () => {
-            lookbookSections.forEach(section => {
-                const rect = section.getBoundingClientRect();
-                const img = section.querySelector('.lookbook-img');
-                
-                if (rect.top < window.innerHeight && rect.bottom > 0) {
-                    const progress = (window.innerHeight - rect.top) / (window.innerHeight + rect.height);
-                    const scale = 1 + (progress * 0.1);
-                    img.style.transform = `scale(${scale})`;
-                }
-            });
+        // Close modal on backdrop click
+        document.getElementById('productModal').addEventListener('click', (e) => {
+            if (e.target.id === 'productModal') closeModal();
         });
     </script>
 </body>
