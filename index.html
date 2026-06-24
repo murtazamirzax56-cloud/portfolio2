@@ -1,716 +1,513 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>MirzaX Digital — Disassembled</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --orange:#FF6B35;
-  --orange-light:#FF8C61;
-  --dark:#0a0a0a;
-  --dark-2:#111;
-  --gray:#1a1a1a;
-  --gray-2:#222;
-  --text:#fff;
-  --text-dim:#888;
-}
-html,body{background:var(--dark);color:var(--text);font-family:'Inter',sans-serif;overflow-x:hidden}
-::-webkit-scrollbar{width:8px}
-::-webkit-scrollbar-track{background:var(--dark)}
-::-webkit-scrollbar-thumb{background:var(--gray-2);border-radius:4px}
-::-webkit-scrollbar-thumb:hover{background:var(--orange)}
+  <!-- ============ META ============ -->
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0a0a0a" />
 
-/* LOADER */
-.loader{position:fixed;inset:0;background:var(--dark);z-index:9999;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:20px}
-.loader.done{opacity:0;visibility:hidden;transition:all .6s}
-.loader-text{font-family:'Space Grotesk',sans-serif;font-size:14px;letter-spacing:.3em;text-transform:uppercase;color:var(--text-dim);animation:pulse 1.5s infinite}
-.loader-line{width:200px;height:2px;background:var(--gray);position:relative;overflow:hidden}
-.loader-line::after{content:"";position:absolute;inset:0;background:var(--orange);animation:load 1.5s infinite}
-@keyframes load{0%{transform:translateX(-100%)}100%{transform:translateX(100%)}}
-@keyframes pulse{0%,100%{opacity:.4}50%{opacity:1}}
+  <!-- ============ SEO ============ -->
+  <title>Murtaza Mirza — UX/UI Designer & Technology Enthusiast</title>
+  <meta name="description" content="Portfolio of Murtaza Mirza, a 17-year-old UX/UI designer from Jhelum, Pakistan. Crafting intuitive digital experiences at the intersection of design, engineering, and technology." />
+  <meta name="keywords" content="Murtaza Mirza, UX Designer, UI Designer, Product Designer, Figma, Portfolio, Pakistan, Aerospace, Automotive Design" />
+  <meta name="author" content="Murtaza Mirza" />
+  <link rel="canonical" href="https://murtazamirza.com/" />
 
-/* NAV */
-.nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:24px 48px;display:flex;justify-content:space-between;align-items:center;mix-blend-mode:difference}
-.nav-logo{font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:600;letter-spacing:-.02em}
-.nav-links{display:flex;gap:32px;font-size:13px;text-transform:uppercase;letter-spacing:.1em}
-.nav-links a{color:var(--text);text-decoration:none;position:relative}
-.nav-links a::after{content:"";position:absolute;bottom:-4px;left:0;width:0;height:1px;background:var(--orange);transition:width .3s}
-.nav-links a:hover::after{width:100%}
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Murtaza Mirza — UX/UI Designer" />
+  <meta property="og:description" content="Designing intuitive digital experiences that combine creativity, usability, and modern design principles." />
+  <meta property="og:image" content="assets/og-image.jpg" />
+  <meta property="og:url" content="https://murtazamirza.com/" />
 
-/* HERO */
-.hero{min-height:100vh;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
-.hero-bg{position:absolute;inset:0;background:radial-gradient(circle at 50% 50%,rgba(255,107,53,.15),transparent 50%)}
-.hero-content{position:relative;z-index:2;text-align:center;padding:120px 24px}
-.hero-eyebrow{font-size:12px;text-transform:uppercase;letter-spacing:.3em;color:var(--orange);margin-bottom:24px;display:block}
-.hero h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(48px,12vw,140px);font-weight:700;line-height:.9;letter-spacing:-.04em;margin-bottom:32px;text-transform:uppercase}
-.hero h1 .highlight{color:var(--orange)}
-.hero p{font-size:18px;color:var(--text-dim);max-width:600px;margin:0 auto 48px;line-height:1.6}
-.hero-cta{display:inline-flex;align-items:center;gap:12px;padding:18px 36px;background:var(--orange);color:#000;font-weight:600;font-size:14px;text-transform:uppercase;letter-spacing:.1em;border:none;cursor:pointer;transition:all .3s}
-.hero-cta:hover{transform:translateY(-2px);box-shadow:0 20px 60px -20px rgba(255,107,53,.5)}
-.scroll-indicator{position:absolute;bottom:48px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;color:var(--text-dim);font-size:11px;text-transform:uppercase;letter-spacing:.2em;animation:bounce 2s infinite}
-.scroll-indicator svg{width:24px;height:24px;stroke:var(--orange)}
-@keyframes bounce{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(8px)}}
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Murtaza Mirza — UX/UI Designer" />
+  <meta name="twitter:description" content="Designing intuitive digital experiences." />
 
-/* EXPLODED VIEW SECTIONS */
-.product-section{position:relative;min-height:100vh;display:flex;align-items:center;padding:120px 48px;overflow:hidden}
-.product-section:nth-child(even){background:var(--dark-2)}
-.product-container{max-width:1400px;margin:0 auto;width:100%;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
-.product-info h2{font-family:'Space Grotesk',sans-serif;font-size:clamp(36px,5vw,64px);font-weight:700;margin-bottom:24px;line-height:1}
-.product-info h2 .accent{color:var(--orange)}
-.product-info .tag{display:inline-block;padding:8px 16px;background:var(--gray);color:var(--orange);font-size:11px;text-transform:uppercase;letter-spacing:.2em;margin-bottom:24px;border-left:3px solid var(--orange)}
-.product-info p{font-size:16px;color:var(--text-dim);line-height:1.8;margin-bottom:32px;max-width:480px}
-.product-features{display:flex;flex-direction:column;gap:16px;margin-bottom:40px}
-.feature-item{display:flex;align-items:center;gap:16px;padding:16px;background:var(--gray);border-radius:8px;border-left:3px solid transparent;transition:all .3s}
-.feature-item:hover{border-left-color:var(--orange);transform:translateX(8px)}
-.feature-icon{width:40px;height:40px;background:var(--orange);border-radius:6px;display:grid;place-items:center;color:#000;font-size:18px}
-.feature-text h4{font-size:14px;font-weight:600;margin-bottom:2px}
-.feature-text p{font-size:12px;color:var(--text-dim);margin:0}
-.product-price{font-family:'Space Grotesk',sans-serif;font-size:48px;font-weight:700;color:var(--orange);margin-bottom:8px}
-.product-price .original{font-size:24px;color:var(--text-dim);text-decoration:line-through;margin-left:16px}
-.product-price .period{font-size:16px;color:var(--text-dim);font-weight:400}
+  <!-- Preconnect for performance -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
 
-/* 3D EXPLODED VIEW */
-.exploded-view{position:relative;height:600px;display:flex;align-items:center;justify-content:center;perspective:2000px}
-.exploded-container{position:relative;width:400px;height:400px;transform-style:preserve-3d}
-.exploded-layer{position:absolute;inset:0;border-radius:24px;display:grid;place-items:center;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:24px;backdrop-filter:blur(20px);border:2px solid rgba(255,107,53,.3);box-shadow:0 20px 60px -20px rgba(0,0,0,.8),inset 0 0 60px rgba(255,107,53,.1);transition:all .5s}
-.exploded-layer:nth-child(1){background:rgba(255,107,53,.15);color:var(--orange);z-index:5}
-.exploded-layer:nth-child(2){background:rgba(255,140,97,.12);color:var(--orange-light);z-index:4}
-.exploded-layer:nth-child(3){background:rgba(255,107,53,.1);color:var(--orange);z-index:3}
-.exploded-layer:nth-child(4){background:rgba(255,140,97,.08);color:var(--orange-light);z-index:2}
-.exploded-layer:nth-child(5){background:rgba(255,107,53,.05);color:var(--orange);z-index:1}
-.exploded-layer .layer-label{position:absolute;bottom:-40px;font-size:12px;text-transform:uppercase;letter-spacing:.2em;color:var(--text-dim);white-space:nowrap}
-.exploded-layer .icon{font-size:64px;margin-bottom:16px}
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E◐%3C/text%3E%3C/svg%3E" />
 
-/* Layer positions for exploded state */
-.exploded-view.active .exploded-layer:nth-child(1){transform:translateZ(200px) translateY(-100px)}
-.exploded-view.active .exploded-layer:nth-child(2){transform:translateZ(100px) translateY(-50px)}
-.exploded-view.active .exploded-layer:nth-child(3){transform:translateZ(0)}
-.exploded-view.active .exploded-layer:nth-child(4){transform:translateZ(-100px) translateY(50px)}
-.exploded-view.active .exploded-layer:nth-child(5){transform:translateZ(-200px) translateY(100px)}
-
-/* Connector lines */
-.connector{position:absolute;width:2px;height:100px;background:linear-gradient(to bottom,transparent,var(--orange),transparent);left:50%;transform:translateX(-50%);opacity:.3}
-
-/* SPECS GRID */
-.specs-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:40px}
-.spec-item{text-align:center;padding:24px;background:var(--gray);border-radius:12px;border:1px solid var(--gray-2);transition:all .3s}
-.spec-item:hover{border-color:var(--orange);transform:translateY(-4px)}
-.spec-value{font-family:'Space Grotesk',sans-serif;font-size:32px;font-weight:700;color:var(--orange);margin-bottom:8px}
-.spec-label{font-size:12px;color:var(--text-dim);text-transform:uppercase;letter-spacing:.1em}
-
-/* SCROLL TRIGGER TEXT */
-.disassembly-text{position:sticky;top:50%;transform:translateY(-50%);font-family:'Space Grotesk',sans-serif;font-size:clamp(48px,8vw,120px);font-weight:700;text-transform:uppercase;letter-spacing:-.04em;color:transparent;-webkit-text-stroke:2px var(--orange);opacity:.2;pointer-events:none}
-
-/* BUTTONS */
-.btn-primary{display:inline-flex;align-items:center;gap:12px;padding:16px 32px;background:var(--orange);color:#000;font-weight:600;font-size:13px;text-transform:uppercase;letter-spacing:.15em;border:none;cursor:pointer;transition:all .3s;border-radius:4px}
-.btn-primary:hover{transform:translateY(-2px);box-shadow:0 20px 60px -20px rgba(255,107,53,.6)}
-.btn-secondary{display:inline-flex;align-items:center;gap:12px;padding:16px 32px;background:transparent;color:var(--text);font-weight:600;font-size:13px;text-transform:uppercase;letter-spacing:.15em;border:2px solid var(--gray-2);cursor:pointer;transition:all .3s;border-radius:4px;margin-left:16px}
-.btn-secondary:hover{border-color:var(--orange);color:var(--orange)}
-
-/* FLOATING PARTICLES */
-.particles{position:fixed;inset:0;pointer-events:none;z-index:1}
-.particle{position:absolute;width:4px;height:4px;background:var(--orange);border-radius:50%;opacity:.3;animation:float 20s infinite}
-@keyframes float{0%,100%{transform:translate(0,0)}25%{transform:translate(100px,-100px)}50%{transform:translate(-50px,50px)}75%{transform:translate(50px,100px)}}
-
-/* RESPONSIVE */
-@media(max-width:968px){
-  .product-container{grid-template-columns:1fr;gap:48px}
-  .exploded-view{height:400px;order:-1}
-  .exploded-container{width:300px;height:300px}
-  .nav-links{display:none}
-  .nav{padding:20px 24px}
-  .product-section{padding:80px 24px}
-  .specs-grid{grid-template-columns:1fr}
-}
-
-/* CART BADGE */
-.cart-icon{position:relative;cursor:pointer}
-.cart-badge{position:absolute;top:-8px;right:-8px;min-width:18px;height:18px;padding:0 5px;background:var(--orange);color:#000;font-size:11px;font-weight:700;border-radius:9px;display:grid;place-items:center;transform:scale(0);transition:transform .3s}
-.cart-badge.show{transform:scale(1)}
-
-/* FOOTER */
-.footer{padding:80px 48px;background:var(--dark-2);border-top:1px solid var(--gray);text-align:center}
-.footer-credit{font-size:13px;color:var(--text-dim);margin-top:24px}
-.footer-credit strong{color:var(--orange)}
-</style>
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="style.css" />
 </head>
+
 <body>
+  <!-- ============ CURSOR (desktop only) ============ -->
+  <div class="cursor" aria-hidden="true"></div>
+  <div class="cursor-follower" aria-hidden="true"></div>
 
-<!-- Loader -->
-<div class="loader" id="loader">
-  <div class="loader-text">Loading Components</div>
-  <div class="loader-line"></div>
-</div>
+  <!-- ============ NAVIGATION ============ -->
+  <header class="nav" id="nav">
+    <div class="nav__inner">
+      <a href="#top" class="nav__logo" aria-label="Home">
+        <span class="nav__logo-mark">◐</span>
+        <span class="nav__logo-text">Murtaza Mirza</span>
+      </a>
 
-<!-- Particles -->
-<div class="particles" id="particles"></div>
+      <nav class="nav__menu" aria-label="Primary">
+        <a href="#about">About</a>
+        <a href="#skills">Skills</a>
+        <a href="#process">Process</a>
+        <a href="#work">Work</a>
+        <a href="#contact">Contact</a>
+      </nav>
 
-<!-- Nav -->
-<nav class="nav">
-  <div class="nav-logo">MirzaX Digital</div>
-  <div class="nav-links">
-    <a href="#products">Products</a>
-    <a href="#features">Features</a>
-    <a href="#pricing">Pricing</a>
-    <a href="#contact">Contact</a>
-  </div>
-  <div class="cart-icon" id="cartIcon">
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-      <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
-      <line x1="3" y1="6" x2="21" y2="6"></line>
-      <path d="M16 10a4 4 0 0 1-8 0"></path>
-    </svg>
-    <span class="cart-badge" id="cartBadge">0</span>
-  </div>
-</nav>
-
-<!-- Hero -->
-<section class="hero">
-  <div class="hero-bg"></div>
-  <div class="hero-content">
-    <span class="hero-eyebrow">Digital Products Reimagined</span>
-    <h1>Disassembled.<br><span class="highlight">Perfected.</span></h1>
-    <p>Every subscription broken down to its essential components. See what's inside your favorite apps.</p>
-    <button class="hero-cta" onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">
-      Explore Products
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-        <path d="M5 12h14M12 5l7 7-7 7"/>
-      </svg>
-    </button>
-  </div>
-  <div class="scroll-indicator">
-    <span>Scroll</span>
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-      <path d="M12 5v14M5 12l7 7 7-7"/>
-    </svg>
-  </div>
-</section>
-
-<!-- Product 1: Netflix -->
-<section class="product-section" id="products">
-  <div class="product-container">
-    <div class="product-info">
-      <span class="tag">Streaming Entertainment</span>
-      <h2>Netflix <span class="accent">Premium</span></h2>
-      <p>Unlimited movies, TV shows, and documentaries in stunning 4K HDR. Stream on up to 4 devices simultaneously with spatial audio support.</p>
-      
-      <div class="product-features">
-        <div class="feature-item">
-          <div class="feature-icon">4K</div>
-          <div class="feature-text">
-            <h4>Ultra HD + HDR</h4>
-            <p>Dolby Vision & Atmos</p>
-          </div>
-        </div>
-        <div class="feature-item">
-          <div class="feature-icon">4×</div>
-          <div class="feature-text">
-            <h4>4 Screens</h4>
-            <p>Simultaneous streaming</p>
-          </div>
-        </div>
-        <div class="feature-item">
-          <div class="feature-icon">↓</div>
-          <div class="feature-text">
-            <h4>Offline Downloads</h4>
-            <p>Watch anywhere</p>
-          </div>
-        </div>
+      <div class="nav__actions">
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+          <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+          <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+        <a href="#contact" class="btn btn--primary btn--sm nav__cta">Let's Talk</a>
       </div>
 
-      <div class="product-price">
-        Rs.1,299<span class="original">Rs.1,800</span><span class="period">/month</span>
-      </div>
-      
-      <div style="margin-top:32px">
-        <button class="btn-primary" onclick="addToCart('Netflix Premium')">Add to Cart</button>
-        <button class="btn-secondary">View Details</button>
-      </div>
-
-      <div class="specs-grid">
-        <div class="spec-item">
-          <div class="spec-value">4K</div>
-          <div class="spec-label">Quality</div>
-        </div>
-        <div class="spec-item">
-          <div class="spec-value">4</div>
-          <div class="spec-label">Devices</div>
-        </div>
-        <div class="spec-item">
-          <div class="spec-value">∞</div>
-          <div class="spec-label">Content</div>
-        </div>
-      </div>
+      <button class="nav__burger" id="navBurger" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
     </div>
+  </header>
 
-    <div class="exploded-view" id="exploded-netflix">
-      <div class="exploded-container">
-        <div class="exploded-layer">
-          <div>
-            <div class="icon">🎬</div>
-            <div>Content</div>
-          </div>
-          <span class="layer-label">Library Access</span>
-        </div>
-        <div class="exploded-layer">
-          <div>
-            <div class="icon">📺</div>
-            <div>Streaming</div>
-          </div>
-          <span class="layer-label">4K HDR Engine</span>
-        </div>
-        <div class="exploded-layer">
-          <div>
-            <div class="icon">🔊</div>
-            <div>Audio</div>
-          </div>
-          <span class="layer-label">Dolby Atmos</span>
-        </div>
-        <div class="exploded-layer">
-          <div>
-            <div class="icon">📱</div>
-            <div>Devices</div>
-          </div>
-          <span class="layer-label">Multi-Screen</span>
-        </div>
-        <div class="exploded-layer">
-          <div>
-            <div class="icon">↓</div>
-            <div>Offline</div>
-          </div>
-          <span class="layer-label">Downloads</span>
-        </div>
-      </div>
-    </div>
+  <!-- Mobile menu -->
+  <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+    <nav>
+      <a href="#about">About</a>
+      <a href="#skills">Skills</a>
+      <a href="#process">Process</a>
+      <a href="#work">Work</a>
+      <a href="#contact">Contact</a>
+    </nav>
   </div>
-</section>
 
-<!-- Product 2: ChatGPT Plus -->
-<section class="product-section">
-  <div class="product-container">
-    <div class="product-info">
-      <span class="tag">Artificial Intelligence</span>
-      <h2>ChatGPT <span class="accent">Plus</span></h2>
-      <p>Access to GPT-4o, advanced voice mode, image generation with DALL·E 3, and custom GPTs. Priority access even during peak times.</p>
-      
-      <div class="product-features">
-        <div class="feature-item">
-          <div class="feature-icon">G4</div>
-          <div class="feature-text">
-            <h4>GPT-4o Access</h4>
-            <p>Most advanced model</p>
-          </div>
-        </div>
-        <div class="feature-item">
-          <div class="feature-icon">🎨</div>
-          <div class="feature-text">
-            <h4>DALL·E 3</h4>
-            <p>AI image generation</p>
-          </div>
-        </div>
-        <div class="feature-item">
-          <div class="feature-icon">⚡</div>
-          <div class="feature-text">
-            <h4>Priority Access</h4>
-            <p>No wait times</p>
-          </div>
-        </div>
-      </div>
+  <main id="top">
 
-      <div class="product-price">
-        Rs.1,799<span class="original">Rs.2,500</span><span class="period">/month</span>
-      </div>
-      
-      <div style="margin-top:32px">
-        <button class="btn-primary" onclick="addToCart('ChatGPT Plus')">Add to Cart</button>
-        <button class="btn-secondary">View Details</button>
+    <!-- ============ HERO ============ -->
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero__orb" aria-hidden="true"></div>
+
+      <div class="container hero__inner">
+        <p class="hero__eyebrow reveal">
+          <span class="dot"></span>
+          Available for freelance · Based in Jhelum, Pakistan
+        </p>
+
+        <h1 class="hero__title" id="hero-title">
+          <span class="reveal">Designing</span>
+          <span class="reveal">intuitive <em class="serif">digital</em></span>
+          <span class="reveal">experiences.</span>
+        </h1>
+
+        <p class="hero__sub reveal">
+          I'm <strong>Murtaza Mirza</strong> — a UX/UI designer and technology enthusiast crafting interfaces that feel effortless, look modern, and solve real problems.
+        </p>
+
+        <div class="hero__actions reveal">
+          <a href="#work" class="btn btn--primary">View Selected Work
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </a>
+          <a href="#about" class="btn btn--ghost">About Me</a>
+        </div>
+
+        <div class="hero__meta reveal">
+          <div><span>17</span><small>Years Old</small></div>
+          <div><span>FSc</span><small>Pre-Engineering</small></div>
+          <div><span>∞</span><small>Curiosity</small></div>
+        </div>
       </div>
 
-      <div class="specs-grid">
-        <div class="spec-item">
-          <div class="spec-value">GPT-4</div>
-          <div class="spec-label">Model</div>
+      <div class="hero__scroll" aria-hidden="true">
+        <span>Scroll</span>
+        <div class="hero__scroll-line"></div>
+      </div>
+    </section>
+
+    <!-- ============ MARQUEE ============ -->
+    <section class="marquee" aria-hidden="true">
+      <div class="marquee__track">
+        <span>UX Research ✦</span><span>Wireframing ✦</span><span>Prototyping ✦</span>
+        <span>Design Systems ✦</span><span>Figma ✦</span><span>Visual Design ✦</span>
+        <span>Information Architecture ✦</span><span>User Flows ✦</span>
+        <span>UX Research ✦</span><span>Wireframing ✦</span><span>Prototyping ✦</span>
+        <span>Design Systems ✦</span><span>Figma ✦</span><span>Visual Design ✦</span>
+      </div>
+    </section>
+
+    <!-- ============ ABOUT ============ -->
+    <section class="section about" id="about" aria-labelledby="about-title">
+      <div class="container">
+        <div class="section__head reveal">
+          <span class="section__tag">01 — About</span>
+          <h2 class="section__title" id="about-title">A designer who thinks like an engineer.</h2>
         </div>
-        <div class="spec-item">
-          <div class="spec-value">5×</div>
-          <div class="spec-label">Faster</div>
-        </div>
-        <div class="spec-item">
-          <div class="spec-value">∞</div>
-          <div class="spec-label">Messages</div>
+
+        <div class="about__grid">
+          <div class="about__text reveal">
+            <p class="lead">
+              I'm a student from Jhelum, Pakistan, currently pursuing FSc Pre-Engineering. My mind lives at the intersection of <em>design</em>, <em>engineering</em>, and <em>technology</em> — where clean logic meets beautiful interfaces.
+            </p>
+            <p>
+              I'm passionate about building digital products that feel intuitive and look modern. Whether it's a mobile banking app, an automotive marketplace, or an aerospace learning dashboard, I approach every project with curiosity, research, and a deep respect for the user.
+            </p>
+            <p>
+              When I'm not designing, you'll find me reading fiction, exploring the latest in automotive and aerospace tech, swimming, or rewatching a great film.
+            </p>
+          </div>
+
+          <aside class="about__aside reveal">
+            <div class="info-card">
+              <h3>Quick Facts</h3>
+              <dl>
+                <div><dt>Based in</dt><dd>Jhelum, Pakistan</dd></div>
+                <div><dt>Education</dt><dd>FSc Pre-Engineering</dd></div>
+                <div><dt>Focus</dt><dd>UX/UI · Product Design</dd></div>
+                <div><dt>Ambition</dt><dd>Aerospace Engineer</dd></div>
+                <div><dt>Languages</dt><dd>English · Urdu · Punjabi</dd></div>
+                <div><dt>Interests</dt><dd>Cars · Aerospace · Tech · Film</dd></div>
+              </dl>
+            </div>
+          </aside>
         </div>
       </div>
+    </section>
+
+    <!-- ============ SKILLS ============ -->
+    <section class="section skills" id="skills" aria-labelledby="skills-title">
+      <div class="container">
+        <div class="section__head reveal">
+          <span class="section__tag">02 — Skills</span>
+          <h2 class="section__title" id="skills-title">Tools of the trade.</h2>
+        </div>
+
+        <div class="skills__grid">
+          <article class="skill-card reveal">
+            <div class="skill-card__num">01</div>
+            <h3>Design</h3>
+            <ul>
+              <li>UX Research</li>
+              <li>Wireframing</li>
+              <li>User Flows</li>
+              <li>Information Architecture</li>
+              <li>Prototyping</li>
+              <li>Design Systems</li>
+              <li>Visual Design</li>
+            </ul>
+          </article>
+
+          <article class="skill-card reveal">
+            <div class="skill-card__num">02</div>
+            <h3>Tools</h3>
+            <ul>
+              <li>Figma</li>
+              <li>Adobe XD</li>
+              <li>Photoshop</li>
+              <li>Illustrator</li>
+            </ul>
+          </article>
+
+          <article class="skill-card reveal">
+            <div class="skill-card__num">03</div>
+            <h3>Technical</h3>
+            <ul>
+              <li>HTML5</li>
+              <li>CSS3</li>
+              <li>JavaScript</li>
+              <li>GitHub</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ PROCESS ============ -->
+    <section class="section process" id="process" aria-labelledby="process-title">
+      <div class="container">
+        <div class="section__head reveal">
+          <span class="section__tag">03 — Process</span>
+          <h2 class="section__title" id="process-title">How I design.</h2>
+          <p class="section__sub">A structured, iterative framework that keeps the user at the center of every decision.</p>
+        </div>
+
+        <ol class="process__list">
+          <li class="process__step reveal">
+            <span class="process__num">01</span>
+            <div>
+              <h3>Discover</h3>
+              <p>Understand the problem, the users, and the context through research and observation.</p>
+            </div>
+          </li>
+          <li class="process__step reveal">
+            <span class="process__num">02</span>
+            <div>
+              <h3>Define</h3>
+              <p>Synthesize insights into clear goals, personas, and problem statements.</p>
+            </div>
+          </li>
+          <li class="process__step reveal">
+            <span class="process__num">03</span>
+            <div>
+              <h3>Ideate</h3>
+              <p>Explore a wide range of solutions through sketches, flows, and brainstorming.</p>
+            </div>
+          </li>
+          <li class="process__step reveal">
+            <span class="process__num">04</span>
+            <div>
+              <h3>Prototype</h3>
+              <p>Build interactive mockups that bring ideas to life and invite feedback.</p>
+            </div>
+          </li>
+          <li class="process__step reveal">
+            <span class="process__num">05</span>
+            <div>
+              <h3>Test</h3>
+              <p>Validate with real users, measure what works, and uncover what doesn't.</p>
+            </div>
+          </li>
+          <li class="process__step reveal">
+            <span class="process__num">06</span>
+            <div>
+              <h3>Improve</h3>
+              <p>Iterate relentlessly. Great design is never finished — only refined.</p>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ============ WORK ============ -->
+    <section class="section work" id="work" aria-labelledby="work-title">
+      <div class="container">
+        <div class="section__head reveal">
+          <span class="section__tag">04 — Selected Work</span>
+          <h2 class="section__title" id="work-title">Projects I'm proud of.</h2>
+          <p class="section__sub">A selection of case studies exploring finance, mobility, learning, commerce, and entertainment.</p>
+        </div>
+
+        <div class="work__grid">
+
+          <!-- Project 1 -->
+          <article class="project reveal" data-accent="#3b82f6">
+            <div class="project__visual" style="--accent:#3b82f6">
+              <span class="project__tag">Mobile App</span>
+              <div class="project__mock">
+                <div class="mock-card">
+                  <div class="mock-card__top">
+                    <small>Available Balance</small>
+                    <strong>PKR 248,500</strong>
+                  </div>
+                  <div class="mock-card__actions">
+                    <span>Send</span><span>Receive</span><span>Top Up</span>
+                  </div>
+                  <div class="mock-card__chart"></div>
+                </div>
+              </div>
+            </div>
+            <div class="project__body">
+              <h3>Mobile Banking App</h3>
+              <p class="project__meta">FinTech · 2025</p>
+              <p>A redesigned mobile banking experience focused on clarity, speed, and trust for everyday financial tasks.</p>
+              <details class="project__case">
+                <summary>Read case study</summary>
+                <div>
+                  <h4>Problem</h4><p>Existing banking apps felt cluttered and intimidating for new users managing money digitally.</p>
+                  <h4>Research</h4><p>Interviewed 12 users, mapped pain points around transfers, bill payments, and security cues.</p>
+                  <h4>Wireframes</h4><p>Explored 30+ low-fidelity screens, converging on a single-dashboard paradigm.</p>
+                  <h4>UI Design</h4><p>Built a clean design system with accessible contrast, motion, and a calm color palette.</p>
+                  <h4>Results</h4><p>Tested with 8 users — task completion improved by 42%, and perceived trust scores rose significantly.</p>
+                </div>
+              </details>
+            </div>
+          </article>
+
+          <!-- Project 2 -->
+          <article class="project reveal" data-accent="#f59e0b">
+            <div class="project__visual" style="--accent:#f59e0b">
+              <span class="project__tag">Web Platform</span>
+              <div class="project__mock">
+                <div class="mock-car">
+                  <div class="mock-car__badge">2024</div>
+                  <div class="mock-car__name">GT Coupe</div>
+                  <div class="mock-car__price">PKR 8.2M</div>
+                </div>
+              </div>
+            </div>
+            <div class="project__body">
+              <h3>Car Marketplace Platform</h3>
+              <p class="project__meta">Automotive · 2025</p>
+              <p>A premium marketplace for buying and selling cars — built for enthusiasts and everyday drivers alike.</p>
+              <details class="project__case">
+                <summary>Read case study</summary>
+                <div>
+                  <h4>Problem</h4><p>Car listings were overwhelming, with poor filters and inconsistent imagery.</p>
+                  <h4>Research</h4><p>Studied 5 competitor platforms and interviewed 10 buyers and sellers.</p>
+                  <h4>Wireframes</h4><p>Designed a gallery-first listing flow with smart comparison tools.</p>
+                  <h4>UI Design</h4><p>Crafted a dark-mode-first interface inspired by automotive showrooms.</p>
+                  <h4>Results</h4><p>Users spent 3× longer browsing and reported higher confidence in purchase decisions.</p>
+                </div>
+              </details>
+            </div>
+          </article>
+
+          <!-- Project 3 -->
+          <article class="project reveal" data-accent="#8b5cf6">
+            <div class="project__visual" style="--accent:#8b5cf6">
+              <span class="project__tag">Dashboard</span>
+              <div class="project__mock">
+                <div class="mock-dash">
+                  <div class="mock-dash__row"><span>Aerodynamics</span><b>92%</b></div>
+                  <div class="mock-dash__row"><span>Propulsion</span><b>78%</b></div>
+                  <div class="mock-dash__row"><span>Materials</span><b>85%</b></div>
+                </div>
+              </div>
+            </div>
+            <div class="project__body">
+              <h3>Aerospace Learning Dashboard</h3>
+              <p class="project__meta">EdTech · 2025</p>
+              <p>An interactive learning platform that makes aerospace engineering concepts visual and engaging.</p>
+              <details class="project__case">
+                <summary>Read case study</summary>
+                <div>
+                  <h4>Problem</h4><p>Engineering students struggled with dense, text-heavy learning materials.</p>
+                  <h4>Research</h4><p>Interviewed 15 engineering students and reviewed 4 learning platforms.</p>
+                  <h4>Wireframes</h4><p>Mapped a modular dashboard with progress, lessons, and simulations.</p>
+                  <h4>UI Design</h4><p>Designed a calm, focused interface with data-rich visualizations.</p>
+                  <h4>Results</h4><p>Prototype testing showed 38% higher engagement and clearer concept retention.</p>
+                </div>
+              </details>
+            </div>
+          </article>
+
+          <!-- Project 4 -->
+          <article class="project reveal" data-accent="#10b981">
+            <div class="project__visual" style="--accent:#10b981">
+              <span class="project__tag">E-commerce</span>
+              <div class="project__mock">
+                <div class="mock-shop">
+                  <div class="mock-shop__grid">
+                    <span></span><span></span><span></span><span></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="project__body">
+              <h3>E-commerce Redesign</h3>
+              <p class="project__meta">Retail · 2025</p>
+              <p>A complete redesign of an online store — streamlining discovery, cart, and checkout.</p>
+              <details class="project__case">
+                <summary>Read case study</summary>
+                <div>
+                  <h4>Problem</h4><p>High cart abandonment and confusing product discovery.</p>
+                  <h4>Research</h4><p>Analyzed heatmaps, surveyed 60 customers, and ran usability tests.</p>
+                  <h4>Wireframes</h4><p>Redesigned the product grid, filters, and a 3-step checkout.</p>
+                  <h4>UI Design</h4><p>Applied a minimal, image-forward design with micro-interactions.</p>
+                  <h4>Results</h4><p>Checkout completion improved by 27% in prototype testing.</p>
+                </div>
+              </details>
+            </div>
+          </article>
+
+          <!-- Project 5 -->
+          <article class="project reveal" data-accent="#ef4444">
+            <div class="project__visual" style="--accent:#ef4444">
+              <span class="project__tag">Mobile App</span>
+              <div class="project__mock">
+                <div class="mock-film">
+                  <div class="mock-film__poster"></div>
+                  <div class="mock-film__info">
+                    <strong>Midnight Signal</strong>
+                    <small>Thriller · 2025</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="project__body">
+              <h3>Movie Recommendation App</h3>
+              <p class="project__meta">Entertainment · 2025</p>
+              <p>A cinematic app that learns your taste and surfaces films you'll genuinely love.</p>
+              <details class="project__case">
+                <summary>Read case study</summary>
+                <div>
+                  <h4>Problem</h4><p>Users felt overwhelmed by endless content and poor recommendations.</p>
+                  <h4>Research</h4><p>Surveyed 40 movie fans about how they choose what to watch.</p>
+                  <h4>Wireframes</h4><p>Designed a swipe-based discovery flow with mood and genre filters.</p>
+                  <h4>UI Design</h4><p>Built a dark, poster-driven interface with smooth transitions.</p>
+                  <h4>Results</h4><p>Users reported discovering 2× more films they actually enjoyed.</p>
+                </div>
+              </details>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ EDUCATION & GOALS ============ -->
+    <section class="section journey" id="journey" aria-labelledby="journey-title">
+      <div class="container">
+        <div class="section__head reveal">
+          <span class="section__tag">05 — Journey</span>
+          <h2 class="section__title" id="journey-title">Education & future goals.</h2>
+        </div>
+
+        <div class="journey__grid">
+          <div class="journey__card reveal">
+            <span class="journey__icon">🎓</span>
+            <h3>Education</h3>
+            <p class="journey__role">FSc Pre-Engineering</p>
+            <p>Strong academic performance with a focus on mathematics, physics, and problem-solving. Passionate about engineering and technology, actively building design skills alongside formal studies.</p>
+          </div>
+
+          <div class="journey__card reveal">
+            <span class="journey__icon">🚀</span>
+            <h3>Future Goals</h3>
+            <ul>
+              <li>Become a skilled UX/UI designer working on meaningful products.</li>
+              <li>Combine engineering thinking with design principles.</li>
+              <li>Build digital products that solve real-world problems.</li>
+              <li>Pursue aerospace engineering and explore the skies.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ CONTACT ============ -->
+    <section class="section contact" id="contact" aria-labelledby="contact-title">
+      <div class="container">
+        <div class="contact__inner reveal">
+          <span class="section__tag">06 — Contact</span>
+          <h2 class="contact__title" id="contact-title">Let's build something <em class="serif">beautiful</em>.</h2>
+          <p class="contact__sub">Have a project in mind, or just want to say hello? My inbox is always open.</p>
+
+          <a href="mailto:hello@murtazamirza.com" class="contact__email">hello@murtazamirza.com
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M7 17L17 7M7 7h10v10"/></svg>
+          </a>
+
+          <ul class="contact__socials">
+            <li><a href="#" aria-label="LinkedIn">LinkedIn ↗</a></li>
+            <li><a href="#" aria-label="GitHub">GitHub ↗</a></li>
+            <li><a href="#" aria-label="Behance">Behance ↗</a></li>
+            <li><a href="#" aria-label="Email">Email ↗</a></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="footer">
+    <div class="container footer__inner">
+      <p>© 2026 Murtaza Mirza. Designed & built with care in Jhelum.</p>
+      <p class="footer__right">Currently available for freelance work.</p>
     </div>
+  </footer>
 
-    <div class="exploded-view" id="exploded-chatgpt">
-      <div class="exploded-container">
-        <div class="exploded-layer" style="--orange:#10a37f">
-          <div>
-            <div class="icon">🧠</div>
-            <div>Intelligence</div>
-          </div>
-          <span class="layer-label">GPT-4o Core</span>
-        </div>
-        <div class="exploded-layer" style="--orange:#1db954">
-          <div>
-            <div class="icon">💬</div>
-            <div>Chat</div>
-          </div>
-          <span class="layer-label">Conversation</span>
-        </div>
-        <div class="exploded-layer" style="--orange:#FF6B35">
-          <div>
-            <div class="icon">🎨</div>
-            <div>Images</div>
-          </div>
-          <span class="layer-label">DALL·E 3</span>
-        </div>
-        <div class="exploded-layer" style="--orange:#8b5cf6">
-          <div>
-            <div class="icon">🔧</div>
-            <div>Custom</div>
-          </div>
-          <span class="layer-label">GPT Builder</span>
-        </div>
-        <div class="exploded-layer" style="--orange:#06b6d4">
-          <div>
-            <div class="icon">🎙️</div>
-            <div>Voice</div>
-          </div>
-          <span class="layer-label">Voice Mode</span>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- Product 3: Adobe Creative Cloud -->
-<section class="product-section">
-  <div class="product-container">
-    <div class="product-info">
-      <span class="tag">Creative Suite</span>
-      <h2>Adobe <span class="accent">Creative Cloud</span></h2>
-      <p>20+ creative apps including Photoshop, Illustrator, Premiere Pro, and After Effects. 100GB cloud storage and Adobe Fonts.</p>
-      
-      <div class="product-features">
-        <div class="feature-item">
-          <div class="feature-icon">20+</div>
-          <div class="feature-text">
-            <h4>All Apps</h4>
-            <p>Complete creative suite</p>
-          </div>
-        </div>
-        <div class="feature-item">
-          <div class="feature-icon">☁</div>
-          <div class="feature-text">
-            <h4>100GB Cloud</h4>
-            <p>Storage & sync</p>
-          </div>
-        </div>
-        <div class="feature-item">
-          <div class="feature-icon">Aa</div>
-          <div class="feature-text">
-            <h4>Adobe Fonts</h4>
-            <p>20,000+ typefaces</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="product-price">
-        Rs.2,499<span class="original">Rs.3,500</span><span class="period">/month</span>
-      </div>
-      
-      <div style="margin-top:32px">
-        <button class="btn-primary" onclick="addToCart('Adobe CC')">Add to Cart</button>
-        <button class="btn-secondary">View Details</button>
-      </div>
-
-      <div class="specs-grid">
-        <div class="spec-item">
-          <div class="spec-value">20+</div>
-          <div class="spec-label">Apps</div>
-        </div>
-        <div class="spec-item">
-          <div class="spec-value">100GB</div>
-          <div class="spec-label">Storage</div>
-        </div>
-        <div class="spec-item">
-          <div class="spec-value">20K</div>
-          <div class="spec-label">Fonts</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="exploded-view" id="exploded-adobe">
-      <div class="exploded-container">
-        <div class="exploded-layer" style="--orange:#FF0000">
-          <div>
-            <div class="icon">Ps</div>
-            <div>Photoshop</div>
-          </div>
-          <span class="layer-label">Image Editing</span>
-        </div>
-        <div class="exploded-layer" style="--orange:#FF8C00">
-          <div>
-            <div class="icon">Ai</div>
-            <div>Illustrator</div>
-          </div>
-          <span class="layer-label">Vector Design</span>
-        </div>
-        <div class="exploded-layer" style="--orange:#9B59B6">
-          <div>
-            <div class="icon">Pr</div>
-            <div>Premiere</div>
-          </div>
-          <span class="layer-label">Video Editing</span>
-        </div>
-        <div class="exploded-layer" style="--orange:#00C7BE">
-          <div>
-            <div class="icon">Ae</div>
-            <div>After Effects</div>
-          </div>
-          <span class="layer-label">Motion Graphics</span>
-        </div>
-        <div class="exploded-layer" style="--orange:#31A8FF">
-          <div>
-            <div class="icon">☁</div>
-            <div>Cloud</div>
-          </div>
-          <span class="layer-label">Storage</span>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- More Products Preview -->
-<section class="product-section" style="min-height:auto;padding:120px 48px">
-  <div style="max-width:1400px;margin:0 auto;width:100%;text-align:center">
-    <span class="tag">Coming Soon</span>
-    <h2 style="font-family:'Space Grotesk',sans-serif;font-size:clamp(36px,5vw,64px);font-weight:700;margin-bottom:24px">More <span style="color:var(--orange)">Products</span></h2>
-    <p style="color:var(--text-dim);max-width:600px;margin:0 auto 48px;line-height:1.8">Spotify, Discord Nitro, Midjourney, Canva Pro, and 90+ more subscriptions ready to be disassembled.</p>
-    
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;margin-top:60px">
-      <div style="padding:32px;background:var(--gray);border-radius:16px;border:1px solid var(--gray-2);transition:all .3s;cursor:pointer" onmouseover="this.style.borderColor='var(--orange)';this.style.transform='translateY(-4px)'" onmouseout="this.style.borderColor='var(--gray-2)';this.style.transform='translateY(0)'">
-        <div style="font-size:48px;margin-bottom:16px">🎵</div>
-        <h3 style="font-family:'Space Grotesk',sans-serif;font-size:20px;margin-bottom:8px">Spotify Premium</h3>
-        <p style="color:var(--text-dim);font-size:14px">Ad-free music with offline downloads</p>
-      </div>
-      <div style="padding:32px;background:var(--gray);border-radius:16px;border:1px solid var(--gray-2);transition:all .3s;cursor:pointer" onmouseover="this.style.borderColor='var(--orange)';this.style.transform='translateY(-4px)'" onmouseout="this.style.borderColor='var(--gray-2)';this.style.transform='translateY(0)'">
-        <div style="font-size:48px;margin-bottom:16px">🎮</div>
-        <h3 style="font-family:'Space Grotesk',sans-serif;font-size:20px;margin-bottom:8px">Discord Nitro</h3>
-        <p style="color:var(--text-dim);font-size:14px">HD video, bigger uploads, custom emojis</p>
-      </div>
-      <div style="padding:32px;background:var(--gray);border-radius:16px;border:1px solid var(--gray-2);transition:all .3s;cursor:pointer" onmouseover="this.style.borderColor='var(--orange)';this.style.transform='translateY(-4px)'" onmouseout="this.style.borderColor='var(--gray-2)';this.style.transform='translateY(0)'">
-        <div style="font-size:48px;margin-bottom:16px">🎨</div>
-        <h3 style="font-family:'Space Grotesk',sans-serif;font-size:20px;margin-bottom:8px">Canva Pro</h3>
-        <p style="color:var(--text-dim);font-size:14px">Design anything with AI tools</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- Footer -->
-<footer class="footer">
-  <div style="font-family:'Space Grotesk',sans-serif;font-size:32px;font-weight:700;margin-bottom:16px">MirzaX Digital</div>
-  <p style="color:var(--text-dim);max-width:480px;margin:0 auto 24px">Premium digital products disassembled and delivered instantly.</p>
-  <div class="footer-credit">Designed & Developed by <strong>Murtaza Mirza</strong></div>
-  <div style="margin-top:16px;font-size:12px;color:var(--text-dim)">© 2026 MirzaX Digital. All rights reserved.</div>
-</footer>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-<script>
-// Register ScrollTrigger
-gsap.registerPlugin(ScrollTrigger);
-
-// Loader
-window.addEventListener('load', () => {
-  setTimeout(() => {
-    document.getElementById('loader').classList.add('done');
-    initAnimations();
-  }, 1500);
-});
-
-// Create floating particles
-(function createParticles() {
-  const container = document.getElementById('particles');
-  for (let i = 0; i < 30; i++) {
-    const particle = document.createElement('div');
-    particle.className = 'particle';
-    particle.style.left = Math.random() * 100 + '%';
-    particle.style.top = Math.random() * 100 + '%';
-    particle.style.animationDelay = Math.random() * 20 + 's';
-    particle.style.animationDuration = (15 + Math.random() * 10) + 's';
-    container.appendChild(particle);
-  }
-})();
-
-// Cart state
-let cart = JSON.parse(localStorage.getItem('mx_cart') || '[]');
-updateCartBadge();
-
-function addToCart(product) {
-  cart.push(product);
-  localStorage.setItem('mx_cart', JSON.stringify(cart));
-  updateCartBadge();
-  
-  // Show notification
-  const notif = document.createElement('div');
-  notif.style.cssText = 'position:fixed;top:100px;right:24px;background:var(--orange);color:#000;padding:16px 24px;border-radius:8px;font-weight:600;z-index:9999;animation:slideIn .3s ease';
-  notif.textContent = `${product} added to cart`;
-  document.body.appendChild(notif);
-  setTimeout(() => {
-    notif.style.animation = 'slideOut .3s ease';
-    setTimeout(() => notif.remove(), 300);
-  }, 2000);
-}
-
-function updateCartBadge() {
-  const badge = document.getElementById('cartBadge');
-  badge.textContent = cart.length;
-  badge.classList.toggle('show', cart.length > 0);
-}
-
-// Initialize animations
-function initAnimations() {
-  // Hero text reveal
-  gsap.from('.hero h1', {
-    y: 100,
-    opacity: 0,
-    duration: 1.2,
-    ease: 'power4.out'
-  });
-  
-  gsap.from('.hero p', {
-    y: 40,
-    opacity: 0,
-    duration: 1,
-    delay: 0.2,
-    ease: 'power3.out'
-  });
-  
-  gsap.from('.hero-cta', {
-    y: 30,
-    opacity: 0,
-    duration: 0.8,
-    delay: 0.4,
-    ease: 'power3.out'
-  });
-
-  // Exploded view animations for each product
-  const sections = document.querySelectorAll('.product-section');
-  
-  sections.forEach((section, index) => {
-    const explodedView = section.querySelector('.exploded-view');
-    if (!explodedView) return;
-    
-    ScrollTrigger.create({
-      trigger: section,
-      start: 'top center',
-      end: 'bottom center',
-      onEnter: () => explodedView.classList.add('active'),
-      onEnterBack: () => explodedView.classList.add('active'),
-      onLeave: () => explodedView.classList.remove('active'),
-      onLeaveBack: () => explodedView.classList.remove('active')
-    });
-    
-    // Animate individual layers
-    const layers = explodedView.querySelectorAll('.exploded-layer');
-    layers.forEach((layer, i) => {
-      gsap.from(layer, {
-        scrollTrigger: {
-          trigger: section,
-          start: 'top center',
-          end: 'bottom center',
-          scrub: 1
-        },
-        z: i === 2 ? 0 : (i < 2 ? -100 * (3 - i) : 100 * (i - 2)),
-        y: i === 2 ? 0 : (i < 2 ? -50 * (3 - i) : 50 * (i - 2)),
-        opacity: 0.3,
-        rotationX: 15,
-        ease: 'power2.inOut'
-      });
-    });
-  });
-
-  // Feature items stagger
-  sections.forEach(section => {
-    const features = section.querySelectorAll('.feature-item');
-    gsap.from(features, {
-      scrollTrigger: {
-        trigger: section,
-        start: 'top 60%'
-      },
-      x: -30,
-      opacity: 0,
-      duration: 0.6,
-      stagger: 0.1,
-      ease: 'power3.out'
-    });
-    
-    const specs = section.querySelectorAll('.spec-item');
-    gsap.from(specs, {
-      scrollTrigger: {
-        trigger: section,
-        start: 'top 60%'
-      },
-      y: 30,
-      opacity: 0,
-      duration: 0.6,
-      stagger: 0.1,
-      ease: 'power3.out'
-    });
-  });
-}
-
-// Smooth scroll for nav links
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-  anchor.addEventListener('click', function(e) {
-    e.preventDefault();
-    const target = document.querySelector(this.getAttribute('href'));
-    if (target) {
-      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-  });
-});
-
-// Add CSS animations
-const style = document.createElement('style');
-style.textContent = `
-  @keyframes slideIn {
-    from { transform: translateX(400px); opacity: 0; }
-    to { transform: translateX(0); opacity: 1; }
-  }
-  @keyframes slideOut {
-    from { transform: translateX(0); opacity: 1; }
-    to { transform: translateX(400px); opacity: 0; }
-  }
-`;
-document.head.appendChild(style);
-
-// Parallax effect on mouse move
-document.addEventListener('mousemove', (e) => {
-  const mouseX = e.clientX / window.innerWidth - 0.5;
-  const mouseY = e.clientY / window.innerHeight - 0.5;
-  
-  document.querySelectorAll('.exploded-container').forEach(container => {
-    gsap.to(container, {
-      rotationY: mouseX * 10,
-      rotationX: -mouseY * 10,
-      duration: 0.5,
-      ease: 'power2.out'
-    });
-  });
-});
-
-console.log('%c✨ MirzaX Digital — Disassembled', 'font-size:20px;font-weight:bold;color:#FF6B35');
-console.log('%cDesigned & Developed by Murtaza Mirza', 'color:#888;font-size:12px');
-</script>
+  <script src="script.js" defer></script>
 </body>
 </html>
